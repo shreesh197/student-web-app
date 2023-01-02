@@ -13,10 +13,6 @@ const TextField = (props: any) => {
     onChange,
     ...rest
   } = props;
-  const { isMobile, isTab }: any = useContext(DeviceContext);
-  const { register } = useForm({
-    criteriaMode: "all",
-  });
   return (
     <div className="text-fields">
       <span className="profile-label">{labelText}</span>
