@@ -1,0 +1,133 @@
+.main {
+  overflow: hidden;
+}
+
+.Login-area1 {
+  height: 100vh;
+  background: transparent url("/images/login-cover-image.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.Login-main-area1 {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+  font-weight: 400;
+  padding-top: 30px;
+  padding-bottom: 100px;
+  height: 100%;
+}
+
+.customRow {
+  height: 100% !important;
+}
+
+.login-box {
+  padding: 60px 30px;
+  background-color: #fff;
+  box-shadow: 3px 3px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 45px;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-head {
+  font-weight: 700;
+  font-size: 30px;
+  margin-bottom: 30px;
+}
+
+.login-welcome-text {
+  font-weight: 500;
+}
+
+.login-input {
+  border: 2px solid #000000;
+  border-radius: 11px;
+  padding: 8px 15px;
+  font-size: 14px;
+  width: 100%;
+}
+.login-input.validation-error {
+  border: 2px solid var(--validation-error-color) !important;
+}
+.login-input.no-validation-error {
+  border: 2px solid var(--no-validation-error-color) !important;
+}
+
+.login-input.validation-error::placeholder {
+  color: var(--validation-error-color);
+  font-size: 12px;
+}
+
+.login-input:active,
+.login-input:focus,
+.login-input:focus-visible {
+  border: 2px solid var(--primary-color);
+  outline: none;
+}
+
+.login-submit {
+  border: 2px solid var(--primary-color);
+  border-radius: 27px;
+  background-color: #fff;
+  font-size: 20px;
+  color: #000000;
+  margin-top: 50px;
+  width: 100%;
+  padding: 6px 0;
+}
+
+.login-submit:hover {
+  border: 2px solid #000;
+  background-color: #000;
+  color: var(--primary-color);
+}
+
+.login-assist-text {
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.mobile-logo {
+  width: 50%;
+  margin-bottom: 70px;
+}
+
+.custom-logo-row {
+  justify-content: center;
+  text-align: center;
+  padding-left: 40px;
+}
+.validation-err-msg {
+  color: var(--validation-error-color);
+  font-size: 12px;
+  margin: 5px 0 0 5px;
+}
+
+.col-alignment {
+  padding: 0 30px 0 0;
+}
+
+/* ======== media queries ======== */
+
+@media (max-width: 1000px) {
+  .Login-area1 {
+    background: #fff;
+  }
+
+  .Login-main-area1 {
+    display: grid;
+    align-content: center;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+@media (min-width: 1000px) {
+  .custom-logo-row {
+    display: none !important;
+  }
+}

@@ -1,0 +1,33 @@
+:root {
+  --primary-color: #feba01;
+  --secondary-color: #000;
+  --no-validation-error-color: green;
+  --validation-error-color: red;
+
+  /* --inverted-primary-color: #000;
+    --inverted-secondary-color: #feba01; */
+}
+
+body {
+  font-family: "Poppins" sans-serif;
+}
+
+.area1 {
+  height: 100vh;
+}
+
+.transparent-button {
+  background: transparent;
+  outline: none;
+  border: none;
+  padding: 0;
+}
+
+.radio-fields label.validation-error {
+  border: 2px solid var(--validation-error-color) !important;
+  color: var(--validation-error-color) !important;
+}
+
+/* .radio-fields label.no-validation-error {
+  border: 2px solid var(--no-validation-error-color) !important;
+} */
