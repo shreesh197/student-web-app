@@ -12,7 +12,7 @@
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.9",
     "antd": "^5.0.7",
-    "app-repo-common-pkg": "^2.0.8",
+    "app-repo-common-pkg": "^2.0.11",
     "babel-jest": "^27.4.2",
     "babel-loader": "^8.2.3",
     "babel-plugin-named-asset-import": "^0.3.8",
@@ -36,6 +36,7 @@
     "jest": "^27.4.3",
     "jest-resolve": "^27.4.2",
     "jest-watch-typeahead": "^1.0.0",
+    "mdb-react-ui-kit": "^5.1.0",
     "mini-css-extract-plugin": "^2.4.5",
     "next": "^13.1.1",
     "postcss": "^8.4.4",
@@ -70,7 +71,6 @@
     "webpack-manifest-plugin": "^4.0.2",
     "workbox-webpack-plugin": "^6.4.1"
   },
-  "proxy": "https://nhwo7ew62l.execute-api.ap-south-1.amazonaws.com",
   "scripts": {
     "dev": "next dev",
     "start": "next start",
