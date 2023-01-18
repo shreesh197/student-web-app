@@ -405,3 +405,9 @@
     margin-bottom: 0;
   }
 }
+
+@media (max-width: 1200px) and (min-height: 800px) {
+  .ant-steps-item-container {
+    margin-bottom: 70px !important;
+  }
+}

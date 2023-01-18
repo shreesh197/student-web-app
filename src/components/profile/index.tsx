@@ -127,7 +127,7 @@ const Profile = () => {
     }
   };
 
-  console.log(`height is ====> ${screenHeight}`);
+  // console.log(`height is ====> ${screenHeight}`);
 
   return (
     <div
@@ -136,12 +136,25 @@ const Profile = () => {
           ? "overflow-hidden"
           : `${screenHeight < 550 ? "" : ""}`
       }`}
+      style={{
+        display: "flex",
+        flexWrap: isBigScreen ? "wrap-reverse" : "wrap",
+      }}
     >
       <div
         className={`${
           !isBigScreen
             ? "col-12"
-            : `col-4 m-0 ${screenHeight < 750 ? "" : "h-100"}`
+            : `col-4 m-0 ${
+                screenHeight < 750
+                  ? ""
+                  : `h-100 ${
+                      screenHeight > 800 &&
+                      currentStep === stepNumber.contactDetails
+                        ? "pb-5"
+                        : ""
+                    }`
+              }`
         } profile-main-area1`}
       >
         <div className={`row stepperRow customRow h-100`}>
