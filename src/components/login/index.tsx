@@ -17,7 +17,7 @@ const Login = () => {
             <div className="row col-12 custom-logo-row">
               <img
                 className="kodLogo mobile-logo"
-                src={""}
+                src={"/logos/kodnest-logo.png"}
                 alt="appLogo"
                 style={{ width: isTab ? "35%" : "50%" }}
               />
