@@ -8,7 +8,7 @@
   justify-content: center;
   flex-direction: column;
   font-weight: 400;
-  padding-top: 35px;
+  padding-top: 100px;
   padding-bottom: 35px;
   padding-left: 50px;
   padding-right: 50px;
@@ -24,6 +24,7 @@
   height: 100%;
   padding-left: 70px !important;
   padding-right: 70px;
+  padding-top: 100px;
 }
 
 .step-label {
@@ -61,7 +62,14 @@
   font-size: 16px !important;
 }
 
+:where(.css-dev-only-do-not-override-acm2ia).ant-picker:hover,
+:where(.css-dev-only-do-not-override-acm2ia).ant-picker-focused {
+  border: 2px solid var(--primary-color);
+  /* border-inline-end-width: 2px; */
+}
+
 .profile-input:active,
+.profile-input:hover,
 .profile-input:focus,
 .profile-input:focus-visible,
 .ant-picker-focused {
@@ -178,18 +186,18 @@
 }
 
 .ant-steps-item-container {
-  margin-bottom: 30px !important;
+  margin-bottom: 20px !important;
   color: #fff !important;
 }
 
 .ant-steps-item-tail {
   top: 0 !important;
-  padding: 47px 6px 6px !important;
+  padding: 47px 4px 6px !important;
 }
 
 .ant-steps-item-icon {
-  height: 44px !important;
-  width: 44px !important;
+  height: 40px !important;
+  width: 40px !important;
 }
 
 .ant-steps .ant-steps-item-process .ant-steps-item-icon {
@@ -339,6 +347,12 @@
   .form-heading {
     font-size: 20px;
     margin-bottom: 40px;
+  }
+}
+
+@media (min-width: 1366px) and (min-height: 1080px) {
+  .profile-main-area1 {
+    padding-bottom: 100px;
   }
 }
 

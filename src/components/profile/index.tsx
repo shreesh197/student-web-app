@@ -134,13 +134,15 @@ const Profile = () => {
       className={`row m-0 p-0 ${
         !isBigScreen && screenWidth < 500
           ? "overflow-hidden"
-          : `${screenHeight < 550 ? "" : "vh-100"}`
+          : `${screenHeight < 550 ? "" : ""}`
       }`}
     >
       <div
         className={`${
-          !isBigScreen ? "col-12" : `col-4 ${screenHeight < 750 ? "" : "h-100"}`
-        } profile-main-area1 m-0`}
+          !isBigScreen
+            ? "col-12"
+            : `col-4 m-0 ${screenHeight < 750 ? "" : "h-100"}`
+        } profile-main-area1`}
       >
         <div className={`row stepperRow customRow h-100`}>
           {!isBigScreen && (
@@ -159,7 +161,7 @@ const Profile = () => {
             </div>
           )}
           <div
-            className={`col-${!isBigScreen ? "8 my-auto" : "12"} ${
+            className={`col-${!isBigScreen ? "8 my-auto" : "12 my-auto"} ${
               screenHeight > 650 ? "my-auto pt-6" : ""
             }`}
           >
@@ -197,8 +199,8 @@ const Profile = () => {
       </div>
       <div
         className={`${
-          !isBigScreen ? "col-12 pt-5" : "col-8"
-        } profile-main-area2 m-0 overflow-scroll ${
+          !isBigScreen ? "col-12 pt-5 pb-5" : "col-8 my-auto pb-5"
+        } profile-main-area2 overflow-scroll ${
           screenHeight < 550 ? "" : "h-100"
         }`}
       >

@@ -33,7 +33,7 @@ body {
 }
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  background-color: transparent;
+  background-color: transparent ;
 }
 .navbar-light .navbar-nav .nav-link {
   margin-right: 20px;
