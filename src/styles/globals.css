@@ -33,7 +33,7 @@ body {
 }
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  background-color: transparent ;
+  background-color: transparent;
 }
 .navbar-light .navbar-nav .nav-link {
   margin-right: 20px;
@@ -52,6 +52,26 @@ body {
 @media (max-width: 500px) {
   .ant-drawer-content-wrapper {
     width: 278px !important;
+  }
+}
+
+/* ===== antd drawer ====== */
+
+@media (min-width: 1000px) {
+  .ant-drawer.ant-drawer-left.css-dev-only-do-not-override-acm2ia.ant-drawer-open.ant-drawer-inline {
+    height: 1180px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .ant-drawer.ant-drawer-left.css-dev-only-do-not-override-acm2ia.ant-drawer-open.ant-drawer-inline {
+    height: 1280px;
+  }
+}
+
+@media (max-width: 500px) {
+  .ant-drawer.ant-drawer-left.css-dev-only-do-not-override-acm2ia.ant-drawer-open.ant-drawer-inline {
+    height: 2100px;
   }
 }
 
