@@ -3,7 +3,7 @@ import { Drawer } from "antd";
 const SideDrawer = (props) => {
   return (
     <Drawer
-      title="Basic Drawer"
+      // title="Basic Drawer" 
       placement="left"
       closable={false}
       onClose={() => props.setOpen(false)}

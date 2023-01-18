@@ -160,7 +160,7 @@ const Profile = () => {
           )}
           <div
             className={`col-${!isBigScreen ? "8 my-auto" : "12"} ${
-              screenHeight > 650 ? "my-auto" : ""
+              screenHeight > 650 ? "my-auto pt-6" : ""
             }`}
           >
             <p className="step-label text-start">Step {currentStep}</p>
@@ -179,7 +179,7 @@ const Profile = () => {
             )}
           </div>
           {!isBigScreen && (
-            <div className="col-2 my-auto">
+            <div className="col-2 my-auto pe-0 text-end">
               <button
                 className="transparent-button"
                 onClick={() => setCurrentStep(currentStep + 1)}
@@ -198,7 +198,9 @@ const Profile = () => {
       <div
         className={`${
           !isBigScreen ? "col-12 pt-5" : "col-8"
-        } profile-main-area2 m-0 ${screenHeight < 550 ? "" : "h-100"}`}
+        } profile-main-area2 m-0 overflow-scroll ${
+          screenHeight < 550 ? "" : "h-100"
+        }`}
       >
         <div className={`row customRow h-100`}>
           <div

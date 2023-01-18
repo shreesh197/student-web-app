@@ -1,14 +1,14 @@
 import { useRouter } from "next/router";
-import { Navbar, Nav, Container } from "react-bootstrap";
-// import kodlogo from "../../assets/logos/kodnest-logo.png";
+import { Navbar, Nav } from "react-bootstrap";
 import { DeviceContext } from "app-repo-common-pkg";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 
 const AppHeader = (props: any) => {
   const router = useRouter();
   const { isMobile }: any = useContext(DeviceContext);
-  const margin = !isMobile ? "" : "20px";
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
     <Navbar
       className="color-nav"
@@ -20,54 +20,64 @@ const AppHeader = (props: any) => {
         width: "100%",
         zIndex: 1,
         background: "white",
+        paddingLeft: !isMobile ? "50px" : "20px",
+        paddingRight: !isMobile ? "50px" : "20px",
       }}
     >
-      <Container style={{}}>
-        <Navbar.Brand>
-          <div className="row">
-            <div className="col-4 my-auto">
-              <button
-                className="transparent-button"
-                onClick={() => props.setOpen(true)}
-              >
-                <GiHamburgerMenu fontSize={24} color={"grey"} />
-              </button>
-            </div>
-            <div className="col-8 my-auto">
-              <button
-                className="transparent-button"
-                onClick={() => router.push("/")}
-              >
-                <img
-                  className="kodLogo"
-                  src={"/logos/kodnest-logo.png"}
-                  alt="appLogo"
-                />
-              </button>
-            </div>
+      <Navbar.Brand>
+        <div className="row">
+          <div className="col-4 my-auto">
+            <button
+              className="transparent-button"
+              onClick={() => props.setOpen(true)}
+            >
+              <GiHamburgerMenu fontSize={24} color={"grey"} />
+            </button>
           </div>
-        </Navbar.Brand>
-        {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
-        <Navbar.Collapse id="basic-navbar-nav" className="navbar-menu-links">
-          <Nav
-            variant="pills"
-            defaultActiveKey="/"
-            className="nav-links justify-content-end"
-            style={{ width: "100%", marginTop: isMobile && "20px" }}
-          >
-            <Nav.Link className="navMenuLinks" href="/">
-              Home
-            </Nav.Link>
-            <Nav.Link className="navMenuLinks" href="/about-us">
-              About Us
-            </Nav.Link>
-            <Nav.Link className="navMenuLinks" href="/services">
-              Services
-            </Nav.Link>
-            <Nav.Link className="navMenuLinks" href="/contact-us">
-              Contact Us
-            </Nav.Link>
-            {/* <NavDropdown title="Company" id="nav-dropdown">
+          <div className="col-8 my-auto">
+            <button
+              className="transparent-button"
+              onClick={() => router.push("/")}
+            >
+              <img
+                className="kodLogo"
+                src={"/logos/kodnest-logo.png"}
+                alt="appLogo"
+              />
+            </button>
+          </div>
+        </div>
+      </Navbar.Brand>
+      <Navbar.Toggle
+        aria-controls="basic-navbar-nav"
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+      >
+        {isMenuOpen ? (
+          <FaAngleUp fontSize={24} color={"grey"} />
+        ) : (
+          <FaAngleDown fontSize={24} color={"grey"} />
+        )}
+      </Navbar.Toggle>
+      <Navbar.Collapse id="basic-navbar-nav" className="navbar-menu-links">
+        <Nav
+          variant="pills"
+          defaultActiveKey="/"
+          className="nav-links justify-content-end"
+          style={{ width: "100%", marginTop: isMobile && "20px" }}
+        >
+          <Nav.Link className="navMenuLinks" href="/">
+            Home
+          </Nav.Link>
+          <Nav.Link className="navMenuLinks" href="/about-us">
+            About Us
+          </Nav.Link>
+          <Nav.Link className="navMenuLinks" href="/services">
+            Services
+          </Nav.Link>
+          <Nav.Link className="navMenuLinks" href="/contact-us">
+            Contact Us
+          </Nav.Link>
+          {/* <NavDropdown title="Company" id="nav-dropdown">
                 <NavDropdown.Item eventKey="4.1" href="/portfolio">
                   Portfolio
                 </NavDropdown.Item>
@@ -75,7 +85,7 @@ const AppHeader = (props: any) => {
                   Skillmine
                 </NavDropdown.Item>
               </NavDropdown> */}
-            {/* <NavDropdown title="Services" id="nav-dropdown">
+          {/* <NavDropdown title="Services" id="nav-dropdown">
                 <NavDropdown.Item
                   eventKey="4.1"
                   href="/services/web-design-and-development"
@@ -101,7 +111,7 @@ const AppHeader = (props: any) => {
                   Search Engine Optimization
                 </NavDropdown.Item>
                 {/* <NavDropdown.Divider /> */}
-            {/* <NavDropdown.Item
+          {/* <NavDropdown.Item
                   eventKey="4.5"
                   href="/services/social-media-marketing"
                 >
@@ -114,7 +124,7 @@ const AppHeader = (props: any) => {
                   Lead Generation Services
                 </NavDropdown.Item>
               </NavDropdown>  */}
-            {/* <NavDropdown title="Insights" id="nav-dropdown">
+          {/* <NavDropdown title="Insights" id="nav-dropdown">
                 <NavDropdown.Item eventKey="4.1">Action</NavDropdown.Item>
                 <NavDropdown.Item eventKey="4.2">Another action</NavDropdown.Item>
                 <NavDropdown.Item eventKey="4.3">
@@ -123,15 +133,14 @@ const AppHeader = (props: any) => {
                 <NavDropdown.Divider />
                 <NavDropdown.Item eventKey="4.4">Separated link</NavDropdown.Item>
               </NavDropdown> */}
-            {/* <Nav.Link className="navMenuLinks" href="/contact-us">
+          {/* <Nav.Link className="navMenuLinks" href="/contact-us">
                 Contact Us
               </Nav.Link> */}
-            {/* <Nav.Link className="navMenuLinks" href="#other"> */}
-            {/* <FaSearch /> */}
-            {/* </Nav.Link> */}
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
+          {/* <Nav.Link className="navMenuLinks" href="#other"> */}
+          {/* <FaSearch /> */}
+          {/* </Nav.Link> */}
+        </Nav>
+      </Navbar.Collapse>
     </Navbar>
   );
 };

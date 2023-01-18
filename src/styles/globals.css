@@ -23,9 +23,36 @@ body {
   padding: 0;
 }
 
+.transparent-button:focus {
+  outline: none;
+}
+
 .radio-fields label.validation-error {
   border: 2px solid var(--validation-error-color) !important;
   color: var(--validation-error-color) !important;
+}
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  background-color: transparent;
+}
+.navbar-light .navbar-nav .nav-link {
+  margin-right: 20px;
+}
+
+.navbar-light .navbar-toggler {
+  color: rgba(0, 0, 0, 0.55);
+  border-color: var(--primary-color);
+}
+.navbar-toggler:focus {
+  text-decoration: none;
+  outline: 0;
+  box-shadow: none !important;
+}
+
+@media (max-width: 500px) {
+  .ant-drawer-content-wrapper {
+    width: 278px !important;
+  }
 }
 
 /* .radio-fields label.no-validation-error {
