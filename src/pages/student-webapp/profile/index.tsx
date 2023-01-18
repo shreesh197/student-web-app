@@ -1,7 +1,6 @@
 import { AppDesign } from "app-repo-common-pkg";
 import React from "react";
 import withAuth from "../../../components/auth/AuthGuard";
-import AppFooter from "../../../components/common/layout/footer";
 import RootLayout from "../../../components/common/layout/root-layout";
 import Profile from "../../../components/profile";
 
