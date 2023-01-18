@@ -177,6 +177,7 @@ const Profile = () => {
             className={`col-${!isBigScreen ? "8 my-auto" : "12 my-auto"} ${
               screenHeight > 650 ? "my-auto pt-6" : ""
             }`}
+            style={{ paddingLeft: isBigScreen ? "50px" : 0 }}
           >
             <p className="step-label text-start">Step {currentStep}</p>
             <p

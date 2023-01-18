@@ -64,18 +64,20 @@
 
 :where(.css-dev-only-do-not-override-acm2ia).ant-picker:hover,
 :where(.css-dev-only-do-not-override-acm2ia).ant-picker-focused {
-  border: 2px solid var(--primary-color);
+  border: 1px solid var(--primary-color);
   /* border-inline-end-width: 2px; */
 }
 
 .profile-input:active,
-.profile-input:hover,
 .profile-input:focus,
 .profile-input:focus-visible,
 .ant-picker-focused {
   border: 2px solid var(--primary-color) !important;
   outline: none;
   box-shadow: none;
+}
+.profile-input:hover {
+  border: 1px solid var(--primary-color) !important;
 }
 .ant-picker-cell-inner::before {
   border: 1px solid var(--primary-color) !important;
