@@ -13,6 +13,7 @@
     "@types/node": "^16.18.9",
     "antd": "^5.0.7",
     "app-repo-common-pkg": "^2.0.14",
+    "axios": "^1.2.3",
     "babel-jest": "^27.4.2",
     "babel-loader": "^8.2.3",
     "babel-plugin-named-asset-import": "^0.3.8",
