@@ -1,5 +1,5 @@
 module.exports = {
-    reactStrictMode: true,
+    reactStrictMode: false,
     webpack5: true,
   webpack: (config) => {
     config.resolve.fallback = { fs: false };

@@ -1,0 +1,55 @@
+.editor-main-area,
+.compiler-btn-row {
+  background: #032744;
+  color: #fff;
+}
+.reset-code-btn,
+.run-test-case {
+  color: #fff;
+  padding: 2px 10px 4px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+.run-test-case {
+  background: #595757;
+}
+.reset-code-btn {
+  background: green;
+}
+.question-main-area {
+  padding-left: 30px !important;
+  padding-right: 15px !important;
+  padding-top: 20px;
+  /* background: #154c79; */
+  /* background: #032744; */
+  /* color: #fff; */
+}
+.example-card {
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+.code-editor-dropdown {
+  background: #595757;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 8px;
+  padding: 2px;
+}
+.code-editor-dropdown:focus {
+  outline: none;
+}
+.compiler-textarea {
+  height: 100%;
+  width: 100%;
+  background: #3d3c3c;
+  border: none;
+  padding: 20px;
+}
+.compiler-textarea:focus {
+  outline: none;
+}
+.editor-labels {
+  font-size: 14px;
+}

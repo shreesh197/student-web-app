@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import "../styles/globals.css";
 import "./student-webapp/login/index.css";
 import "./student-webapp/profile/index.css";
+import "./student-webapp/assessment/index.css";
 
 export default function MyApp({ Component, pageProps }: any) {
   const [isDomRendered, setIsDomRendered] = useState(false);
