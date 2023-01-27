@@ -1,3 +1,5 @@
+/* ====== coding ======= */
+
 .editor-main-area,
 .compiler-btn-row {
   background: #032744;
@@ -52,4 +54,35 @@
 }
 .editor-labels {
   font-size: 14px;
+}
+
+/* ======== mcq ======== */
+
+.question-no-container {
+  background: rgb(201, 213, 211);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+.question-no-container.answered {
+  background: rgb(170, 246, 170);
+}
+.question-no-container:focus {
+  outline: none;
+}
+.option-container {
+  border: 1px solid rgba(182, 182, 182, 0.933);
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+.option-container.active {
+  border: 2px solid #71aafd;
+  background: rgb(209 244 255);
+  font-weight: bold;
+}
+.mcq-question-main-area {
+  border-right: 1px solid #595757;
 }
