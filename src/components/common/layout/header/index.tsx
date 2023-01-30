@@ -18,7 +18,7 @@ const AppHeader = (props: any) => {
         boxShadow: "20px 15px 10px -17px #111",
         position: "fixed",
         width: "100%",
-        zIndex: 1,
+        zIndex: 99,
         background: "white",
         paddingLeft: !isMobile ? "50px" : "20px",
         paddingRight: !isMobile ? "50px" : "20px",

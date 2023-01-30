@@ -1,3 +1,6 @@
+import { DeviceContext } from "app-repo-common-pkg";
+import React, { useContext } from "react";
+
 const rapidKey = "4ba68e9f0emsh365d8594c1e2cf3p1d5bf2jsn158770d5835d";
 const rapidHost = "judge0-ce.p.rapidapi.com";
 
@@ -317,6 +320,266 @@ export const mcqCollection = {
         },
       ],
     },
+    {
+      question:
+        "A train passes a station platform in 36 seconds and a man standing on the platform in 20 seconds. If the speed of the train is 54 km/hr, what is the length of the platform?",
+      options: [
+        {
+          option_id: "1",
+          option: "1200",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "800",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1000",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "900",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A train passes a station platform in 36 seconds and a man standing on the platform in 20 seconds. If the speed of the train is 54 km/hr, what is the length of the platform?",
+      options: [
+        {
+          option_id: "1",
+          option: "1200",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "800",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1000",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "900",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A train passes a station platform in 36 seconds and a man standing on the platform in 20 seconds. If the speed of the train is 54 km/hr, what is the length of the platform?",
+      options: [
+        {
+          option_id: "1",
+          option: "1200",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "800",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1000",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "900",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A train passes a station platform in 36 seconds and a man standing on the platform in 20 seconds. If the speed of the train is 54 km/hr, what is the length of the platform?",
+      options: [
+        {
+          option_id: "1",
+          option: "1200",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "800",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1000",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "900",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A train passes a station platform in 36 seconds and a man standing on the platform in 20 seconds. If the speed of the train is 54 km/hr, what is the length of the platform?",
+      options: [
+        {
+          option_id: "1",
+          option: "1200",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "800",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1000",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "900",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A train passes a station platform in 36 seconds and a man standing on the platform in 20 seconds. If the speed of the train is 54 km/hr, what is the length of the platform?",
+      options: [
+        {
+          option_id: "1",
+          option: "1200",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "800",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1000",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "900",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A train passes a station platform in 36 seconds and a man standing on the platform in 20 seconds. If the speed of the train is 54 km/hr, what is the length of the platform?",
+      options: [
+        {
+          option_id: "1",
+          option: "1200",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "800",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1000",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "900",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A train passes a station platform in 36 seconds and a man standing on the platform in 20 seconds. If the speed of the train is 54 km/hr, what is the length of the platform?",
+      options: [
+        {
+          option_id: "1",
+          option: "1200",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "800",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1000",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "900",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A train passes a station platform in 36 seconds and a man standing on the platform in 20 seconds. If the speed of the train is 54 km/hr, what is the length of the platform?",
+      options: [
+        {
+          option_id: "1",
+          option: "1200",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "800",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1000",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "900",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A train passes a station platform in 36 seconds and a man standing on the platform in 20 seconds. If the speed of the train is 54 km/hr, what is the length of the platform?",
+      options: [
+        {
+          option_id: "1",
+          option: "1200",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "800",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1000",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "900",
+          is_correct: false,
+        },
+      ],
+    },
   ],
   created_by: "KODNEST",
   min_score: 3,
@@ -324,3 +587,30 @@ export const mcqCollection = {
   enabled: true,
   created_at: "",
 };
+
+export const questionLegends = [
+  {
+    id: 1,
+    name: "Not Visited",
+    className: "",
+    number: 14,
+  },
+  {
+    id: 2,
+    name: "Answered",
+    className: "answered",
+    number: 11,
+  },
+  {
+    id: 3,
+    name: "Not Answered",
+    className: "not-answered",
+    number: 16,
+  },
+  {
+    id: 4,
+    name: "Marked for Review",
+    className: "is-marked",
+    number: 15,
+  },
+];

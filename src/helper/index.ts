@@ -58,3 +58,8 @@ export const getCapitalizedString = (str: string): string => {
 export const getCorrectClassName = (key: string): string => {
   return `${key.length > 0 ? "" : "validation-error"}`;
 };
+
+export const getBigScreen = (isMobile: any, isTab: any): boolean => {
+  const isBigScreen: boolean = !isMobile || isTab;
+  return isBigScreen;
+}
