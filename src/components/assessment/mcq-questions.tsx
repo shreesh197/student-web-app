@@ -37,11 +37,11 @@ const MCQ = () => {
     );
     // console.log(`correctQuestion =====> ${JSON.stringify(correctQuestion)}`);
     setCurrentQuestion(correctQuestion);
-    findCorrectOptionSelected(correctQuestion);
+    findCorrespondingOptionSelected(correctQuestion);
     setOpen(false);
   }, [currentQuestionNumber, mcqTest]);
 
-  const findCorrectOptionSelected = (question: any) => {
+  const findCorrespondingOptionSelected = (question: any) => {
     question?.options.forEach((option: any) => {
       if (option.is_correct) {
         setSelectedOption(option);
