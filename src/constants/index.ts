@@ -1,3 +1,6 @@
+import { DeviceContext } from "app-repo-common-pkg";
+import React, { useContext } from "react";
+
 const rapidKey = "4ba68e9f0emsh365d8594c1e2cf3p1d5bf2jsn158770d5835d";
 const rapidHost = "judge0-ce.p.rapidapi.com";
 
@@ -54,3 +57,560 @@ export const codingCollection = {
   enabled: true,
   created_at: "",
 };
+
+export const mcqCollection = {
+  id: "1",
+  type: "MCQ",
+  questions: [
+    {
+      question:
+        "Out of all the 2-digit integers between 1 and 100, a 2-digit number has to be selected at random. What is the probability that the selected number is not divisible by 7?",
+      options: [
+        {
+          option_id: "1",
+          option: "13/90",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "12/90",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "78/90",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "77/90",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A deck of 5 cards (each carrying a distinct number from 1 to 5) is shuffled thoroughly. Two cards are then removed one at time from the deck. What is the probability that the two cards are selected with the number on the first card being one higher than the number on the second card?",
+      options: [
+        {
+          option_id: "1",
+          option: "1/5",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "4/25",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1/4",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "2/5",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question: "Were you a bird, you ______________ in the sky.",
+      options: [
+        {
+          option_id: "1",
+          option: "would fly",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "shall fly",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "should fly",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "will fly",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question: "Which one is NOT divisible by 3 ?",
+      options: [
+        {
+          option_id: "1",
+          option: "5271",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "6291",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "4372",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "8952",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "The least perfect square, which is divisible by each of 15, 20 and 36 is:",
+      options: [
+        {
+          option_id: "1",
+          option: "1200",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "800",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1000",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "900",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A train running at the speed of 60 km/hr crosses a pole in 9 seconds. What is the length of the train?",
+      options: [
+        {
+          option_id: "1",
+          option: "13/90",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "12/90",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "78/90",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "77/90",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A train 125 m long passes a man, running at 5 km/hr in the same direction in which the train is going, in 10 seconds. The speed of the train is:",
+      options: [
+        {
+          option_id: "1",
+          option: "1/5",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "4/25",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1/4",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "2/5",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "The length of the bridge, which a train 130 metres long and travelling at 45 km/hr can cross in 30 seconds, is:",
+      options: [
+        {
+          option_id: "1",
+          option: "would fly",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "shall fly",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "should fly",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "will fly",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "Two trains running in opposite directions cross a man standing on the platform in 27 seconds and 17 seconds respectively and they cross each other in 23 seconds. The ratio of their speeds is:",
+      options: [
+        {
+          option_id: "1",
+          option: "5271",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "6291",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "4372",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "8952",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A train passes a station platform in 36 seconds and a man standing on the platform in 20 seconds. If the speed of the train is 54 km/hr, what is the length of the platform?",
+      options: [
+        {
+          option_id: "1",
+          option: "1200",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "800",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1000",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "900",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A train passes a station platform in 36 seconds and a man standing on the platform in 20 seconds. If the speed of the train is 54 km/hr, what is the length of the platform?",
+      options: [
+        {
+          option_id: "1",
+          option: "1200",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "800",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1000",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "900",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A train passes a station platform in 36 seconds and a man standing on the platform in 20 seconds. If the speed of the train is 54 km/hr, what is the length of the platform?",
+      options: [
+        {
+          option_id: "1",
+          option: "1200",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "800",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1000",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "900",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A train passes a station platform in 36 seconds and a man standing on the platform in 20 seconds. If the speed of the train is 54 km/hr, what is the length of the platform?",
+      options: [
+        {
+          option_id: "1",
+          option: "1200",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "800",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1000",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "900",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A train passes a station platform in 36 seconds and a man standing on the platform in 20 seconds. If the speed of the train is 54 km/hr, what is the length of the platform?",
+      options: [
+        {
+          option_id: "1",
+          option: "1200",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "800",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1000",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "900",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A train passes a station platform in 36 seconds and a man standing on the platform in 20 seconds. If the speed of the train is 54 km/hr, what is the length of the platform?",
+      options: [
+        {
+          option_id: "1",
+          option: "1200",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "800",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1000",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "900",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A train passes a station platform in 36 seconds and a man standing on the platform in 20 seconds. If the speed of the train is 54 km/hr, what is the length of the platform?",
+      options: [
+        {
+          option_id: "1",
+          option: "1200",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "800",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1000",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "900",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A train passes a station platform in 36 seconds and a man standing on the platform in 20 seconds. If the speed of the train is 54 km/hr, what is the length of the platform?",
+      options: [
+        {
+          option_id: "1",
+          option: "1200",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "800",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1000",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "900",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A train passes a station platform in 36 seconds and a man standing on the platform in 20 seconds. If the speed of the train is 54 km/hr, what is the length of the platform?",
+      options: [
+        {
+          option_id: "1",
+          option: "1200",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "800",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1000",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "900",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A train passes a station platform in 36 seconds and a man standing on the platform in 20 seconds. If the speed of the train is 54 km/hr, what is the length of the platform?",
+      options: [
+        {
+          option_id: "1",
+          option: "1200",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "800",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1000",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "900",
+          is_correct: false,
+        },
+      ],
+    },
+    {
+      question:
+        "A train passes a station platform in 36 seconds and a man standing on the platform in 20 seconds. If the speed of the train is 54 km/hr, what is the length of the platform?",
+      options: [
+        {
+          option_id: "1",
+          option: "1200",
+          is_correct: false,
+        },
+        {
+          option_id: "2",
+          option: "800",
+          is_correct: false,
+        },
+        {
+          option_id: "3",
+          option: "1000",
+          is_correct: false,
+        },
+        {
+          option_id: "4",
+          option: "900",
+          is_correct: false,
+        },
+      ],
+    },
+  ],
+  created_by: "KODNEST",
+  min_score: 3,
+  meta: {},
+  enabled: true,
+  created_at: "",
+};
+
+export const questionLegends = [
+  {
+    id: 1,
+    name: "Not Visited",
+    className: "",
+    number: 14,
+  },
+  {
+    id: 2,
+    name: "Answered",
+    className: "answered",
+    number: 11,
+  },
+  {
+    id: 3,
+    name: "Not Answered",
+    className: "not-answered",
+    number: 16,
+  },
+  {
+    id: 4,
+    name: "Marked for Review",
+    className: "is-marked",
+    number: 15,
+  },
+];

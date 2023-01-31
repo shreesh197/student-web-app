@@ -5,7 +5,7 @@ import MCQ from "../../../components/assessment/mcq-questions";
 import RootLayout from "../../../components/common/layout/root-layout";
 
 const AssessmentPage = () => {
-  const [assessmentType, setAssessmentType] = useState("code");
+  const [assessmentType, setAssessmentType] = useState("mcq");
   return (
     <RootLayout>
       <AppDesign>

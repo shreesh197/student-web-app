@@ -1,5 +1,4 @@
-
-import rootReducer from './reducers';
+import rootReducer from "./reducers";
 
 import { legacy_createStore as createStore, compose } from "redux";
 
@@ -9,5 +8,11 @@ declare global {
   }
 }
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-export const store = createStore(rootReducer, composeEnhancers());
+const composeEnhancers =
+  typeof window !== "undefined"
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+    : null;
+export const store =
+  typeof window !== "undefined"
+    ? createStore(rootReducer, composeEnhancers())
+    : null;
