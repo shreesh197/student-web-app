@@ -268,7 +268,6 @@ const MCQ = () => {
                   if (ques?.is_visited) {
                     setCurrentQuestionNumber(i + 1);
                   }
-                  // setIsQuestionAnswered(false);
                 }}
                 style={{
                   padding:
