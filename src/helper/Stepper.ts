@@ -36,5 +36,7 @@ export const stepNumber = {
   academicDetails: 4,
   experience: 5,
   socialContact: 6,
-  consent: 7
+  consent: 7,
+  tpodetails:8,
+  kodnestdetails:9
 };

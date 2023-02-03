@@ -28,10 +28,11 @@ import DatePicker from 'react-datepicker'
 import { useForm, Controller } from 'react-hook-form'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
+import Icon from '../../../@core/components/icon'
 
 // ** Types
 import { DateType } from 'src/types/forms/reactDatepickerTypes'
+import DatePickerWrapper from '../../../@core/styles/libs/react-datepicker'
 
 interface State {
   password: string
@@ -99,6 +100,8 @@ const FormValidationBasic = () => {
 
   return (
     <Card>
+           <DatePickerWrapper>
+
       <CardHeader title='Basic' />
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -386,6 +389,8 @@ const FormValidationBasic = () => {
           </Grid>
         </form>
       </CardContent>
+           </DatePickerWrapper>
+
     </Card>
   )
 }
