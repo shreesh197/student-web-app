@@ -3,14 +3,13 @@ import { styled } from '@mui/material/styles'
 import Box, { BoxProps } from '@mui/material/Box'
 
 // ** Hooks
-import { useSettings } from 'src/@core/hooks/useSettings' // ** Hooks Imports
-import useBgColor, { UseBgColorType } from 'src/@core/hooks/useBgColor'
-
+import { useSettings } from '../../../hooks/useSettings' // ** Hooks Imports
+import useBgColor, { UseBgColorType } from '../../../hooks/useBgColor'
 // ** Util Import
-import { hexToRGBA } from 'src/@core/utils/hex-to-rgba'
+import { hexToRGBA } from '../../../utils/hex-to-rgba'
 
 // ** Styles
-import 'react-datepicker/dist/react-datepicker.css'
+import 'react-datepicker/dist/react-datepicker.css';
 
 const DatePickerWrapper = styled(Box)<BoxProps>(({ theme }) => {
   // ** Hook
@@ -193,9 +192,9 @@ const DatePickerWrapper = styled(Box)<BoxProps>(({ theme }) => {
       },
       '& .react-datepicker__day--keyboard-selected': {
         '&:not(.react-datepicker__day--in-range)': {
-          backgroundColor: `rgba(${theme.palette.customColors.main}, 0.06)`,
+          backgroundColor: `rgba(${theme.palette.customColors?.main}, 0.06)`,
           '&:hover': {
-            backgroundColor: `rgba(${theme.palette.customColors.main}, 0.06)`
+            backgroundColor: `rgba(${theme.palette.customColors?.main}, 0.06)`
           }
         },
         '&.react-datepicker__day--in-range:not(.react-datepicker__day--range-end)': {
@@ -208,19 +207,19 @@ const DatePickerWrapper = styled(Box)<BoxProps>(({ theme }) => {
       '& .react-datepicker__month-text--keyboard-selected': {
         '&:not(.react-datepicker__month--in-range)': {
           color: theme.palette.text.primary,
-          backgroundColor: `rgba(${theme.palette.customColors.main}, 0.06)`,
+          backgroundColor: `rgba(${theme.palette.customColors?.main}, 0.06)`,
           '&:hover': {
             color: theme.palette.text.primary,
-            backgroundColor: `rgba(${theme.palette.customColors.main}, 0.06)`
+            backgroundColor: `rgba(${theme.palette.customColors?.main}, 0.06)`
           }
         }
       },
       '& .react-datepicker__year-text--keyboard-selected': {
         color: theme.palette.text.primary,
-        backgroundColor: `rgba(${theme.palette.customColors.main}, 0.06)`,
+        backgroundColor: `rgba(${theme.palette.customColors?.main}, 0.06)`,
         '&:hover': {
           color: theme.palette.text.primary,
-          backgroundColor: `rgba(${theme.palette.customColors.main}, 0.06)`
+          backgroundColor: `rgba(${theme.palette.customColors?.main}, 0.06)`
         }
       },
       '& .react-datepicker__day--selected, & .react-datepicker__month--selected, & .react-datepicker__year-text--selected, & .react-datepicker__quarter--selected':
