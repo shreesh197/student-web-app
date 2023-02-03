@@ -123,12 +123,12 @@ const AddressDetailsView = () => {
 
   const onSelectCity = (e) => {
     setSelectedCity(e.target.value);
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
 
   const onSubmit = () => toast.success("Form Submitted");
 
-  console.log(selectedState);
+  // console.log(selectedState);
 
   return (
     <Card
@@ -193,7 +193,7 @@ const AddressDetailsView = () => {
               <FormControl fullWidth>
                 <InputLabel
                   id="validation-address-city"
-                  error={Boolean(errors.city)}
+                  error={Boolean(!selectedCity && isSubmit)}
                   htmlFor="validation-address-city"
                 >
                   Current Location - City
@@ -204,10 +204,14 @@ const AddressDetailsView = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <Select
-                      value={selectedCity && selectedCity}
-                      label="Are you Working professional?"
-                      onChange={onSelectCity}
-                      error={Boolean(errors.city)}
+                      value={value}
+                      label="Current Location - City"
+                      onChange={(value: any) => {
+                        onChange(value);
+                        // onSelectCity(value);
+                        setSelectedCity(value);
+                      }}
+                      error={Boolean(!selectedCity && isSubmit)}
                       labelId="validation-address-city"
                       aria-describedby="validation-address-city"
                     >
@@ -221,7 +225,7 @@ const AddressDetailsView = () => {
                     </Select>
                   )}
                 />
-                {errors.city && (
+                {!selectedCity && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-address-city"

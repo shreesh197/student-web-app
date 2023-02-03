@@ -25,7 +25,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 // ** Third Party Imports
 import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, set } from "react-hook-form";
 
 // ** Icon Imports
 import Icon from "../../common/ui-library/app-repository-admin-panel/src/@core/components/icon";
@@ -69,11 +69,22 @@ const CustomInput = forwardRef(({ ...props }: CustomInputProps, ref) => {
 });
 
 const BasicDetailsView = () => {
+  const [isSubmit, setIsSubmit] = useState(false);
+
   // ** States
   // const [state, setState] = useState<State>({
   //   password: "",
   //   showPassword: false,
   // });
+
+  const [fName, setFName] = useState("");
+  const [lName, setLName] = useState("");
+  const [kid, setKid] = useState("");
+  const [eno, setEno] = useState(null);
+  const [Dob, setDob] = useState("");
+  const [disb, setDisb] = useState("");
+
+  console.log(disb)
 
   // ** Hooks
   const {
@@ -89,6 +100,8 @@ const BasicDetailsView = () => {
   // const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
   //   event.preventDefault();
   // };
+
+  // const onfnameChange = (e) => setFName(e.target.value);
 
   const onSubmit = () => toast.success("Form Submitted");
 
@@ -115,14 +128,17 @@ const BasicDetailsView = () => {
                       <TextField
                         value={value}
                         label="First Name"
-                        onChange={onChange}
+                        onChange={(value: any) => {
+                          onChange(value);
+                          setFName(value);
+                        }}
                         placeholder="Leonard"
-                        error={Boolean(errors.firstName)}
+                        error={Boolean(!fName && isSubmit)}
                         aria-describedby="validation-basic-first-name"
                       />
                     )}
                   />
-                  {errors.firstName && (
+                  {!fName && isSubmit && (
                     <FormHelperText
                       sx={{ color: "error.main" }}
                       id="validation-basic-first-name"
@@ -143,14 +159,17 @@ const BasicDetailsView = () => {
                       <TextField
                         value={value}
                         label="Last Name"
-                        onChange={onChange}
+                        onChange={(value: any) => {
+                          onChange(value);
+                          setLName(value);
+                        }}
                         placeholder="Carter"
-                        error={Boolean(errors.lastName)}
+                        error={Boolean(!lName && isSubmit)}
                         aria-describedby="validation-basic-last-name"
                       />
                     )}
                   />
-                  {errors.lastName && (
+                  {!lName && isSubmit && (
                     <FormHelperText
                       sx={{ color: "error.main" }}
                       id="validation-basic-last-name"
@@ -171,14 +190,17 @@ const BasicDetailsView = () => {
                       <TextField
                         value={value}
                         label="KodNest Id"
-                        onChange={onChange}
-                        error={Boolean(errors.kodnestid)}
+                        onChange={(value: any) => {
+                          onChange(value);
+                          setKid(value);
+                        }}
+                        error={Boolean(!kid && isSubmit)}
                         placeholder=""
                         aria-describedby="validation-basic-kodnestid"
                       />
                     )}
                   />
-                  {errors.kodnestid && (
+                  {!kid && isSubmit && (
                     <FormHelperText
                       sx={{ color: "error.main" }}
                       id="validation-basic-kodnestid"
@@ -200,14 +222,17 @@ const BasicDetailsView = () => {
                         type="tel"
                         value={value}
                         label="Emergency Contact Number  ( Father/mother/sister/brother)"
-                        onChange={onChange}
-                        error={Boolean(errors.emergencycontactnumnber)}
+                        onChange={(value: any) => {
+                          onChange(value);
+                          setEno(value);
+                        }}
+                        error={Boolean(!eno && isSubmit)}
                         placeholder=""
                         aria-describedby="validation-basic-emergencycontactnumnber"
                       />
                     )}
                   />
-                  {errors.emergencycontactnumnber && (
+                  {!eno && isSubmit && (
                     <FormHelperText
                       sx={{ color: "error.main" }}
                       id="validation-basic-emergencycontactnumnber"
@@ -280,21 +305,24 @@ const BasicDetailsView = () => {
                       selected={value}
                       showYearDropdown
                       showMonthDropdown
-                      onChange={(e) => onChange(e)}
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setDob(value);
+                      }}
                       placeholderText="MM/DD/YYYY"
                       customInput={
                         <CustomInput
                           value={value}
                           onChange={onChange}
                           label="Date of Birth"
-                          error={Boolean(errors.dob)}
+                          error={Boolean(!Dob && isSubmit)}
                           aria-describedby="validation-basic-dob"
                         />
                       }
                     />
                   )}
                 />
-                {errors.dob && (
+                {!Dob && isSubmit && (
                   <FormHelperText
                     sx={{ mx: 3.5, color: "error.main" }}
                     id="validation-basic-dob"
@@ -389,6 +417,9 @@ const BasicDetailsView = () => {
                         <FormControlLabel
                           value="yes"
                           label="Yes"
+                          onClick={(e: any) => {
+                            setDisb(e.target.value);
+                          }}
                           sx={errors.radio ? { color: "error.main" } : null}
                           control={
                             <Radio
@@ -399,6 +430,9 @@ const BasicDetailsView = () => {
                         <FormControlLabel
                           value="no"
                           label="No"
+                          onClick={(e: any) => {
+                            setDisb(e.target.value);
+                          }}
                           sx={errors.radio ? { color: "error.main" } : null}
                           control={
                             <Radio
@@ -469,6 +503,7 @@ const BasicDetailsView = () => {
                   type="submit"
                   variant="contained"
                   style={{ marginTop: 30 }}
+                  onClick={() => setIsSubmit(true)}
                 >
                   Submit
                 </Button>

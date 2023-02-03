@@ -60,6 +60,12 @@ const YearsFunction = (item: string) => {
 };
 
 const TpoDetailsView = () => {
+
+    const [isSubmit, setIsSubmit] = useState(false);
+    const [tpoName, setTpoName] = useState("");
+    const [tpoEmail, setTpoEmail] = useState("");
+    const [tpoNumber, setTpoNumber] = useState(null);
+
   // ** Hooks
   const {
     control,
@@ -91,14 +97,17 @@ const TpoDetailsView = () => {
                     <TextField
                       value={value}
                       label="Your College Training and Placement Officer name"
-                      onChange={onChange}
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setTpoName(value);
+                      }}
                       placeholder="Leonard"
-                      error={Boolean(errors.tponame)}
+                      error={Boolean(!tpoName && isSubmit)}
                       aria-describedby="validation-tpo-tponame"
                     />
                   )}
                 />
-                {errors.tponame && (
+                {!tpoName && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-tpo-tponame"
@@ -119,14 +128,17 @@ const TpoDetailsView = () => {
                     <TextField
                       value={value}
                       label="Your College Training and Placement Officer Email ID"
-                      onChange={onChange}
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setTpoEmail(value);
+                      }}
                       placeholder="Leonard"
-                      error={Boolean(errors.tpoemailid)}
+                      error={Boolean(!tpoEmail && isSubmit)}
                       aria-describedby="validation-tpo-tpoemailid"
                     />
                   )}
                 />
-                {errors.tpoemailid && (
+                {!tpoEmail && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-tpo-tpoemailid"
@@ -149,15 +161,18 @@ const TpoDetailsView = () => {
                       <TextField
                         value={value}
                         label="Your College Training and Placement Officer Contact Number"
-                        onChange={onChange}
+                        onChange={(value: any) => {
+                          onChange(value);
+                          setTpoNumber(value);
+                        }}
                         placeholder="Leonard"
-                        error={Boolean(errors.tpocontactnumber)}
+                        error={Boolean(!tpoNumber && isSubmit)}
                         aria-describedby="validation-tpo-tpocontactnumber"
                       />
                     );
                   }}
                 />
-                {errors.tpocontactnumber && (
+                {!tpoNumber && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-tpo-tpocontactnumber"
@@ -174,6 +189,7 @@ const TpoDetailsView = () => {
                 type="submit"
                 variant="contained"
                 style={{ marginTop: 30 }}
+                onClick={() => setIsSubmit(true)}
               >
                 Submit
               </Button>
