@@ -14,10 +14,35 @@ import CardContent from '@mui/material/CardContent'
 import axios from 'axios'
 
 // ** Icon Imports
-import Icon from 'src/@core/components/icon'
 
 // ** Types
-import { ProfileHeaderType } from 'src/@fake-db/types'
+// import { ProfileHeaderType } from 'src/@fake-db/types'
+import Icon from '../../../@core/components/icon'
+
+ interface ProfileHeaderType  {
+  fullName: string
+  coverImg: string
+  location: string
+  profileImg: string
+  joiningDate: string
+  designation: string
+  designationIcon?: string
+}
+
+interface DataType {
+  profileHeader: ProfileHeaderType
+}
+const profiledata: DataType = {
+  profileHeader: {
+    fullName: 'John Doe',
+    location: 'Vatican City',
+    joiningDate: 'April 2021',
+    designation: 'UX Designer',
+    profileImg: '/images/1.png',
+    designationIcon: 'mdi:fountain-pen-tip',
+    coverImg: '/images/profile-banner.png'
+  }
+}
 
 const ProfilePicture = styled('img')(({ theme }) => ({
   width: 120,
@@ -34,15 +59,15 @@ const UserProfileHeader = () => {
   const [data, setData] = useState<ProfileHeaderType | null>(null)
 
   useEffect(() => {
-    axios.get('/pages/profile-header').then(response => {
-      setData(response.data)
-    })
+    // axios.get('/pages/profile-header').then(response => {
+      setData(profiledata.profileHeader)
+    // })
   }, [])
 
   const designationIcon = data?.designationIcon || 'mdi:briefcase-outline'
 
   return data !== null ? (
-    <Card>
+    <Card >
       <CardMedia
         component='img'
         alt='profile-header'
@@ -54,7 +79,7 @@ const UserProfileHeader = () => {
       <CardContent
         sx={{
           pt: 0,
-          mt: -8,
+          mt: -4,
           display: 'flex',
           alignItems: 'flex-end',
           flexWrap: { xs: 'wrap', md: 'nowrap' },
@@ -72,8 +97,8 @@ const UserProfileHeader = () => {
             justifyContent: ['center', 'space-between']
           }}
         >
-          <Box sx={{ mb: [6, 0], display: 'flex', flexDirection: 'column', alignItems: ['center', 'flex-start'] }}>
-            <Typography variant='h5' sx={{ mb: 4, fontSize: '1.375rem' }}>
+          <Box className="" sx={{ mb: [6, 0], display: 'flex', flexDirection: 'column', alignItems: ['center', 'flex-start'] }}>
+            <Typography variant='h5' sx={{ mb: 2, fontSize: '1.375rem' }}>
               {data.fullName}
             </Typography>
             <Box
