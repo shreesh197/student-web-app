@@ -1,5 +1,11 @@
 // ** React Imports
-import { forwardRef, MouseEvent, useState, ChangeEvent } from "react";
+import {
+  forwardRef,
+  MouseEvent,
+  useState,
+  ChangeEvent,
+  useEffect,
+} from "react";
 
 // ** MUI Imports
 import Card from "@mui/material/Card";
@@ -33,6 +39,7 @@ import Icon from "../../common/ui-library/app-repository-admin-panel/src/@core/c
 // ** Types
 import { DateType } from "../../common/ui-library/app-repository-admin-panel/src/types/forms/reactDatepickerTypes";
 import DatePickerWrapper from "../../common/ui-library/app-repository-admin-panel/src/@core/styles/libs/react-datepicker";
+import { getBasicDetails } from "../../services/ApiExecutor";
 
 interface State {
   password: string;
@@ -70,6 +77,7 @@ const CustomInput = forwardRef(({ ...props }: CustomInputProps, ref) => {
 
 const BasicDetailsView = () => {
   const [isSubmit, setIsSubmit] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
   // ** States
   // const [state, setState] = useState<State>({
@@ -84,7 +92,7 @@ const BasicDetailsView = () => {
   const [Dob, setDob] = useState("");
   const [disb, setDisb] = useState("");
 
-  console.log(disb)
+  // console.log(disb);
 
   // ** Hooks
   const {
@@ -103,7 +111,16 @@ const BasicDetailsView = () => {
 
   // const onfnameChange = (e) => setFName(e.target.value);
 
-  const onSubmit = () => toast.success("Form Submitted");
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getBasicDetails();
+      setFName(res.data.first_name);
+      console.log(res.data);
+    };
+    fetchData();
+  }, []);
+
+  const onSubmit = () => console.log("Form Submitted");
 
   return (
     <Card
@@ -126,19 +143,20 @@ const BasicDetailsView = () => {
                     rules={{ required: true }}
                     render={({ field: { value, onChange } }) => (
                       <TextField
+                        disabled={isEdit === false ? true : false}
                         value={value}
-                        label="First Name"
+                        label={isEdit === false ? fName : "First Name"}
                         onChange={(value: any) => {
                           onChange(value);
                           setFName(value);
                         }}
-                        placeholder="Leonard"
-                        error={Boolean(!fName && isSubmit)}
+                        placeholder={fName}
+                        error={Boolean(errors.firstName && isSubmit)}
                         aria-describedby="validation-basic-first-name"
                       />
                     )}
                   />
-                  {!fName && isSubmit && (
+                  {errors.firstName && isSubmit && (
                     <FormHelperText
                       sx={{ color: "error.main" }}
                       id="validation-basic-first-name"
@@ -503,10 +521,30 @@ const BasicDetailsView = () => {
                   type="submit"
                   variant="contained"
                   style={{ marginTop: 30 }}
-                  onClick={() => setIsSubmit(true)}
+                  onClick={() => {
+                    setIsEdit(true);
+
+                    {
+                      isEdit === true && setIsSubmit(true);
+                    }
+                  }}
                 >
-                  Submit
+                  {isEdit === false ? "Edit" : "Submit"}
                 </Button>
+                {isEdit === true && (
+                  <Button
+                    className="ml-2"
+                    size="large"
+                    type="submit"
+                    variant="contained"
+                    style={{ marginTop: 30 }}
+                    onClick={() => {
+                      setIsEdit(false);
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                )}
               </Grid>
             </Grid>
           </form>
