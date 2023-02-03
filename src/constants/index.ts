@@ -1,5 +1,4 @@
-import { DeviceContext } from "app-repo-common-pkg";
-import React, { useContext } from "react";
+import { Column } from "../common/ui-library/app-repository-admin-panel/src/views/table/mui/TableStickyHeader";
 
 const rapidKey = "4ba68e9f0emsh365d8594c1e2cf3p1d5bf2jsn158770d5835d";
 const rapidHost = "judge0-ce.p.rapidapi.com";
@@ -612,5 +611,210 @@ export const questionLegends = [
     name: "Marked for Review",
     className: "is-marked",
     number: 15,
+  },
+];
+
+export const mcqResultCollection = {
+  submission_id: "46456ac4-a097-11ed-9e19-acde48001122",
+  assessment_id: "1",
+  assessment_name: "pyton basics - test",
+  user_id: "1",
+  questions: [
+    {
+      question_id: 1,
+      question: "Question 1",
+      options: [
+        {
+          option_id: "1",
+          option: "Option 1",
+          user_response: false,
+          correct_response: true,
+        },
+        {
+          option_id: "2",
+          option: "Option 2",
+          user_response: false,
+          correct_response: true,
+        },
+        {
+          option_id: "3",
+          option: "Option 3",
+          user_response: false,
+          correct_response: true,
+        },
+        {
+          option_id: "4",
+          option: "Option 4",
+          user_response: false,
+          correct_response: true,
+        },
+      ],
+      score: 0,
+      maximum_marks: 5,
+    },
+    {
+      question_id: 1,
+      question: "Question 1",
+      options: [
+        {
+          option_id: "1",
+          option: "Option 1",
+          user_response: false,
+          correct_response: true,
+        },
+        {
+          option_id: "2",
+          option: "Option 2",
+          user_response: false,
+          correct_response: true,
+        },
+        {
+          option_id: "3",
+          option: "Option 3",
+          user_response: false,
+          correct_response: true,
+        },
+        {
+          option_id: "4",
+          option: "Option 4",
+          user_response: false,
+          correct_response: true,
+        },
+      ],
+      score: 0,
+      maximum_marks: 5,
+    },
+  ],
+  maximum_marks: 9,
+  total_score: 3,
+  minimum_score: 3,
+  status: "1",
+  total_correct: 3,
+  total_unattempted: 2,
+  total_incorrect: 2,
+  time_taken: 4800000,
+  total_time: 5400000,
+};
+
+export const mcqCollectionWithTabs = {
+  id: "1",
+  type: "MCQ",
+  sections: [
+    {
+      section_id: "1",
+      section_name: "english",
+      questions: [
+        {
+          question: "Were you a bird, you ______________ in the sky.",
+          options: [
+            {
+              option_id: "1",
+              option: "would fly",
+              is_correct: false,
+            },
+            {
+              option_id: "2",
+              option: "shall fly",
+              is_correct: false,
+            },
+            {
+              option_id: "3",
+              option: "should fly",
+              is_correct: false,
+            },
+            {
+              option_id: "4",
+              option: "will fly",
+              is_correct: false,
+            },
+          ],
+        },
+      ],
+    },
+    {
+      section_id: "2",
+      section_name: "aptitude",
+      questions: [
+        {
+          question:
+            "Out of all the 2-digit integers between 1 and 100, a 2-digit number has to be selected at random. What is the probability that the selected number is not divisible by 7?",
+          options: [
+            {
+              option_id: "1",
+              option: "13/90",
+              is_correct: false,
+            },
+            {
+              option_id: "2",
+              option: "12/90",
+              is_correct: false,
+            },
+            {
+              option_id: "3",
+              option: "78/90",
+              is_correct: false,
+            },
+            {
+              option_id: "4",
+              option: "77/90",
+              is_correct: false,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  created_by: "KODNEST",
+  min_score: 3,
+  meta: {},
+  enabled: true,
+  created_at: "",
+};
+
+const mcqResultColumns1 = [
+  {
+    title: "Section",
+    dataIndex: "section",
+    key: "section",
+  },
+  {
+    title: "Score",
+    dataIndex: "score",
+    key: "score",
+  },
+  {
+    title: "Accuracy",
+    dataIndex: "accuracy",
+    key: "accuracy",
+  },
+  {
+    title: "Time Spent",
+    dataIndex: "time",
+    key: "time",
+  },
+];
+
+export const mcqResultColumns: Column[] = [
+  { id: "section", label: "Section", minWidth: 100 },
+  {
+    id: "score",
+    label: "Score",
+    minWidth: 100,
+    // align: "right",
+    // format: (value: any) => `${value?.total_score} / ${value?.maximum_marks}`,
+  },
+  {
+    id: "accuracy",
+    label: "Accuracy",
+    minWidth: 100,
+    // align: "right",
+    // format: (value: number) => `${value.toFixed(2)} %`,
+  },
+  {
+    id: "time",
+    label: "Time Spent",
+    minWidth: 170,
+    // align: "right",
+    // format: (value: any) => `${value?.time_taken} / ${value?.total_time}`,
   },
 ];

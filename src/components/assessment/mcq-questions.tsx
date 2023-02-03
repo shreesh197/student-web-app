@@ -6,6 +6,7 @@ import { getQuestions, saveQuestions } from "../../redux/actions";
 import Countdown from "react-countdown";
 import { Drawer } from "antd";
 import { BsQuestionSquareFill } from "react-icons/bs";
+import { useRouter } from "next/router";
 
 const MCQ = () => {
   const [currentQuestionNumber, setCurrentQuestionNumber] = useState(1);
@@ -15,6 +16,7 @@ const MCQ = () => {
   const [open, setOpen] = useState(false);
 
   const dispatch = useDispatch();
+  const router = useRouter();
   const { screenWidth, isMobile }: any = useContext(DeviceContext);
   // const footerButtons = [
   //   {
@@ -430,7 +432,9 @@ const MCQ = () => {
                     className={`mcq-question-buttons me-2 ${
                       screenWidth < 1366 ? "mb-2" : ""
                     }`}
-                    onClick={() => {}}
+                    onClick={() =>
+                      router.push("/student-webapp/assessment/result")
+                    }
                   >
                     Submit Test
                   </button>
@@ -461,7 +465,9 @@ const MCQ = () => {
                 <div className="col-12">
                   <button
                     className="mcq-question-buttons submit-button"
-                    onClick={() => {}}
+                    onClick={() =>
+                      router.push("/student-webapp/assessment/result")
+                    }
                   >
                     Submit Test
                   </button>

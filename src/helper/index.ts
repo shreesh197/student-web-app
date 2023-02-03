@@ -62,4 +62,10 @@ export const getCorrectClassName = (key: string): string => {
 export const getBigScreen = (isMobile: any, isTab: any): boolean => {
   const isBigScreen: boolean = !isMobile || isTab;
   return isBigScreen;
-}
+};
+
+export const millisecondsToMinutesAndSeconds = (milliseconds) => {
+  var minutes = Math.floor(milliseconds / 60000);
+  let seconds = (milliseconds % 60000) / 1000;
+  return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+};
