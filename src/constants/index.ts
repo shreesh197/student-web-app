@@ -801,7 +801,9 @@ export const mcqResultColumns: Column[] = [
     label: "Score",
     minWidth: 100,
     // align: "right",
-    // format: (value: any) => `${value?.total_score} / ${value?.maximum_marks}`,
+    // format: (value: any) => {
+    //   // return()
+    // },
   },
   {
     id: "accuracy",
