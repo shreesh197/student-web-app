@@ -119,6 +119,30 @@ const GraduationCourse = [
 // };
 
 const AcademicDetailsView = () => {
+
+    const [isSubmit, setIsSubmit] = useState(false);
+    const [usn, setUsn] = useState("");
+    const [tenthYop, setTenthYop] = useState("");
+    const [twelthYop, setTwelthYop] = useState("");
+    const [tenthPercentage, setTenthPercentage] = useState(null);
+    const [twelthPercentage, setTwelthPercentage] = useState(null);
+    const [graduationCourse, setGraduationCourse] = useState("");
+    const [graduationBrnach, setGraduationBrnach] = useState("");
+    const [graduationYop, setGraduationYop] = useState("");
+    const [graduationCollege, setGraduationCollege] = useState("");
+    const [graduationPercentage, setGraduationPercentage] = useState(null);
+    const [graduationCgpa, setGraduationCgpa] = useState(null);
+    const [activeBacksLogs, setActiveBacksLogs] = useState(null);
+    const [postGraduationCourse, setPostGraduationCourse] = useState("");
+    const [postgraduationBrnach, setPostGraduationBrnach] = useState("");
+    const [postgraduationYop, setPostGraduationYop] = useState("");
+    const [postgraduationCollege, setPostGraduationCollege] = useState("");
+    const [postgraduationPercentage, setPostGraduationPercentage] = useState(null);
+    const [postgraduationCgpa, setPostGraduationCgpa] = useState(null);
+    const [postactiveBacksLogs, setPostActiveBacksLogs] = useState(null);
+    const [gapInAcademics, setGapInAcademics] = useState(null);
+
+
   // ** Hooks
   const {
     control,
@@ -150,14 +174,17 @@ const AcademicDetailsView = () => {
                     <TextField
                       value={value}
                       label="USN ID (College Roll No.)"
-                      onChange={onChange}
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setUsn(value);
+                      }}
                       placeholder="Leonard"
-                      error={Boolean(errors.usn)}
+                      error={Boolean(!usn && isSubmit)}
                       aria-describedby="validation-academic-usn"
                     />
                   )}
                 />
-                {errors.usn && (
+                {!usn && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-tpo-usn"
@@ -185,8 +212,11 @@ const AcademicDetailsView = () => {
                     <Select
                       value={value}
                       label="10th Year of Passout"
-                      onChange={onChange}
-                      error={Boolean(errors.tenthyop)}
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setTenthYop(value);
+                      }}
+                      error={Boolean(!tenthYop && isSubmit)}
                       labelId="validation-academic-tenthyop"
                       aria-describedby="validation-academic-tenthyop"
                     >
@@ -205,7 +235,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {errors.tenthyop && (
+                {!tenthYop && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-tenthyop"
@@ -229,7 +259,7 @@ const AcademicDetailsView = () => {
                       label="10th %"
                       onChange={onChange}
                       placeholder=""
-                      error={Boolean(errors.twelthpercentage)}
+                      error={Boolean(errors.tenthpercentage)}
                       aria-describedby="validation-academic-tenthpercentage"
                     />
                   )}
@@ -291,8 +321,11 @@ const AcademicDetailsView = () => {
                     <Select
                       value={value}
                       label="12th / PUC / Intermediate/Diploma passout"
-                      onChange={onChange}
-                      error={Boolean(errors.twelthyop)}
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setTwelthYop(value);
+                      }}
+                      error={Boolean(!twelthYop && isSubmit)}
                       labelId="validation-academic-twelthyop"
                       aria-describedby="validation-academic-twelthyop"
                     >
@@ -311,7 +344,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {errors.twelthyop && (
+                {!twelthYop && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-twelthyop"
@@ -333,14 +366,17 @@ const AcademicDetailsView = () => {
                       type="number"
                       value={value}
                       label="12th / PUC / Intermediate/Diploma %"
-                      onChange={onChange}
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setTwelthPercentage(value);
+                      }}
                       placeholder="Leonard"
-                      error={Boolean(errors.twelthpercentage)}
+                      error={Boolean(!twelthPercentage && isSubmit)}
                       aria-describedby="validation-academic-twelthpercentage"
                     />
                   )}
                 />
-                {errors.twelthpercentage && (
+                {!twelthPercentage && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-tpo-twelthpercentage"
@@ -368,8 +404,11 @@ const AcademicDetailsView = () => {
                     <Select
                       value={value}
                       label="Graduation Course"
-                      onChange={onChange}
-                      error={Boolean(errors.graduationcourse)}
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setGraduationCourse(value);
+                      }}
+                      error={Boolean(!graduationCourse && isSubmit)}
                       labelId="validation-academic-graduationcourse"
                       aria-describedby="validation-academic-graduationcourse"
                     >
@@ -379,7 +418,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {errors.graduationcourse && (
+                {!graduationCourse && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-graduationcourse"
@@ -407,8 +446,11 @@ const AcademicDetailsView = () => {
                     <Select
                       value={value}
                       label="Graduation - Branch / Stream"
-                      onChange={onChange}
-                      error={Boolean(errors.graduationbranch)}
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setGraduationBrnach(value);
+                      }}
+                      error={Boolean(!graduationCourse && isSubmit)}
                       labelId="validation-academic-graduationbranch"
                       aria-describedby="validation-academic-graduationbranch"
                     >
@@ -418,7 +460,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {errors.graduationbranch && (
+                {!graduationCourse && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-graduationbranch"
@@ -446,8 +488,11 @@ const AcademicDetailsView = () => {
                     <Select
                       value={value}
                       label="Graduation Year of Passout"
-                      onChange={onChange}
-                      error={Boolean(errors.graduationyop)}
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setGraduationYop(value);
+                      }}
+                      error={Boolean(!graduationYop && isSubmit)}
                       labelId="validation-academic-graduationyop"
                       aria-describedby="validation-academic-graduationyop"
                     >
@@ -457,7 +502,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {errors.graduationyop && (
+                {!graduationYop && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-graduationyop"
@@ -479,14 +524,17 @@ const AcademicDetailsView = () => {
                       type="number"
                       value={value}
                       label="Graduation Percentage (% equal to CGPA)"
-                      onChange={onChange}
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setGraduationPercentage(value);
+                      }}
                       placeholder="Leonard"
-                      error={Boolean(errors.graduationpercentage)}
+                      error={Boolean(!graduationPercentage && isSubmit)}
                       aria-describedby="validation-academic-graduationpercentage"
                     />
                   )}
                 />
-                {errors.graduationpercentage && (
+                {!graduationPercentage && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-graduationpercentage"
@@ -508,14 +556,17 @@ const AcademicDetailsView = () => {
                       type="number"
                       value={value}
                       label="Graduation (CGPA only)"
-                      onChange={onChange}
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setGraduationCgpa(value);
+                      }}
                       placeholder="Leonard"
-                      error={Boolean(errors.graduationpercgpa)}
+                      error={Boolean(!graduationCgpa && isSubmit)}
                       aria-describedby="validation-academic-graduationpercgpa"
                     />
                   )}
                 />
-                {errors.graduationpercgpa && (
+                {!graduationCgpa && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-graduationpercgpa"
@@ -530,7 +581,7 @@ const AcademicDetailsView = () => {
               <FormControl fullWidth>
                 <InputLabel
                   id="validation-academic-activebacklogs"
-                  error={Boolean(errors.activebacklogs)}
+                  error={Boolean(!activeBacksLogs && isSubmit)}
                   htmlFor="validation-academic-activebacklogs"
                 >
                   Any Active Backlog in Graduation
@@ -543,8 +594,11 @@ const AcademicDetailsView = () => {
                     <Select
                       value={value}
                       label="Any Active Backlog in Graduation"
-                      onChange={onChange}
-                      error={Boolean(errors.activebacklogs)}
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setActiveBacksLogs(value);
+                      }}
+                      error={Boolean(!activeBacksLogs && isSubmit)}
                       labelId="validation-academic-activebacklogs"
                       aria-describedby="validation-academic-activebacklogs"
                     >
@@ -554,7 +608,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {errors.activebacklogs && (
+                {!activeBacksLogs && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-activebacklogs"
@@ -569,7 +623,7 @@ const AcademicDetailsView = () => {
               <FormControl fullWidth>
                 <InputLabel
                   id="validation-academic-graduationcollegename"
-                  error={Boolean(errors.graduationcollegename)}
+                  error={Boolean(!graduationCollege && isSubmit)}
                   htmlFor="validation-academic-graduationcollegename"
                 >
                   Graduation College Name
@@ -582,8 +636,11 @@ const AcademicDetailsView = () => {
                     <Select
                       value={value}
                       label="Graduation College Name"
-                      onChange={onChange}
-                      error={Boolean(errors.graduationcollegename)}
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setGraduationCollege(value);
+                      }}
+                      error={Boolean(!graduationCollege && isSubmit)}
                       labelId="validation-academic-graduationcollegename"
                       aria-describedby="validation-academic-graduationcollegename"
                     >
@@ -593,7 +650,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {errors.graduationcollegename && (
+                {!graduationCollege && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-graduationcollegename"
@@ -608,7 +665,7 @@ const AcademicDetailsView = () => {
               <FormControl fullWidth>
                 <InputLabel
                   id="validation-academic-postgraduationcourse"
-                  error={Boolean(errors.postgraduationcourse)}
+                  error={Boolean(!postgraduationPercentage && isSubmit)}
                   htmlFor="validation-academic-postgraduationcourse"
                 >
                   Post-Graduation Course
@@ -621,8 +678,11 @@ const AcademicDetailsView = () => {
                     <Select
                       value={value}
                       label="Post-Graduation Course"
-                      onChange={onChange}
-                      error={Boolean(errors.postgraduationcourse)}
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setPostGraduationCourse(value);
+                      }}
+                      error={Boolean(!postgraduationPercentage && isSubmit)}
                       labelId="validation-academic-postgraduationcourse"
                       aria-describedby="validation-academic-postgraduationcourse"
                     >
@@ -632,7 +692,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {errors.postgraduationcourse && (
+                {!postgraduationPercentage && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-postgraduationcourse"
@@ -660,8 +720,11 @@ const AcademicDetailsView = () => {
                     <Select
                       value={value}
                       label="Post-Graduation - Branch / Stream"
-                      onChange={onChange}
-                      error={Boolean(errors.postgraduationbranch)}
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setPostGraduationBrnach(value);
+                      }}
+                      error={Boolean(!postgraduationBrnach && isSubmit)}
                       labelId="validation-academic-postgraduationbranch"
                       aria-describedby="validation-academic-postgraduationbranch"
                     >
@@ -671,7 +734,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {errors.graduationbranch && (
+                {!postgraduationBrnach && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-postgraduationbranch"
@@ -699,8 +762,11 @@ const AcademicDetailsView = () => {
                     <Select
                       value={value}
                       label="Post-Graduation Year of Passout"
-                      onChange={onChange}
-                      error={Boolean(errors.postgraduationyop)}
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setPostGraduationYop(value);
+                      }}
+                      error={Boolean(!postgraduationYop && isSubmit)}
                       labelId="validation-academic-postgraduationyop"
                       aria-describedby="validation-academic-postgraduationyop"
                     >
@@ -710,7 +776,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {errors.postgraduationyop && (
+                {!postgraduationYop && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-postgraduationyop"
@@ -732,14 +798,17 @@ const AcademicDetailsView = () => {
                       type="number"
                       value={value}
                       label="Post-Graduation  (% equal to CGPA)"
-                      onChange={onChange}
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setPostGraduationPercentage(value);
+                      }}
                       placeholder="Leonard"
-                      error={Boolean(errors.postgraduationpercentage)}
+                      error={Boolean(!postgraduationPercentage && isSubmit)}
                       aria-describedby="validation-academic-postgraduationpercentage"
                     />
                   )}
                 />
-                {errors.postgraduationpercentage && (
+                {!postgraduationPercentage && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-postgraduationpercentage"
@@ -761,7 +830,10 @@ const AcademicDetailsView = () => {
                       type="number"
                       value={value}
                       label="Post-Graduation (CGPA only)"
-                      onChange={onChange}
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setPostGraduationCgpa(value);
+                      }}
                       placeholder="Leonard"
                       error={Boolean(errors.postgraduationpercgpa)}
                       aria-describedby="validation-academic-postgraduationpercgpa"
@@ -796,8 +868,11 @@ const AcademicDetailsView = () => {
                     <Select
                       value={value}
                       label="Any Active Backlog in Post-Graduation"
-                      onChange={onChange}
-                      error={Boolean(errors.postgraduationactivebacklogs)}
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setPostActiveBacksLogs(value);
+                      }}
+                      error={Boolean(!postactiveBacksLogs && isSubmit)}
                       labelId="validation-academic-postgraduationactivebacklogs"
                       aria-describedby="validation-academic-postgraduationactivebacklogs"
                     >
@@ -807,7 +882,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {errors.postgraduationactivebacklogs && (
+                {!postactiveBacksLogs && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-postgraduationactivebacklogs"
@@ -835,8 +910,11 @@ const AcademicDetailsView = () => {
                     <Select
                       value={value}
                       label="Post-Graduation College Name"
-                      onChange={onChange}
-                      error={Boolean(errors.postgraduationcollegename)}
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setPostGraduationCollege(value);
+                      }}
+                      error={Boolean(!postgraduationCollege && isSubmit)}
                       labelId="validation-academic-postgraduationcollegename"
                       aria-describedby="validation-academic-postgraduationcollegename"
                     >
@@ -846,7 +924,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {errors.postgraduationcollegename && (
+                {!postgraduationCollege && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-postgraduationcollegename"
@@ -864,7 +942,7 @@ const AcademicDetailsView = () => {
                   error={Boolean(errors.gapinacademics)}
                   htmlFor="validation-academic-gapinacademics"
                 >
-                  Post-Graduation College Name
+                  Gap in Academics, if any, (Nos of years)
                 </InputLabel>
                 <Controller
                   name="gapinacademics"
@@ -873,9 +951,12 @@ const AcademicDetailsView = () => {
                   render={({ field: { value, onChange } }) => (
                     <Select
                       value={value}
-                      label="Post-Graduation College Name"
-                      onChange={onChange}
-                      error={Boolean(errors.gapinacademics)}
+                      label="Gap in Academics, if any, (Nos of years)"
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setGapInAcademics(value);
+                      }}
+                      error={Boolean(!gapInAcademics && isSubmit)}
                       labelId="validation-academic-gapinacademics"
                       aria-describedby="validation-academic-gapinacademics"
                     >
@@ -885,7 +966,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {errors.gapinacademics && (
+                {!gapInAcademics && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-gapinacademics"
@@ -902,6 +983,7 @@ const AcademicDetailsView = () => {
                 type="submit"
                 variant="contained"
                 style={{ marginTop: 30 }}
+                onClick={() => setIsSubmit(true)}
               >
                 Submit
               </Button>

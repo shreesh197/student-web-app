@@ -25,10 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/student-webapp/profile": [
+    "/student-webapp/profile/view": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/student-webapp/profile.js"
+      "static/chunks/pages/student-webapp/profile/view.js"
     ]
   },
   "ampFirstPages": []

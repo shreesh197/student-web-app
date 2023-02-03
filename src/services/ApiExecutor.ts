@@ -78,3 +78,13 @@ export const postConsentDetails = (data: any) => {
       return result.data;
     });
 };
+
+export const getBasicDetails = () => {
+  return Api()
+    .get(
+      "/profile-service/api/v1/users/3f7d87e0-8242-11ed-acfb-4e8efacd60ba/consent_details",
+    )
+    .then((result: any) => {
+      return result.data;
+    });
+};

@@ -63,11 +63,16 @@ const ExperienceYears = [
   "5 Years",
 ];
 
-const YearsFunction = (item: string) => {
-  return <MenuItem value={item}>{item}</MenuItem>;
-};
+// const YearsFunction = (item: string) => {
+//   return <MenuItem value={item}>{item}</MenuItem>;
+// };
 
 const ExperienceDetailsView = () => {
+
+    const [isSubmit, setIsSubmit] = useState(false);
+    const [working, setWorking] = useState("");
+    const [YOE, setYOE] = useState("");
+
   // ** Hooks
   const {
     control,
@@ -93,7 +98,7 @@ const ExperienceDetailsView = () => {
               <FormControl fullWidth>
                 <InputLabel
                   id="validation-experience-working"
-                  error={Boolean(errors.working)}
+                  error={Boolean(!working && isSubmit)}
                   htmlFor="validation-experience-working"
                 >
                   Are you Working professional?
@@ -106,8 +111,11 @@ const ExperienceDetailsView = () => {
                     <Select
                       value={value}
                       label="Are you Working professional?"
-                      onChange={onChange}
-                      error={Boolean(errors.working)}
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setWorking(value);
+                      }}
+                      error={Boolean(!working && isSubmit)}
                       labelId="validation-experience-working"
                       aria-describedby="validation-experience-working"
                     >
@@ -116,7 +124,7 @@ const ExperienceDetailsView = () => {
                     </Select>
                   )}
                 />
-                {errors.working && (
+                {!working && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-experience-working"
@@ -130,7 +138,7 @@ const ExperienceDetailsView = () => {
               <FormControl fullWidth>
                 <InputLabel
                   id="validation-experience-totalyearsofexperience"
-                  error={Boolean(errors.working)}
+                  error={Boolean(!YOE && isSubmit)}
                   htmlFor="validation-experience-totalyearsofexperience"
                 >
                   Total work experience
@@ -143,8 +151,11 @@ const ExperienceDetailsView = () => {
                     <Select
                       value={value}
                       label="Total work experience"
-                      onChange={onChange}
-                      error={Boolean(errors.totalyearsofexperience)}
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setYOE(value);
+                      }}
+                      error={Boolean(!YOE && isSubmit)}
                       labelId="validation-experience-totalyearsofexperience"
                       aria-describedby="validation-experience-totalyearsofexperience"
                     >
@@ -163,7 +174,7 @@ const ExperienceDetailsView = () => {
                     </Select>
                   )}
                 />
-                {errors.totalyearsofexperience && (
+                {!YOE && isSubmit && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-experience-totalyearsofexperience"
@@ -180,6 +191,7 @@ const ExperienceDetailsView = () => {
                 type="submit"
                 variant="contained"
                 style={{ marginTop: 30 }}
+                onClick={() => setIsSubmit(true)}
               >
                 Submit
               </Button>
