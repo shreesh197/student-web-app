@@ -58,6 +58,13 @@ const CustomInput = forwardRef(({ ...props }: CustomInputProps, ref) => {
 });
 
 const CommunincationDetailsView = () => {
+
+    const [isSubmit, setIsSubmit] = useState(false);
+    const [email, setEmail] = useState("");
+    const [pnumber, setPnumber] = useState(null);
+    const [anumber, setAnumber] = useState(null);
+    const [wnumber, setWnumber] = useState(null);
+
  
   // ** Hooks
   const {
@@ -76,139 +83,152 @@ const CommunincationDetailsView = () => {
         boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
       }}
     >
-        {/* <CardHeader title="Basic" /> */}
-        <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth>
-                  <Controller
-                    name="email"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field: { value, onChange } }) => (
-                      <TextField
-                        type="email"
-                        value={value}
-                        label="Email Id (gmail by default)"
-                        onChange={onChange}
-                        error={Boolean(errors.email)}
-                        placeholder="carterleonard@gmail.com"
-                        aria-describedby="validation-communication-email"
-                      />
-                    )}
-                  />
-                  {errors.email && (
-                    <FormHelperText
-                      sx={{ color: "error.main" }}
-                      id="validation-communication-email"
-                    >
-                      This field is required
-                    </FormHelperText>
+      {/* <CardHeader title="Basic" /> */}
+      <CardContent>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <Controller
+                  name="email"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <TextField
+                      type="email"
+                      value={value}
+                      label="Email Id (gmail by default)"
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setEmail(value);
+                      }}
+                      error={Boolean(!email && isSubmit)}
+                      placeholder="carterleonard@gmail.com"
+                      aria-describedby="validation-communication-email"
+                    />
                   )}
-                </FormControl>
-              </Grid>
-
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth>
-                  <Controller
-                    name="primarycontactnumber"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field: { value, onChange } }) => (
-                      <TextField
-                        type="tel"
-                        value={value}
-                        label="Primary Contact Number"
-                        onChange={onChange}
-                        error={Boolean(errors.primarycontactnumber)}
-                        placeholder=""
-                        aria-describedby="validation-communication-primarycontactnumber"
-                      />
-                    )}
-                  />
-                  {errors.primarycontactnumber && (
-                    <FormHelperText
-                      sx={{ color: "error.main" }}
-                      id="validation-communication-primarycontactnumber"
-                    >
-                      This field is required
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </Grid>
-
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth>
-                  <Controller
-                    name="alternatecontactnumber"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field: { value, onChange } }) => (
-                      <TextField
-                        type="tel"
-                        value={value}
-                        label="Alternate Contact Number"
-                        onChange={onChange}
-                        error={Boolean(errors.primarycontactnumber)}
-                        placeholder=""
-                        aria-describedby="validation-communication-alternatecontactnumber"
-                      />
-                    )}
-                  />
-                  {errors.alternatecontactnumber && (
-                    <FormHelperText
-                      sx={{ color: "error.main" }}
-                      id="validation-communication-alternatecontactnumber"
-                    >
-                      This field is required
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </Grid>
-
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth>
-                  <Controller
-                    name="whatsappcontactnumber"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field: { value, onChange } }) => (
-                      <TextField
-                        type="tel"
-                        value={value}
-                        label="WhatsApp Contact Number  ( Father/mother/sister/brother)"
-                        onChange={onChange}
-                        error={Boolean(errors.whatsappcontactnumber)}
-                        placeholder=""
-                        aria-describedby="validation-communication-whatsappcontactnumber"
-                      />
-                    )}
-                  />
-                  {errors.whatsappcontactnumber && (
-                    <FormHelperText
-                      sx={{ color: "error.main" }}
-                      id="validation-communication-whatsappcontactnumber"
-                    >
-                      This field is required
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </Grid>
-
-              <Grid item xs={12}>
-                <Button
-                  size="large"
-                  type="submit"
-                  variant="contained"
-                  style={{ marginTop: 30 }}
-                >
-                  Submit
-                </Button>
-              </Grid>
+                />
+                {!email && isSubmit && (
+                  <FormHelperText
+                    sx={{ color: "error.main" }}
+                    id="validation-communication-email"
+                  >
+                    This field is required
+                  </FormHelperText>
+                )}
+              </FormControl>
             </Grid>
-          </form>
-        </CardContent>
+
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <Controller
+                  name="primarycontactnumber"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <TextField
+                      type="tel"
+                      value={value}
+                      label="Primary Contact Number"
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setPnumber(value);
+                      }}
+                      error={Boolean(!pnumber && isSubmit)}
+                      placeholder=""
+                      aria-describedby="validation-communication-primarycontactnumber"
+                    />
+                  )}
+                />
+                {!pnumber && isSubmit && (
+                  <FormHelperText
+                    sx={{ color: "error.main" }}
+                    id="validation-communication-primarycontactnumber"
+                  >
+                    This field is required
+                  </FormHelperText>
+                )}
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <Controller
+                  name="alternatecontactnumber"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <TextField
+                      type="tel"
+                      value={value}
+                      label="Alternate Contact Number"
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setAnumber(value);
+                      }}
+                      error={Boolean(!anumber && isSubmit)}
+                      placeholder=""
+                      aria-describedby="validation-communication-alternatecontactnumber"
+                    />
+                  )}
+                />
+                {!anumber && isSubmit && (
+                  <FormHelperText
+                    sx={{ color: "error.main" }}
+                    id="validation-communication-alternatecontactnumber"
+                  >
+                    This field is required
+                  </FormHelperText>
+                )}
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <Controller
+                  name="whatsappcontactnumber"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { value, onChange } }) => (
+                    <TextField
+                      type="tel"
+                      value={value}
+                      label="WhatsApp Contact Number  ( Father/mother/sister/brother)"
+                      onChange={(value: any) => {
+                        onChange(value);
+                        setWnumber(value);
+                      }}
+                      error={Boolean(!wnumber && isSubmit)}
+                      placeholder=""
+                      aria-describedby="validation-communication-whatsappcontactnumber"
+                    />
+                  )}
+                />
+                {!wnumber && isSubmit && (
+                  <FormHelperText
+                    sx={{ color: "error.main" }}
+                    id="validation-communication-whatsappcontactnumber"
+                  >
+                    This field is required
+                  </FormHelperText>
+                )}
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Button
+                size="large"
+                type="submit"
+                variant="contained"
+                style={{ marginTop: 30 }}
+                onClick={() => setIsSubmit(true)}
+              >
+                Submit
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
+      </CardContent>
     </Card>
   );
 };

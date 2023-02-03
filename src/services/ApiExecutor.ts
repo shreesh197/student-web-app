@@ -1,6 +1,7 @@
 import { Api, PostMethod, PutMethod } from "app-repo-common-pkg";
+import NgrokApi from "./NgrokApoConfig";
 
-const userId = "3f7d87e0-8242-11ed-acfb-4e8efacd60ba";
+const userId = "0b2efe86-8ced-11ed-9090-3af9d3c3fec6";
 
 export const postLoginData = (data: any) => {
   console.log(data);
@@ -73,6 +74,16 @@ export const postConsentDetails = (data: any) => {
     .put(
       "/profile-service/api/v1/users/3f7d87e0-8242-11ed-acfb-4e8efacd60ba/consent_details",
       data
+    )
+    .then((result: any) => {
+      return result.data;
+    });
+};
+
+export const getBasicDetails = () => {
+  return NgrokApi()
+    .get(
+      `https://9cbf-122-171-19-97.in.ngrok.io/profile-service/api/v1/users/${userId}/basic_details`,
     )
     .then((result: any) => {
       return result.data;
