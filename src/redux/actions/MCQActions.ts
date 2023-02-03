@@ -4,9 +4,3 @@ export const saveQuestions = (questions: any) => {
     payload: questions,
   };
 };
-
-export const getQuestions = () => {
-  return {
-    type: "GET_MCQ",
-  };
-};

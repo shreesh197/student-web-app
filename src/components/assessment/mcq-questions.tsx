@@ -1,12 +1,13 @@
 import { DeviceContext } from "app-repo-common-pkg";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { mcqCollection, questionLegends } from "../../constants";
-import { getQuestions, saveQuestions } from "../../redux/actions";
+import { saveQuestions } from "../../redux/actions";
 import Countdown from "react-countdown";
 import { Drawer } from "antd";
 import { BsQuestionSquareFill } from "react-icons/bs";
 import { useRouter } from "next/router";
+import { StoreState } from "../../redux/Types";
 
 const MCQ = () => {
   const [currentQuestionNumber, setCurrentQuestionNumber] = useState(1);
@@ -14,7 +15,7 @@ const MCQ = () => {
   const [mcqTest, setMcqTest] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [open, setOpen] = useState(false);
-
+  const storeMcq = useSelector((store: StoreState) => store.mcqQuestions);
   const dispatch = useDispatch();
   const router = useRouter();
   const { screenWidth, isMobile }: any = useContext(DeviceContext);
@@ -284,6 +285,8 @@ const MCQ = () => {
       </>
     );
   };
+
+  // console.log(`store ======> ${JSON.stringify(storeMcq)}`);
 
   return (
     <>

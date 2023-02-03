@@ -1,4 +1,7 @@
 /* ====== coding ======= */
+* {
+  font-family: "Poppins" sans-serif;
+}
 
 .editor-main-area,
 .compiler-btn-row {
@@ -189,6 +192,40 @@
   border-radius: 8px;
   /* background: #000;
   fill: #fff;  */
+}
+.css-18y4ikv-MuiTableCell-root,
+.css-1odu81b-MuiTableCell-root {
+  background: #3d3c3c !important;
+  color: #fff !important;
+}
+.css-18y4ikv-MuiTableCell-root {
+  font-size: 16px;
+}
+.css-1ex1afd-MuiTableCell-root,
+.css-18y4ikv-MuiTableCell-root {
+  border-right: 1px solid rgba(224, 224, 224, 1);
+}
+.table-cell-element {
+  font-weight: bold;
+  font-size: 16px;
+}
+.table-cell-element.first {
+  color: rgb(199, 47, 158);
+}
+.table-cell-element.second {
+  color: #a0a0a0 !important;
+}
+.mcq-result-table .ant-table-thead .ant-table-cell {
+  background: #3d3c3c !important;
+  color: #fff !important;
+  font-size: 16px;
+}
+.mcq-result-table .ant-table-tbody .ant-table-cell {
+  border: 1px solid rgba(224, 224, 224, 1);
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+}
+.mcq-result-table .ant-table-tbody {
+  border: 1px solid rgba(224, 224, 224, 1);
 }
 
 @media (max-width: 1330px) {
