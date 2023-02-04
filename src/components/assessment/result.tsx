@@ -7,7 +7,6 @@ import {
   getCapitalizedString,
   millisecondsToMinutesAndSeconds,
 } from "../../helper";
-// import { Bar } from "react-chartjs-2";
 import { Bar, Pie, G2 } from "@ant-design/plots";
 import { Card } from "@mui/material";
 
@@ -40,7 +39,7 @@ const AssessmentResult = () => {
     data,
     angleField: "value",
     colorField: "type",
-    radius: 0.75,
+    radius: 0.55,
     // legend: false,
     label: {
       type: "spider",
@@ -72,7 +71,7 @@ const AssessmentResult = () => {
           attrs: {
             x: 0,
             y: 25,
-            text: `${data.value}个 ${(data.percent * 100).toFixed(2)}%`,
+            text: `${data.value} (${(data.percent * 100).toFixed(1)}%)`,
             fill: "rgba(0, 0, 0, 0.65)",
             fontWeight: 700,
           },
@@ -129,7 +128,7 @@ const AssessmentResult = () => {
       title: "Time Spent",
       dataIndex: "time",
       key: "time",
-      render: (title: string, obj: any) => {
+      render: (title: string) => {
         return <>{customTableCellRenderer(title)}</>;
       },
     },
@@ -186,13 +185,16 @@ const AssessmentResult = () => {
         className="col-12"
         style={{ padding: isMobile ? "20px 40px" : "40px 70px" }}
       >
-        <Table
-          className="mcq-result-table"
-          columns={columns}
-          dataSource={tableRows}
-          bordered={true}
-          pagination={false}
-        />
+        <Card style={{ padding: 40, boxShadow: "0 0 3.5px" }}>
+          <Table
+            className="mcq-result-table"
+            columns={columns}
+            dataSource={tableRows}
+            bordered={true}
+            pagination={false}
+          />
+        </Card>
+
         {/* <TableStickyHeader
           columns={mcqResultColumns}
           rows={tableRows}
@@ -209,15 +211,15 @@ const AssessmentResult = () => {
         <div className="row">
           <div className={`col-${isMobile ? "12" : "6"}`}>
             {/* <div style={{ maxWidth: "650px" }}> */}
-            <Card style={{ padding: 40 }}>
+            <Card style={{ padding: 50, boxShadow: "0 0 3.5px" }}>
               <Bar {...config} maxBarWidth={30} height={300} />
             </Card>
             {/* </div> */}
           </div>
           <div className={`col-${isMobile ? "12 mt-5" : "6"}`}>
             {/* <div style={{ maxWidth: "650px" }}> */}
-            <Card style={{ padding: 40 }}>
-              <Pie {...pieConfig} />
+            <Card style={{ padding: "0px 0px", boxShadow: "0 0 3.5px" }}>
+              <Pie {...pieConfig} height={400} />
             </Card>
             {/* </div> */}
           </div>
@@ -225,6 +227,7 @@ const AssessmentResult = () => {
       </div>
     </div>
   );
+  
 };
 
 export default AssessmentResult;
