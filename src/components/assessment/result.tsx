@@ -227,6 +227,7 @@ const AssessmentResult = () => {
       </div>
     </div>
   );
+  
 };
 
 export default AssessmentResult;
