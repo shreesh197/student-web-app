@@ -692,7 +692,7 @@ export const mcqResultCollection = {
   total_correct: 6,
   total_unattempted: 2,
   total_incorrect: 5,
-  time_taken: 4800000,
+  time_taken: 3600000,
   total_time: 5400000,
 };
 

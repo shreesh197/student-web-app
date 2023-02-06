@@ -250,6 +250,9 @@ th:last-child {
 .mcq-result-table .ant-table-tbody {
   border: 1px solid rgba(224, 224, 224, 1);
 }
+.mcq-result-table .ant-table-cell.ant-table-cell-row-hover {
+  background: rgb(246, 240, 255) !important;
+}
 
 @media (max-width: 1330px) {
   .mcq-question-list-footer {
