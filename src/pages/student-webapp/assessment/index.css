@@ -210,13 +210,13 @@
   font-size: 16px;
 }
 .table-cell-element.first {
-  color: rgb(199, 47, 158);
+  color: rgb(28, 159, 41);
 }
 .table-cell-element.second {
   color: #a0a0a0 !important;
 }
 .mcq-result-table .ant-table-thead .ant-table-cell {
-  background: #3d3c3c !important;
+  background: #6f5c8e !important;
   color: #fff !important;
   font-size: 16px;
 }

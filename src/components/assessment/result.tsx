@@ -18,27 +18,58 @@ const AssessmentResult = () => {
 
   const data = [
     {
-      year: "1",
-      value: mcqResultCollection.total_correct,
-      type: "Total Correct",
+      year: "3",
+      value: mcqResultCollection.total_unattempted,
+      type: "Total Unattempted",
+      color: "rgb(170, 246, 170)",
     },
     {
       year: "2",
       value: mcqResultCollection.total_incorrect,
       type: "Total Incorrect",
+      color: "rgb(170, 246, 170)",
     },
     {
-      year: "3",
-      value: mcqResultCollection.total_unattempted,
-      type: "Total Unattempted",
+      year: "1",
+      value: mcqResultCollection.total_correct,
+      type: "Total Correct",
+      color: "rgb(170, 246, 170)",
     },
   ];
+
+  const pieColorDecider = (type: string) => {
+    let color: string = "";
+    if (type.includes("Correct")) {
+      color = "rgb(170, 246, 170)";
+    }
+    if (type.includes("Incorrect")) {
+      color = "rgb(252, 132, 160)";
+    }
+    if (type.includes("Unattempted")) {
+      color = "rgb(201, 213, 211)";
+    }
+    return color;
+  };
+  const pieColorDecider1 = (type: string) => {
+    let color: string = "";
+    if (type === "Total Correct") {
+      color = "rgb(201, 213, 211)";
+    }
+    if (type === "Total Incorrect") {
+      color = "rgb(252, 132, 160)";
+    }
+    if (type === "Total Unattempted") {
+      color = "rgb(170, 246, 170) ";
+    }
+    return color;
+  };
 
   const cfg = {
     appendPadding: 10,
     data,
     angleField: "value",
     colorField: "type",
+    color: data.map((e) => pieColorDecider1(e.type)),
     radius: 0.55,
     // legend: false,
     label: {
@@ -54,7 +85,7 @@ const AssessmentResult = () => {
             width: 40,
             height: 50,
             r: 5,
-            fill: mappingData.color,
+            fill: pieColorDecider(data.type),
           },
         });
         group.addShape({
@@ -63,7 +94,7 @@ const AssessmentResult = () => {
             x: 10,
             y: 8,
             text: `${data.type}`,
-            fill: mappingData.color,
+            fill: "rgba(0, 0, 0, 0.65)",
           },
         });
         group.addShape({
@@ -92,6 +123,7 @@ const AssessmentResult = () => {
 
   const config = {
     data: data.reverse(),
+    color: data.map((e) => pieColorDecider(e.type)),
     isStack: true,
     xField: "value",
     yField: "year",
@@ -227,7 +259,6 @@ const AssessmentResult = () => {
       </div>
     </div>
   );
-  
 };
 
 export default AssessmentResult;
