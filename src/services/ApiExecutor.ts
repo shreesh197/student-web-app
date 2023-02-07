@@ -83,9 +83,28 @@ export const postConsentDetails = (data: any) => {
 export const getBasicDetails = () => {
   return NgrokApi()
     .get(
-      `https://9cbf-122-171-19-97.in.ngrok.io/profile-service/api/v1/users/${userId}/basic_details`,
+      `https://87a9-103-179-108-118.in.ngrok.io/profile-service/api/v1/users/${userId}/basic_details`,
     )
     .then((result: any) => {
       return result.data;
     });
 };
+
+export const updateBasicDetails = async (data:any) => {
+  const result_1 = await NgrokApi()
+    .patch(
+      `https://87a9-103-179-108-118.in.ngrok.io/profile-service/api/v1/users/${userId}/basic_details`, data
+    );
+  return result_1.data;
+};
+
+// export const postExperienceDetails = (data: any) => {
+//   return Api()
+//     .put(
+//       "/profile-service/api/v1/users/3f7d87e0-8242-11ed-acfb-4e8efacd60ba/experience_details",
+//       data
+//     )
+//     .then((result: any) => {
+//       return result.data;
+//     });
+// };

@@ -39,7 +39,12 @@ import Icon from "../../common/ui-library/app-repository-admin-panel/src/@core/c
 // ** Types
 import { DateType } from "../../common/ui-library/app-repository-admin-panel/src/types/forms/reactDatepickerTypes";
 import DatePickerWrapper from "../../common/ui-library/app-repository-admin-panel/src/@core/styles/libs/react-datepicker";
-import { getBasicDetails } from "../../services/ApiExecutor";
+import { getBasicDetails, updateBasicDetails } from "../../services/ApiExecutor";
+import {
+  BasicDetailsInterface,
+  formBtnColors,
+  initBasicDetails,
+} from "../../helper/Profile";
 
 interface State {
   password: string;
@@ -78,19 +83,17 @@ const CustomInput = forwardRef(({ ...props }: CustomInputProps, ref) => {
 const BasicDetailsView = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [isCancel, setIsCancel] = useState(false);
+  const [isChecking, setIsChecking] = useState(false);
 
-  // ** States
-  // const [state, setState] = useState<State>({
-  //   password: "",
-  //   showPassword: false,
-  // });
-
+  const [basicDetails, setBasicDetails] = useState(null);
   const [fName, setFName] = useState("");
   const [lName, setLName] = useState("");
-  const [kid, setKid] = useState("");
+  const [kid, setKid] = useState("123");
   const [eno, setEno] = useState(null);
-  const [Dob, setDob] = useState("");
-  const [disb, setDisb] = useState("");
+  const [Dob, setDob] = useState(new Date());
+  const [disb, setDisb] = useState(false);
+  const [gender, setGender] = useState("");
 
   // console.log(disb);
 
@@ -98,29 +101,65 @@ const BasicDetailsView = () => {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormInputs>({ defaultValues });
-
-  // const handleClickShowPassword = () => {
-  //   setState({ ...state, showPassword: !state.showPassword });
-  // };
-
-  // const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
-  //   event.preventDefault();
-  // };
-
-  // const onfnameChange = (e) => setFName(e.target.value);
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await getBasicDetails();
+      var basicDetailsObj = {
+        firstName: res.data.first_name,
+        lastName: res.data.last_name,
+        dob: res.data.last_dob,
+        disability: res.data.disability,
+        kid: "123",
+        eno: null,
+      };
       setFName(res.data.first_name);
-      console.log(res.data);
+      setLName(res.data.last_name);
+      setDob(res.data.last_dob);
+      setEno(res.data.eno);
+      setKid("123");
+      setBasicDetails(basicDetailsObj);
     };
     fetchData();
   }, []);
 
-  const onSubmit = () => console.log("Form Submitted");
+  // console.log(`first name ======> ${JSON.stringify(fName)}`);
+
+  const checkingEmpty = () => {
+    if (!fName || !lName || !disb || !gender || !eno) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const formReset = () => {
+    setFName(basicDetails.firstName);
+    setLName(basicDetails.lastName);
+    setDisb(basicDetails.disability);
+    setDob(basicDetails.dob);
+    setKid("123");
+  };
+
+  const onSubmit = async () => {
+    // if (isSubmit) {
+      console.log("Form Submitted");
+      var basicDetailsObj: BasicDetailsInterface = {
+        firstName: fName,
+        lastName: lName,
+        dob: "",
+        disability: false,
+        gender: "",
+      };
+      setBasicDetails(basicDetailsObj);
+      //pass basicDetailsObj to API
+      const res = await updateBasicDetails(basicDetailsObj);
+      console.log(res);
+    // }
+  };
 
   return (
     <Card
@@ -141,22 +180,23 @@ const BasicDetailsView = () => {
                     name="firstName"
                     control={control}
                     rules={{ required: true }}
-                    render={({ field: { value, onChange } }) => (
+                    render={({ field: { onChange } }) => (
                       <TextField
-                        disabled={isEdit === false ? true : false}
-                        value={value}
-                        label={isEdit === false ? fName : "First Name"}
-                        onChange={(value: any) => {
-                          onChange(value);
-                          setFName(value);
+                        disabled={!isEdit ? true : false}
+                        value={!isCancel ? fName : basicDetails.firstName}
+                        label="First Name"
+                        onChange={(e: any) => {
+                          // console.log(`first name ======> ${e?.target?.value}`);
+                          onChange(e?.target?.value);
+                          setFName(e?.target?.value);
                         }}
                         placeholder={fName}
-                        error={Boolean(errors.firstName && isSubmit)}
+                        error={Boolean(!fName && isChecking)}
                         aria-describedby="validation-basic-first-name"
                       />
                     )}
                   />
-                  {errors.firstName && isSubmit && (
+                  {!fName && isChecking && (
                     <FormHelperText
                       sx={{ color: "error.main" }}
                       id="validation-basic-first-name"
@@ -173,21 +213,22 @@ const BasicDetailsView = () => {
                     name="lastName"
                     control={control}
                     rules={{ required: true }}
-                    render={({ field: { value, onChange } }) => (
+                    render={({ field: { onChange } }) => (
                       <TextField
-                        value={value}
+                        disabled={!isEdit ? true : false}
+                        value={!isCancel ? lName : basicDetails.lastName}
                         label="Last Name"
-                        onChange={(value: any) => {
-                          onChange(value);
-                          setLName(value);
+                        onChange={(e: any) => {
+                          onChange(e?.target?.value);
+                          setLName(e?.target?.value);
                         }}
-                        placeholder="Carter"
-                        error={Boolean(!lName && isSubmit)}
+                        placeholder={lName}
+                        error={Boolean(!lName && isChecking)}
                         aria-describedby="validation-basic-last-name"
                       />
                     )}
                   />
-                  {!lName && isSubmit && (
+                  {!lName && isChecking && (
                     <FormHelperText
                       sx={{ color: "error.main" }}
                       id="validation-basic-last-name"
@@ -204,21 +245,23 @@ const BasicDetailsView = () => {
                     name="kodnestid"
                     control={control}
                     rules={{ required: true }}
-                    render={({ field: { value, onChange } }) => (
+                    render={({ field: { onChange } }) => (
                       <TextField
-                        value={value}
+                        disabled={!isEdit ? true : false}
+                        value={!isCancel ? kid : basicDetails.kid}
                         label="KodNest Id"
-                        onChange={(value: any) => {
-                          onChange(value);
-                          setKid(value);
+                        onChange={(e: any) => {
+                          // console.log(`first name ======> ${e?.target?.value}`);
+                          onChange(e?.target?.value);
+                          setKid(e?.target?.value);
                         }}
-                        error={Boolean(!kid && isSubmit)}
-                        placeholder=""
+                        error={Boolean(!kid && isChecking)}
+                        placeholder={kid}
                         aria-describedby="validation-basic-kodnestid"
                       />
                     )}
                   />
-                  {!kid && isSubmit && (
+                  {!kid && isChecking && (
                     <FormHelperText
                       sx={{ color: "error.main" }}
                       id="validation-basic-kodnestid"
@@ -235,22 +278,24 @@ const BasicDetailsView = () => {
                     name="emergencycontactnumnber"
                     control={control}
                     rules={{ required: true }}
-                    render={({ field: { value, onChange } }) => (
+                    render={({ field: { onChange } }) => (
                       <TextField
+                        disabled={!isEdit ? true : false}
                         type="tel"
-                        value={value}
+                        value={!isCancel ? eno : basicDetails.eno}
                         label="Emergency Contact Number  ( Father/mother/sister/brother)"
-                        onChange={(value: any) => {
-                          onChange(value);
-                          setEno(value);
+                        onChange={(e: any) => {
+                          // console.log(`first name ======> ${e?.target?.value}`);
+                          onChange(e?.target?.value);
+                          setEno(e?.target?.value);
                         }}
-                        error={Boolean(!eno && isSubmit)}
+                        error={Boolean(!eno && isChecking)}
                         placeholder=""
                         aria-describedby="validation-basic-emergencycontactnumnber"
                       />
                     )}
                   />
-                  {!eno && isSubmit && (
+                  {!eno && isChecking && (
                     <FormHelperText
                       sx={{ color: "error.main" }}
                       id="validation-basic-emergencycontactnumnber"
@@ -261,86 +306,36 @@ const BasicDetailsView = () => {
                 </FormControl>
               </Grid>
 
-              {/* <Grid item xs={12} sm={6}>
-                <FormControl fullWidth>
-                  <InputLabel
-                    htmlFor="validation-basic-password"
-                    error={Boolean(errors.password)}
-                  >
-                    Password
-                  </InputLabel>
-                  <Controller
-                    name="password"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field: { value, onChange } }) => (
-                      <OutlinedInput
-                        value={value}
-                        label="Password"
-                        onChange={onChange}
-                        id="validation-basic-password"
-                        error={Boolean(errors.password)}
-                        type={state.showPassword ? "text" : "password"}
-                        endAdornment={
-                          <InputAdornment position="end">
-                            <IconButton
-                              edge="end"
-                              onClick={handleClickShowPassword}
-                              onMouseDown={handleMouseDownPassword}
-                              aria-label="toggle password visibility"
-                            >
-                              <Icon
-                                icon={
-                                  state.showPassword
-                                    ? "mdi:eye-outline"
-                                    : "mdi:eye-off-outline"
-                                }
-                              />
-                            </IconButton>
-                          </InputAdornment>
-                        }
-                      />
-                    )}
-                  />
-                  {errors.password && (
-                    <FormHelperText
-                      sx={{ color: "error.main" }}
-                      id="validation-basic-password"
-                    >
-                      This field is required
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </Grid> */}
-
               <Grid item xs={12} sm={6}>
                 <Controller
                   name="dob"
                   control={control}
                   rules={{ required: true }}
-                  render={({ field: { value, onChange } }) => (
+                  render={({ field: { onChange } }) => (
                     <DatePicker
-                      selected={value}
+                      disabled={!isEdit ? true : false}
+                      selected={Dob}
                       showYearDropdown
                       showMonthDropdown
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setDob(value);
+                      onChange={(e: any) => {
+                        // console.log(`first name ======> ${e?.target?.value}`);
+                        onChange(e?.target?.value);
+                        setDob(e?.target?.value);
                       }}
                       placeholderText="MM/DD/YYYY"
                       customInput={
                         <CustomInput
-                          value={value}
+                          value={Dob}
                           onChange={onChange}
                           label="Date of Birth"
-                          error={Boolean(!Dob && isSubmit)}
+                          error={Boolean(!Dob && isChecking)}
                           aria-describedby="validation-basic-dob"
                         />
                       }
                     />
                   )}
                 />
-                {!Dob && isSubmit && (
+                {!Dob && isChecking && (
                   <FormHelperText
                     sx={{ mx: 3.5, color: "error.main" }}
                     id="validation-basic-dob"
@@ -418,8 +413,8 @@ const BasicDetailsView = () => {
                 </FormControl>
               </Grid> */}
 
-              <Grid item xs={12}>
-                <FormControl error={Boolean(errors.radio)}>
+              {/* <Grid item xs={12}>
+                <FormControl error={Boolean(errors.radio && isSubmit)}>
                   <FormLabel>Disability</FormLabel>
                   <Controller
                     name="radio"
@@ -436,12 +431,20 @@ const BasicDetailsView = () => {
                           value="yes"
                           label="Yes"
                           onClick={(e: any) => {
-                            setDisb(e.target.value);
+                            setDisb(true);
                           }}
-                          sx={errors.radio ? { color: "error.main" } : null}
+                          sx={
+                            errors.radio && isSubmit
+                              ? { color: "error.main" }
+                              : null
+                          }
                           control={
                             <Radio
-                              sx={errors.radio ? { color: "error.main" } : null}
+                              sx={
+                                errors.radio && isSubmit
+                                  ? { color: "error.main" }
+                                  : null
+                              }
                             />
                           }
                         />
@@ -449,29 +452,28 @@ const BasicDetailsView = () => {
                           value="no"
                           label="No"
                           onClick={(e: any) => {
-                            setDisb(e.target.value);
+                            setDisb(false);
                           }}
-                          sx={errors.radio ? { color: "error.main" } : null}
+                          sx={
+                            errors.radio && isSubmit
+                              ? { color: "error.main" }
+                              : null
+                          }
                           control={
                             <Radio
-                              sx={errors.radio ? { color: "error.main" } : null}
+                              sx={
+                                errors.radio && isSubmit
+                                  ? { color: "error.main" }
+                                  : null
+                              }
                             />
                           }
                         />
-                        {/* <FormControlLabel
-                          value="other"
-                          label="Other"
-                          sx={errors.radio ? { color: "error.main" } : null}
-                          control={
-                            <Radio
-                              sx={errors.radio ? { color: "error.main" } : null}
-                            />
-                          }
-                        /> */}
+                
                       </RadioGroup>
                     )}
                   />
-                  {errors.radio && (
+                  {errors.radio && isSubmit && (
                     <FormHelperText
                       sx={{ color: "error.main" }}
                       id="validation-basic-radio"
@@ -480,7 +482,7 @@ const BasicDetailsView = () => {
                     </FormHelperText>
                   )}
                 </FormControl>
-              </Grid>
+              </Grid> */}
 
               {/* <Grid item xs={12}>
                 <FormControl>
@@ -522,24 +524,37 @@ const BasicDetailsView = () => {
                   variant="contained"
                   style={{ marginTop: 30 }}
                   onClick={() => {
-                    setIsEdit(true);
-
-                    {
-                      isEdit === true && setIsSubmit(true);
+                    if (!isEdit) {
+                      setIsEdit(true);
+                      setIsSubmit(false);
+                    } else if (!checkingEmpty()) {
+                      // setIsSubmit(true);
+                      // setIsEdit(true);
+                      setIsChecking(true);
+                      console.log("errors are not nill");
+                    } else {
+                      setIsSubmit(true);
+                      setIsEdit(false);
+                      // console.log("submitted");
+                      onSubmit();
                     }
+                    setIsCancel(false);
                   }}
                 >
-                  {isEdit === false ? "Edit" : "Submit"}
+                  {!isEdit ? "Edit" : "Submit"}
                 </Button>
-                {isEdit === true && (
+                {isEdit && (
                   <Button
                     className="ml-2"
                     size="large"
-                    type="submit"
+                    type="reset"
                     variant="contained"
                     style={{ marginTop: 30 }}
                     onClick={() => {
                       setIsEdit(false);
+                      setIsSubmit(false);
+                      setIsCancel(true);
+                      formReset();
                     }}
                   >
                     Cancel
