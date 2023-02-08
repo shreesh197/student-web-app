@@ -7,6 +7,7 @@ import {
   JSXElementConstructor,
   ReactElement,
   ReactFragment,
+  useEffect,
 } from "react";
 
 // ** MUI Imports
@@ -68,10 +69,14 @@ const ExperienceYears = [
 // };
 
 const ExperienceDetailsView = () => {
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [isCancel, setIsCancel] = useState(false);
+  const [isChecking, setIsChecking] = useState(false);
+  const [experienceDetails, setexperienceDetails] = useState(null);
 
-    const [isSubmit, setIsSubmit] = useState(false);
-    const [working, setWorking] = useState("");
-    const [YOE, setYOE] = useState("");
+  const [working, setWorking] = useState("");
+  const [YOE, setYOE] = useState("");
 
   // ** Hooks
   const {
@@ -80,7 +85,48 @@ const ExperienceDetailsView = () => {
     formState: { errors },
   } = useForm<FormInputs>({ defaultValues });
 
-  const onSubmit = () => toast.success("Form Submitted");
+  useEffect(() => {
+    const fetchData = async () => {
+      // const res = await getExperienceDetails();
+      var experienceDetailsObj = {
+        working: "yes",
+        YOE: "2 years",
+      };
+      setWorking(experienceDetailsObj.working);
+      setYOE(experienceDetailsObj.YOE);
+
+      setexperienceDetails(experienceDetailsObj);
+    };
+    fetchData();
+  }, []);
+
+  const checkingEmpty = () => {
+    if (!working || !YOE) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const formReset = () => {
+    setWorking("yes");
+    setYOE("2 years");
+  };
+
+  const onSubmit = async () => {
+    // if (isSubmit) {
+    console.log("Form Submitted");
+    var experienceDetailsObj = {
+      working: "Yes",
+      YOE: "2 years",
+    };
+    setexperienceDetails(experienceDetailsObj);
+    // const res = await updateExeperienceDetails(experienceDetailsObj);
+    // console.log(res);
+    // }
+  };
+
+  console.log(`outside =====> ${working}`);
 
   return (
     <Card
@@ -95,10 +141,10 @@ const ExperienceDetailsView = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
+              <FormControl fullWidth disabled={!isEdit ? true : false}>
                 <InputLabel
                   id="validation-experience-working"
-                  error={Boolean(!working && isSubmit)}
+                  error={Boolean(!working && isChecking)}
                   htmlFor="validation-experience-working"
                 >
                   Are you Working professional?
@@ -107,24 +153,30 @@ const ExperienceDetailsView = () => {
                   name="working"
                   control={control}
                   rules={{ required: true }}
-                  render={({ field: { value, onChange } }) => (
+                  render={({ field: { onChange } }) => (
                     <Select
-                      value={value}
+                      value={!isCancel ? working : experienceDetails?.working}
                       label="Are you Working professional?"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setWorking(value);
+                      onChange={(e: any) => {
+                        console.log(`are you working =====> ${working}`);
+                        onChange(e?.target?.value);
+                        setWorking(e?.target?.value);
                       }}
-                      error={Boolean(!working && isSubmit)}
+                      error={Boolean(!working && isChecking)}
                       labelId="validation-experience-working"
                       aria-describedby="validation-experience-working"
                     >
-                      <MenuItem value="yes">Yes</MenuItem>
-                      <MenuItem value="no">No</MenuItem>
+                      {["Yes", "No"].map((value: string, idx: number) => (
+                        <MenuItem key={idx} value={value.toLowerCase()}>
+                          {value}
+                        </MenuItem>
+                      ))}
+                      {/* <MenuItem value="yes">Yes</MenuItem>
+                      <MenuItem value="no">No</MenuItem> */}
                     </Select>
                   )}
                 />
-                {!working && isSubmit && (
+                {!working && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-experience-working"
@@ -135,10 +187,10 @@ const ExperienceDetailsView = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
+              <FormControl fullWidth disabled={!isEdit ? true : false}>
                 <InputLabel
                   id="validation-experience-totalyearsofexperience"
-                  error={Boolean(!YOE && isSubmit)}
+                  error={Boolean(!YOE && isChecking)}
                   htmlFor="validation-experience-totalyearsofexperience"
                 >
                   Total work experience
@@ -149,32 +201,25 @@ const ExperienceDetailsView = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <Select
-                      value={value}
+                      value={!isCancel ? YOE : experienceDetails.YOE}
                       label="Total work experience"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setYOE(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setYOE(e?.target?.value);
                       }}
-                      error={Boolean(!YOE && isSubmit)}
+                      error={Boolean(!YOE && isChecking)}
                       labelId="validation-experience-totalyearsofexperience"
                       aria-describedby="validation-experience-totalyearsofexperience"
                     >
-                      {/* <MenuItem value="0 months 0 years">
-                        0 Months 0 Years
-                      </MenuItem>
-                      <MenuItem value="6 months">6 Months</MenuItem>
-                      <MenuItem value="1 year">1 year</MenuItem>
-                      <MenuItem value="2 year">2 years</MenuItem>
-                      <MenuItem value="3 year">3 years</MenuItem>
-                      <MenuItem value="4 year">4 years</MenuItem>
-                      <MenuItem value="5 year">5 years</MenuItem> */}
-                      {ExperienceYears.map((item) => (
-                        <MenuItem value={item}>{item}</MenuItem>
+                      {ExperienceYears.map((item: string, idx: number) => (
+                        <MenuItem key={idx} value={item.toLowerCase()}>
+                          {item}
+                        </MenuItem>
                       ))}
                     </Select>
                   )}
                 />
-                {!YOE && isSubmit && (
+                {!YOE && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-experience-totalyearsofexperience"
@@ -191,10 +236,43 @@ const ExperienceDetailsView = () => {
                 type="submit"
                 variant="contained"
                 style={{ marginTop: 30 }}
-                onClick={() => setIsSubmit(true)}
+                onClick={() => {
+                  if (!isEdit) {
+                    setIsEdit(true);
+                    setIsSubmit(false);
+                  } else if (!checkingEmpty()) {
+                    // setIsSubmit(true);
+                    // setIsEdit(true);
+                    setIsChecking(true);
+                    console.log("errors are not nill");
+                  } else {
+                    setIsSubmit(true);
+                    setIsEdit(false);
+                    // console.log("submitted");
+                    onSubmit();
+                  }
+                  setIsCancel(false);
+                }}
               >
-                Submit
+                {!isEdit ? "Edit" : "Submit"}
               </Button>
+              {isEdit && (
+                <Button
+                  className="ml-2"
+                  size="large"
+                  type="reset"
+                  variant="contained"
+                  style={{ marginTop: 30 }}
+                  onClick={() => {
+                    setIsEdit(false);
+                    setIsSubmit(false);
+                    setIsCancel(true);
+                    formReset();
+                  }}
+                >
+                  Cancel
+                </Button>
+              )}
             </Grid>
           </Grid>
         </form>

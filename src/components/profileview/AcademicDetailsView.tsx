@@ -7,6 +7,7 @@ import {
   JSXElementConstructor,
   ReactElement,
   ReactFragment,
+  useEffect,
 } from "react";
 
 // ** MUI Imports
@@ -44,7 +45,6 @@ interface State {
 }
 
 interface FormInputs {
-  
   usn: string;
   tenthyop: string;
   twelthyop: string;
@@ -101,10 +101,9 @@ const TenthYearOfPassOut = [
   "2016",
   "2015",
   "others",
-  
 ];
 
-const GapInAcademic = Array.from("0123456789")
+const GapInAcademic = Array.from("0123456789");
 
 const GraduationCourse = [
   "Bachelor of Engineering/Technology (B.E/B.Tech)",
@@ -119,29 +118,33 @@ const GraduationCourse = [
 // };
 
 const AcademicDetailsView = () => {
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [isCancel, setIsCancel] = useState(false);
+  const [isChecking, setIsChecking] = useState(false);
+  const [academicDetails, setAcademicDetails] = useState(null);
 
-    const [isSubmit, setIsSubmit] = useState(false);
-    const [usn, setUsn] = useState("");
-    const [tenthYop, setTenthYop] = useState("");
-    const [twelthYop, setTwelthYop] = useState("");
-    const [tenthPercentage, setTenthPercentage] = useState(null);
-    const [twelthPercentage, setTwelthPercentage] = useState(null);
-    const [graduationCourse, setGraduationCourse] = useState("");
-    const [graduationBrnach, setGraduationBrnach] = useState("");
-    const [graduationYop, setGraduationYop] = useState("");
-    const [graduationCollege, setGraduationCollege] = useState("");
-    const [graduationPercentage, setGraduationPercentage] = useState(null);
-    const [graduationCgpa, setGraduationCgpa] = useState(null);
-    const [activeBacksLogs, setActiveBacksLogs] = useState(null);
-    const [postGraduationCourse, setPostGraduationCourse] = useState("");
-    const [postgraduationBrnach, setPostGraduationBrnach] = useState("");
-    const [postgraduationYop, setPostGraduationYop] = useState("");
-    const [postgraduationCollege, setPostGraduationCollege] = useState("");
-    const [postgraduationPercentage, setPostGraduationPercentage] = useState(null);
-    const [postgraduationCgpa, setPostGraduationCgpa] = useState(null);
-    const [postactiveBacksLogs, setPostActiveBacksLogs] = useState(null);
-    const [gapInAcademics, setGapInAcademics] = useState(null);
-
+  const [usn, setUsn] = useState("");
+  const [tenthYop, setTenthYop] = useState("");
+  const [twelthYop, setTwelthYop] = useState("");
+  const [tenthPercentage, setTenthPercentage] = useState(null);
+  const [twelthPercentage, setTwelthPercentage] = useState(null);
+  const [graduationCourse, setGraduationCourse] = useState("");
+  const [graduationBrnach, setGraduationBrnach] = useState("");
+  const [graduationYop, setGraduationYop] = useState("");
+  const [graduationCollege, setGraduationCollege] = useState("");
+  const [graduationPercentage, setGraduationPercentage] = useState(null);
+  const [graduationCgpa, setGraduationCgpa] = useState(null);
+  const [activeBacksLogs, setActiveBacksLogs] = useState(null);
+  const [postGraduationCourse, setPostGraduationCourse] = useState("");
+  const [postgraduationBrnach, setPostGraduationBrnach] = useState("");
+  const [postgraduationYop, setPostGraduationYop] = useState("");
+  const [postgraduationCollege, setPostGraduationCollege] = useState("");
+  const [postgraduationPercentage, setPostGraduationPercentage] =
+    useState(null);
+  const [postgraduationCgpa, setPostGraduationCgpa] = useState(null);
+  const [postactiveBacksLogs, setPostActiveBacksLogs] = useState(null);
+  const [gapInAcademics, setGapInAcademics] = useState(null);
 
   // ** Hooks
   const {
@@ -150,7 +153,85 @@ const AcademicDetailsView = () => {
     formState: { errors },
   } = useForm<FormInputs>({ defaultValues });
 
-  const onSubmit = () => toast.success("Form Submitted");
+  useEffect(() => {
+    const fetchData = async () => {
+      // const res = await getAcademicDetails();
+      var academicDetailsObj = {
+        usn: "234rtghnj",
+        tenthYop: "2012",
+        twelthYop: "2014",
+        tenthPercentage: 90,
+        twelthPercentage: 90,
+        graduationCourse: "B.E",
+        graduationBrnach: "Mechanical",
+        graduationCollege: "MSRIT",
+        graduationYop: "2018",
+        graduationPercentage: 90,
+        graduationCgpa: 9,
+        activeBacksLogs: 0,
+        postGraduationCourse: "N/A",
+        postgraduationBrnach: "N/A",
+        postgraduationCollege: "N/A",
+        postgraduationYop: "N/A",
+        postgraduationPercentage: 0,
+        postgraduationCgpa: 0,
+        postactiveBacksLogs: 0,
+        gapInAcademics: 0,
+      };
+      setUsn(academicDetailsObj.usn)
+      setTenthYop(academicDetailsObj.tenthYop)
+      setTwelthYop(academicDetailsObj.twelthYop)
+      setTenthPercentage(academicDetailsObj.tenthPercentage)
+      setTwelthPercentage(academicDetailsObj.twelthPercentage)
+      setGraduationCourse(academicDetailsObj.graduationCourse)
+      setGraduationBrnach(academicDetailsObj.graduationBrnach)
+      setGraduationCollege(academicDetailsObj.graduationCollege)
+      setAcademicDetails(academicDetailsObj)
+    };
+    fetchData();
+  }, []);
+
+  const checkingEmpty = () => {
+    if (!usn) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const formReset = () => {};
+
+  const onSubmit = async () => {
+    // if (isSubmit) {
+    console.log("Form Submitted");
+    var academicDetailsObj = {
+      usn: "",
+      tenthYop: "",
+      twelthYop: "",
+      tenthPercentage: null,
+      twelthPercentage: null,
+      graduationCourse: "",
+      graduationBrnach: "",
+      graduationCollege: "",
+      graduationYop: "",
+      graduationPercentage: null,
+      graduationCgpa: null,
+      activeBacksLogs: null,
+      postGraduationCourse: "",
+      postgraduationBrnach: "",
+      postgraduationCollege: "",
+      postgraduationYop: "",
+      postgraduationPercentage: null,
+      postgraduationCgpa: null,
+      postactiveBacksLogs: null,
+      gapInAcademics: null,
+    };
+
+    setAcademicDetails(academicDetailsObj);
+    // const res = await updateAcademicdetails(communicationDetailsObj);
+    // console.log(res);
+    // }
+  };
 
   return (
     <Card
@@ -170,21 +251,22 @@ const AcademicDetailsView = () => {
                   name="usn"
                   control={control}
                   rules={{ required: true }}
-                  render={({ field: { value, onChange } }) => (
+                  render={({ field: { onChange } }) => (
                     <TextField
-                      value={value}
+                      disabled={!isEdit ? true : false}
+                      value={usn}
                       label="USN ID (College Roll No.)"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setUsn(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setUsn(e?.target?.value);
                       }}
-                      placeholder="Leonard"
-                      error={Boolean(!usn && isSubmit)}
+                      placeholder="12f3gh"
+                      error={Boolean(!usn && isChecking)}
                       aria-describedby="validation-academic-usn"
                     />
                   )}
                 />
-                {!usn && isSubmit && (
+                {!usn && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-tpo-usn"
@@ -196,10 +278,10 @@ const AcademicDetailsView = () => {
             </Grid>
 
             <Grid item xs={12} sm={4}>
-              <FormControl fullWidth>
+              <FormControl fullWidth disabled={true}>
                 <InputLabel
                   id="validation-academic-tenthyop"
-                  error={Boolean(errors.tenthyop)}
+                  error={Boolean(tenthYop && isChecking)}
                   htmlFor="validation-academic-tenthyop"
                 >
                   10th Year of Passout
@@ -210,32 +292,23 @@ const AcademicDetailsView = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <Select
-                      value={value}
+                      value={tenthYop}
                       label="10th Year of Passout"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setTenthYop(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setTenthYop(e?.target?.value);
                       }}
-                      error={Boolean(!tenthYop && isSubmit)}
+                      error={Boolean(!tenthYop && isChecking)}
                       labelId="validation-academic-tenthyop"
                       aria-describedby="validation-academic-tenthyop"
                     >
-                      {/* <MenuItem value="0 months 0 years">
-                        0 Months 0 Years
-                      </MenuItem>
-                      <MenuItem value="6 months">6 Months</MenuItem>
-                      <MenuItem value="1 year">1 year</MenuItem>
-                      <MenuItem value="2 year">2 years</MenuItem>
-                      <MenuItem value="3 year">3 years</MenuItem>
-                      <MenuItem value="4 year">4 years</MenuItem>
-                      <MenuItem value="5 year">5 years</MenuItem> */}
                       {TenthYearOfPassOut.map((item) => (
                         <MenuItem value={item}>{item}</MenuItem>
                       ))}
                     </Select>
                   )}
                 />
-                {!tenthYop && isSubmit && (
+                {!tenthYop && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-tenthyop"
@@ -254,17 +327,21 @@ const AcademicDetailsView = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <TextField
+                      disabled={true}
                       type="number"
-                      value={value}
+                      value={tenthPercentage}
                       label="10th %"
-                      onChange={onChange}
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setTenthPercentage(e?.target?.value);
+                      }}
                       placeholder=""
-                      error={Boolean(errors.tenthpercentage)}
+                      error={Boolean(!tenthPercentage && isChecking)}
                       aria-describedby="validation-academic-tenthpercentage"
                     />
                   )}
                 />
-                {errors.tenthpercentage && (
+                {!tenthPercentage && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-tpo-tenthpercentage"
@@ -275,40 +352,11 @@ const AcademicDetailsView = () => {
               </FormControl>
             </Grid>
 
-            {/* <Grid item xs={12} sm={4}>
-              <FormControl fullWidth>
-                <Controller
-                  name="twelthpercentage"
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field: { value, onChange } }) => (
-                    <TextField
-                      type="number"
-                      value={value}
-                      label="12th / PUC / Intermediate/Diploma %"
-                      onChange={onChange}
-                      placeholder="Leonard"
-                      error={Boolean(errors.twelthpercentage)}
-                      aria-describedby="validation-academic-twelthpercentage"
-                    />
-                  )}
-                />
-                {errors.twelthpercentage && (
-                  <FormHelperText
-                    sx={{ color: "error.main" }}
-                    id="validation-tpo-twelthpercentage"
-                  >
-                    This field is required
-                  </FormHelperText>
-                )}
-              </FormControl>
-            </Grid> */}
-
             <Grid item xs={12} sm={4}>
-              <FormControl fullWidth>
+              <FormControl fullWidth disabled={true}>
                 <InputLabel
                   id="validation-academic-twelthyop"
-                  error={Boolean(errors.twelthyop)}
+                  error={Boolean(!twelthYop && isChecking)}
                   htmlFor="validation-academic-tenthyop"
                 >
                   12th / PUC / Intermediate/Diploma passout
@@ -319,32 +367,23 @@ const AcademicDetailsView = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <Select
-                      value={value}
+                      value={twelthYop}
                       label="12th / PUC / Intermediate/Diploma passout"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setTwelthYop(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setTwelthYop(e?.target?.value);
                       }}
-                      error={Boolean(!twelthYop && isSubmit)}
+                      error={Boolean(!twelthYop && isChecking)}
                       labelId="validation-academic-twelthyop"
                       aria-describedby="validation-academic-twelthyop"
                     >
-                      {/* <MenuItem value="0 months 0 years">
-                        0 Months 0 Years
-                      </MenuItem>
-                      <MenuItem value="6 months">6 Months</MenuItem>
-                      <MenuItem value="1 year">1 year</MenuItem>
-                      <MenuItem value="2 year">2 years</MenuItem>
-                      <MenuItem value="3 year">3 years</MenuItem>
-                      <MenuItem value="4 year">4 years</MenuItem>
-                      <MenuItem value="5 year">5 years</MenuItem> */}
                       {TenthYearOfPassOut.map((item) => (
                         <MenuItem value={item}>{item}</MenuItem>
                       ))}
                     </Select>
                   )}
                 />
-                {!twelthYop && isSubmit && (
+                {!twelthYop && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-twelthyop"
@@ -363,20 +402,21 @@ const AcademicDetailsView = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <TextField
+                      disabled={true}
                       type="number"
-                      value={value}
+                      value={twelthPercentage}
                       label="12th / PUC / Intermediate/Diploma %"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setTwelthPercentage(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setTwelthPercentage(e?.target?.value);
                       }}
                       placeholder="Leonard"
-                      error={Boolean(!twelthPercentage && isSubmit)}
+                      error={Boolean(!twelthPercentage && isChecking)}
                       aria-describedby="validation-academic-twelthpercentage"
                     />
                   )}
                 />
-                {!twelthPercentage && isSubmit && (
+                {!twelthPercentage && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-tpo-twelthpercentage"
@@ -388,10 +428,10 @@ const AcademicDetailsView = () => {
             </Grid>
 
             <Grid item xs={12} sm={4}>
-              <FormControl fullWidth>
+              <FormControl fullWidth disabled={true}>
                 <InputLabel
                   id="validation-academic-graduationcourse"
-                  error={Boolean(errors.graduationcourse)}
+                  error={Boolean(!graduationCourse && isChecking)}
                   htmlFor="validation-academic-graduationcourse"
                 >
                   Graduation Course
@@ -400,15 +440,15 @@ const AcademicDetailsView = () => {
                   name="graduationcourse"
                   control={control}
                   rules={{ required: true }}
-                  render={({ field: { value, onChange } }) => (
+                  render={({ field: { onChange } }) => (
                     <Select
-                      value={value}
+                      value={graduationCourse}
                       label="Graduation Course"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setGraduationCourse(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setGraduationCourse(e?.target?.value);
                       }}
-                      error={Boolean(!graduationCourse && isSubmit)}
+                      error={Boolean(!graduationCourse && isChecking)}
                       labelId="validation-academic-graduationcourse"
                       aria-describedby="validation-academic-graduationcourse"
                     >
@@ -418,7 +458,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {!graduationCourse && isSubmit && (
+                {!graduationCourse && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-graduationcourse"
@@ -430,10 +470,10 @@ const AcademicDetailsView = () => {
             </Grid>
 
             <Grid item xs={12} sm={4}>
-              <FormControl fullWidth>
+              <FormControl fullWidth disabled={true}>
                 <InputLabel
                   id="validation-academic-graduationbranch"
-                  error={Boolean(errors.graduationbranch)}
+                  error={Boolean(!graduationCourse && isChecking)}
                   htmlFor="validation-academic-graduationbranch"
                 >
                   Graduation - Branch / Stream
@@ -444,13 +484,13 @@ const AcademicDetailsView = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <Select
-                      value={value}
+                      value={graduationBrnach}
                       label="Graduation - Branch / Stream"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setGraduationBrnach(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setGraduationBrnach(e?.target?.value);
                       }}
-                      error={Boolean(!graduationCourse && isSubmit)}
+                      error={Boolean(!graduationCourse && isChecking)}
                       labelId="validation-academic-graduationbranch"
                       aria-describedby="validation-academic-graduationbranch"
                     >
@@ -460,7 +500,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {!graduationCourse && isSubmit && (
+                {!graduationCourse && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-graduationbranch"
@@ -472,10 +512,10 @@ const AcademicDetailsView = () => {
             </Grid>
 
             <Grid item xs={12} sm={4}>
-              <FormControl fullWidth>
+              <FormControl fullWidth disabled={!isEdit ? true : false}>
                 <InputLabel
                   id="validation-academic-graduationyop"
-                  error={Boolean(errors.graduationyop)}
+                  error={Boolean(!graduationYop && isChecking)}
                   htmlFor="validation-academic-graduationyop"
                 >
                   Graduation Year of Passout
@@ -486,13 +526,17 @@ const AcademicDetailsView = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <Select
-                      value={value}
+                      value={
+                        !isCancel
+                          ? graduationYop
+                          : academicDetails.graduationYop
+                      }
                       label="Graduation Year of Passout"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setGraduationYop(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setGraduationYop(e?.target?.value);
                       }}
-                      error={Boolean(!graduationYop && isSubmit)}
+                      error={Boolean(!graduationYop && isChecking)}
                       labelId="validation-academic-graduationyop"
                       aria-describedby="validation-academic-graduationyop"
                     >
@@ -502,7 +546,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {!graduationYop && isSubmit && (
+                {!graduationYop && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-graduationyop"
@@ -521,20 +565,25 @@ const AcademicDetailsView = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <TextField
+                      disabled={!isEdit ? true : false}
                       type="number"
-                      value={value}
+                      value={
+                        !isCancel
+                          ? graduationPercentage
+                          : academicDetails.graduationPercentage
+                      }
                       label="Graduation Percentage (% equal to CGPA)"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setGraduationPercentage(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setGraduationPercentage(e?.target?.value);
                       }}
-                      placeholder="Leonard"
-                      error={Boolean(!graduationPercentage && isSubmit)}
+                      placeholder={graduationPercentage}
+                      error={Boolean(!graduationPercentage && isChecking)}
                       aria-describedby="validation-academic-graduationpercentage"
                     />
                   )}
                 />
-                {!graduationPercentage && isSubmit && (
+                {!graduationPercentage && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-graduationpercentage"
@@ -553,20 +602,25 @@ const AcademicDetailsView = () => {
                   rules={{ required: false }}
                   render={({ field: { value, onChange } }) => (
                     <TextField
+                      disabled={!isEdit ? true : false}
                       type="number"
-                      value={value}
+                      value={
+                        !isCancel
+                          ? graduationCgpa
+                          : academicDetails.graduationCgpa
+                      }
                       label="Graduation (CGPA only)"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setGraduationCgpa(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setGraduationCgpa(e?.target?.value);
                       }}
                       placeholder="Leonard"
-                      error={Boolean(!graduationCgpa && isSubmit)}
+                      error={Boolean(!graduationCgpa && isChecking)}
                       aria-describedby="validation-academic-graduationpercgpa"
                     />
                   )}
                 />
-                {!graduationCgpa && isSubmit && (
+                {!graduationCgpa && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-graduationpercgpa"
@@ -578,10 +632,10 @@ const AcademicDetailsView = () => {
             </Grid>
 
             <Grid item xs={12} sm={4}>
-              <FormControl fullWidth>
+              <FormControl fullWidth disabled={!isEdit ? true : false}>
                 <InputLabel
                   id="validation-academic-activebacklogs"
-                  error={Boolean(!activeBacksLogs && isSubmit)}
+                  error={Boolean(!activeBacksLogs && isChecking)}
                   htmlFor="validation-academic-activebacklogs"
                 >
                   Any Active Backlog in Graduation
@@ -592,13 +646,17 @@ const AcademicDetailsView = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <Select
-                      value={value}
+                      value={
+                        !isCancel
+                          ? activeBacksLogs
+                          : academicDetails.activeBacksLogs
+                      }
                       label="Any Active Backlog in Graduation"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setActiveBacksLogs(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setActiveBacksLogs(e?.target?.value);
                       }}
-                      error={Boolean(!activeBacksLogs && isSubmit)}
+                      error={Boolean(!activeBacksLogs && isChecking)}
                       labelId="validation-academic-activebacklogs"
                       aria-describedby="validation-academic-activebacklogs"
                     >
@@ -608,7 +666,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {!activeBacksLogs && isSubmit && (
+                {!activeBacksLogs && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-activebacklogs"
@@ -620,7 +678,7 @@ const AcademicDetailsView = () => {
             </Grid>
 
             <Grid item xs={12} sm={4}>
-              <FormControl fullWidth>
+              <FormControl fullWidth disabled={true}>
                 <InputLabel
                   id="validation-academic-graduationcollegename"
                   error={Boolean(!graduationCollege && isSubmit)}
@@ -634,13 +692,13 @@ const AcademicDetailsView = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <Select
-                      value={value}
+                      value={graduationCollege}
                       label="Graduation College Name"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setGraduationCollege(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setGraduationCollege(e?.target?.value);
                       }}
-                      error={Boolean(!graduationCollege && isSubmit)}
+                      error={Boolean(!graduationCollege && isChecking)}
                       labelId="validation-academic-graduationcollegename"
                       aria-describedby="validation-academic-graduationcollegename"
                     >
@@ -650,7 +708,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {!graduationCollege && isSubmit && (
+                {!graduationCollege && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-graduationcollegename"
@@ -662,10 +720,10 @@ const AcademicDetailsView = () => {
             </Grid>
 
             <Grid item xs={12} sm={4}>
-              <FormControl fullWidth>
+              <FormControl fullWidth disabled={!isEdit ? true : false}>
                 <InputLabel
                   id="validation-academic-postgraduationcourse"
-                  error={Boolean(!postgraduationPercentage && isSubmit)}
+                  error={Boolean(!postgraduationPercentage && isChecking)}
                   htmlFor="validation-academic-postgraduationcourse"
                 >
                   Post-Graduation Course
@@ -676,13 +734,17 @@ const AcademicDetailsView = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <Select
-                      value={value}
+                      value={
+                        !isCancel
+                          ? postgraduationPercentage
+                          : academicDetails.postgraduationPercentage
+                      }
                       label="Post-Graduation Course"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setPostGraduationCourse(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setPostGraduationCourse(e?.target?.value);
                       }}
-                      error={Boolean(!postgraduationPercentage && isSubmit)}
+                      error={Boolean(!postgraduationPercentage && isChecking)}
                       labelId="validation-academic-postgraduationcourse"
                       aria-describedby="validation-academic-postgraduationcourse"
                     >
@@ -692,7 +754,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {!postgraduationPercentage && isSubmit && (
+                {!postgraduationPercentage && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-postgraduationcourse"
@@ -704,10 +766,10 @@ const AcademicDetailsView = () => {
             </Grid>
 
             <Grid item xs={12} sm={4}>
-              <FormControl fullWidth>
+              <FormControl fullWidth disabled={!isEdit ? true : false}>
                 <InputLabel
                   id="validation-academic-postgraduationbranch"
-                  error={Boolean(errors.postgraduationbranch)}
+                  error={Boolean(!postgraduationBrnach && isChecking)}
                   htmlFor="validation-academic-postgraduationbranch"
                 >
                   Post-Graduation - Branch / Stream
@@ -718,13 +780,17 @@ const AcademicDetailsView = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <Select
-                      value={value}
+                      value={
+                        !isCancel
+                          ? postgraduationBrnach
+                          : academicDetails.postgraduationBrnach
+                      }
                       label="Post-Graduation - Branch / Stream"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setPostGraduationBrnach(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setPostGraduationBrnach(e?.target?.value);
                       }}
-                      error={Boolean(!postgraduationBrnach && isSubmit)}
+                      error={Boolean(!postgraduationBrnach && isChecking)}
                       labelId="validation-academic-postgraduationbranch"
                       aria-describedby="validation-academic-postgraduationbranch"
                     >
@@ -734,7 +800,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {!postgraduationBrnach && isSubmit && (
+                {!postgraduationBrnach && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-postgraduationbranch"
@@ -746,10 +812,10 @@ const AcademicDetailsView = () => {
             </Grid>
 
             <Grid item xs={12} sm={4}>
-              <FormControl fullWidth>
+              <FormControl fullWidth disabled={!isEdit ? true : false}>
                 <InputLabel
                   id="validation-academic-postgraduationyop"
-                  error={Boolean(errors.postgraduationyop)}
+                  error={Boolean(!postgraduationYop && isChecking)}
                   htmlFor="validation-academic-postgraduationyop"
                 >
                   Post-Graduation Year of Passout
@@ -760,13 +826,17 @@ const AcademicDetailsView = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <Select
-                      value={value}
+                      value={
+                        !isCancel
+                          ? postgraduationYop
+                          : academicDetails.postgraduationYop
+                      }
                       label="Post-Graduation Year of Passout"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setPostGraduationYop(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setPostGraduationYop(e?.target?.value);
                       }}
-                      error={Boolean(!postgraduationYop && isSubmit)}
+                      error={Boolean(!postgraduationYop && isChecking)}
                       labelId="validation-academic-postgraduationyop"
                       aria-describedby="validation-academic-postgraduationyop"
                     >
@@ -776,7 +846,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {!postgraduationYop && isSubmit && (
+                {!postgraduationYop && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-postgraduationyop"
@@ -795,20 +865,25 @@ const AcademicDetailsView = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <TextField
+                      disabled={!isEdit ? true : false}
                       type="number"
-                      value={value}
+                      value={
+                        !isCancel
+                          ? postgraduationPercentage
+                          : academicDetails.postgraduationPercentage
+                      }
                       label="Post-Graduation  (% equal to CGPA)"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setPostGraduationPercentage(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setPostGraduationPercentage(e?.target?.value);
                       }}
                       placeholder="Leonard"
-                      error={Boolean(!postgraduationPercentage && isSubmit)}
+                      error={Boolean(!postgraduationPercentage && isChecking)}
                       aria-describedby="validation-academic-postgraduationpercentage"
                     />
                   )}
                 />
-                {!postgraduationPercentage && isSubmit && (
+                {!postgraduationPercentage && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-postgraduationpercentage"
@@ -827,20 +902,25 @@ const AcademicDetailsView = () => {
                   rules={{ required: false }}
                   render={({ field: { value, onChange } }) => (
                     <TextField
+                      disabled={!isEdit ? true : false}
                       type="number"
-                      value={value}
+                      value={
+                        !isCancel
+                          ? postgraduationCgpa
+                          : academicDetails.postgraduationCgpa
+                      }
                       label="Post-Graduation (CGPA only)"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setPostGraduationCgpa(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setPostGraduationCgpa(e?.target?.value);
                       }}
                       placeholder="Leonard"
-                      error={Boolean(errors.postgraduationpercgpa)}
+                      error={Boolean(!postgraduationCgpa && isChecking)}
                       aria-describedby="validation-academic-postgraduationpercgpa"
                     />
                   )}
                 />
-                {errors.postgraduationpercgpa && (
+                {!postgraduationCgpa && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-postgraduationpercgpa"
@@ -852,10 +932,10 @@ const AcademicDetailsView = () => {
             </Grid>
 
             <Grid item xs={12} sm={4}>
-              <FormControl fullWidth>
+              <FormControl fullWidth disabled={!isEdit ? true : false}>
                 <InputLabel
                   id="validation-academic-postgraduationactivebacklogs"
-                  error={Boolean(errors.postgraduationactivebacklogs)}
+                  error={Boolean(!postactiveBacksLogs && isChecking)}
                   htmlFor="validation-academic-postgraduationactivebacklogs"
                 >
                   Any Active Backlog in Post-Graduation
@@ -866,13 +946,17 @@ const AcademicDetailsView = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <Select
-                      value={value}
+                      value={
+                        !isCancel
+                          ? postactiveBacksLogs
+                          : academicDetails.postactiveBacksLogs
+                      }
                       label="Any Active Backlog in Post-Graduation"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setPostActiveBacksLogs(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setPostActiveBacksLogs(e?.target?.value);
                       }}
-                      error={Boolean(!postactiveBacksLogs && isSubmit)}
+                      error={Boolean(!postactiveBacksLogs && isChecking)}
                       labelId="validation-academic-postgraduationactivebacklogs"
                       aria-describedby="validation-academic-postgraduationactivebacklogs"
                     >
@@ -882,7 +966,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {!postactiveBacksLogs && isSubmit && (
+                {!postactiveBacksLogs && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-postgraduationactivebacklogs"
@@ -894,10 +978,10 @@ const AcademicDetailsView = () => {
             </Grid>
 
             <Grid item xs={12} sm={4}>
-              <FormControl fullWidth>
+              <FormControl fullWidth disabled={!isEdit ? true : false}>
                 <InputLabel
                   id="validation-academic-postgraduationcollegename"
-                  error={Boolean(errors.postgraduationcollegename)}
+                  error={Boolean(!postgraduationCollege && isChecking)}
                   htmlFor="validation-academic-postgraduationcollegename"
                 >
                   Post-Graduation College Name
@@ -908,13 +992,17 @@ const AcademicDetailsView = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <Select
-                      value={value}
+                      value={
+                        !isCancel
+                          ? postgraduationCollege
+                          : academicDetails.postgraduationCollege
+                      }
                       label="Post-Graduation College Name"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setPostGraduationCollege(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setPostGraduationCollege(e?.target?.value);
                       }}
-                      error={Boolean(!postgraduationCollege && isSubmit)}
+                      error={Boolean(!postgraduationCollege && isChecking)}
                       labelId="validation-academic-postgraduationcollegename"
                       aria-describedby="validation-academic-postgraduationcollegename"
                     >
@@ -924,7 +1012,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {!postgraduationCollege && isSubmit && (
+                {!postgraduationCollege && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-postgraduationcollegename"
@@ -936,10 +1024,10 @@ const AcademicDetailsView = () => {
             </Grid>
 
             <Grid item xs={12} sm={4}>
-              <FormControl fullWidth>
+              <FormControl fullWidth disabled={!isEdit ? true : false}>
                 <InputLabel
                   id="validation-academic-gapinacademics"
-                  error={Boolean(errors.gapinacademics)}
+                  error={Boolean(!gapInAcademics && isChecking)}
                   htmlFor="validation-academic-gapinacademics"
                 >
                   Gap in Academics, if any, (Nos of years)
@@ -948,15 +1036,19 @@ const AcademicDetailsView = () => {
                   name="gapinacademics"
                   control={control}
                   rules={{ required: true }}
-                  render={({ field: { value, onChange } }) => (
+                  render={({ field: { onChange } }) => (
                     <Select
-                      value={value}
+                      value={
+                        !isCancel
+                          ? gapInAcademics
+                          : academicDetails.gapInAcademics
+                      }
                       label="Gap in Academics, if any, (Nos of years)"
                       onChange={(value: any) => {
                         onChange(value);
                         setGapInAcademics(value);
                       }}
-                      error={Boolean(!gapInAcademics && isSubmit)}
+                      error={Boolean(!gapInAcademics && isChecking)}
                       labelId="validation-academic-gapinacademics"
                       aria-describedby="validation-academic-gapinacademics"
                     >
@@ -966,7 +1058,7 @@ const AcademicDetailsView = () => {
                     </Select>
                   )}
                 />
-                {!gapInAcademics && isSubmit && (
+                {!gapInAcademics && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-gapinacademics"
@@ -983,10 +1075,43 @@ const AcademicDetailsView = () => {
                 type="submit"
                 variant="contained"
                 style={{ marginTop: 30 }}
-                onClick={() => setIsSubmit(true)}
+                onClick={() => {
+                  if (!isEdit) {
+                    setIsEdit(true);
+                    setIsSubmit(false);
+                  } else if (!checkingEmpty()) {
+                    // setIsSubmit(true);
+                    // setIsEdit(true);
+                    setIsChecking(true);
+                    console.log("errors are not nill");
+                  } else {
+                    setIsSubmit(true);
+                    setIsEdit(false);
+                    // console.log("submitted");
+                    onSubmit();
+                  }
+                  setIsCancel(false);
+                }}
               >
-                Submit
+                {!isEdit ? "Edit" : "Submit"}
               </Button>
+              {isEdit && (
+                <Button
+                  className="ml-2"
+                  size="large"
+                  type="reset"
+                  variant="contained"
+                  style={{ marginTop: 30 }}
+                  onClick={() => {
+                    setIsEdit(false);
+                    setIsSubmit(false);
+                    setIsCancel(true);
+                    formReset();
+                  }}
+                >
+                  Cancel
+                </Button>
+              )}
             </Grid>
           </Grid>
         </form>
