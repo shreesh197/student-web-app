@@ -5,7 +5,7 @@ export default function Api() {
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
-      "ngrok-skip-browser-warning": "69420"
+      "ngrok-skip-browser-warning": "69420",
     },
   });
   const token = localStorage.getItem("token");
