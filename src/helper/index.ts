@@ -1,5 +1,12 @@
 //helper functions to be used throughout student-webapp
 
+import {
+  apiFetchErrMsg,
+  apiResponseMapping,
+  responseObj,
+  serviceMapping,
+} from "../constants";
+
 export const getValidationErrMsg = (key: string): string => {
   return `${key} is required`;
 };
@@ -69,3 +76,35 @@ export const millisecondsToMinutesAndSeconds = (milliseconds) => {
   let seconds = (milliseconds % 60000) / 1000;
   return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 };
+
+export const getResponseHandler = async (
+  type: string,
+  // method: string,
+  apiCallback: any
+): Promise<any> => {
+  try {
+    const response = await apiCallback();
+    // console.log(`response is ======> ${res}`);
+    const { message, data, status_code } = response;
+    if (
+      message !== responseObj.message &&
+      status_code !== `${type}${responseObj.ok}`
+    ) {
+      alert(message);
+      return;
+    }
+    return data;
+  } catch (e) {
+    alert(apiFetchErrMsg);
+  }
+};
+
+// const checkMethodForDestruct = (method: string, response: any) => {
+//   switch(method) {
+//     case "GET":
+//       const { message, data, status_code } = response;
+//       break;
+//     case "POST":
+
+//   }
+// }

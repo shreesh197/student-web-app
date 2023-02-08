@@ -820,3 +820,24 @@ export const mcqResultColumns: Column[] = [
     // format: (value: any) => `${value?.time_taken} / ${value?.total_time}`,
   },
 ];
+
+export const apiFetchErrMsg = "Some error has occurred";
+
+export const serviceMapping = {
+  profile: "UMS",
+  assessment: "AS",
+  placement: "PMS",
+  course: "LMS",
+  product: "POS",
+};
+
+export const responseObj = {
+  message: "Success",
+  ok: "200",
+};
+
+export const apiResponseMapping = {
+  message: "Success",
+  profileResCode: `${serviceMapping.profile}200`,
+  assessmentResCode: `${serviceMapping.assessment}200`,
+};
