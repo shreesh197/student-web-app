@@ -54,7 +54,7 @@ interface Data {
 
 export function createData(
   section: string,
-  score: any,
+  score: string,
   accuracy: any,
   time: string
 ): Data {

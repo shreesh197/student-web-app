@@ -685,14 +685,14 @@ export const mcqResultCollection = {
       maximum_marks: 5,
     },
   ],
-  maximum_marks: 9,
+  maximum_marks: 12,
   total_score: 3,
   minimum_score: 3,
   status: "1",
-  total_correct: 3,
+  total_correct: 6,
   total_unattempted: 2,
-  total_incorrect: 2,
-  time_taken: 4800000,
+  total_incorrect: 5,
+  time_taken: 3600000,
   total_time: 5400000,
 };
 
@@ -801,7 +801,9 @@ export const mcqResultColumns: Column[] = [
     label: "Score",
     minWidth: 100,
     // align: "right",
-    // format: (value: any) => `${value?.total_score} / ${value?.maximum_marks}`,
+    // format: (value: any) => {
+    //   // return()
+    // },
   },
   {
     id: "accuracy",
