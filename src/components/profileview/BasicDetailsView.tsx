@@ -39,7 +39,10 @@ import Icon from "../../common/ui-library/app-repository-admin-panel/src/@core/c
 // ** Types
 import { DateType } from "../../common/ui-library/app-repository-admin-panel/src/types/forms/reactDatepickerTypes";
 import DatePickerWrapper from "../../common/ui-library/app-repository-admin-panel/src/@core/styles/libs/react-datepicker";
-import { getBasicDetails, updateBasicDetails } from "../../services/ApiExecutor";
+import {
+  getBasicDetails,
+  updateBasicDetails,
+} from "../../services/ApiExecutor";
 import {
   BasicDetailsInterface,
   formBtnColors,
@@ -93,7 +96,7 @@ const BasicDetailsView = () => {
   const [eno, setEno] = useState(null);
   const [Dob, setDob] = useState(new Date());
   const [disb, setDisb] = useState(false);
-  const [gender, setGender] = useState("");
+  // const [gender, setGender] = useState("");
 
   // console.log(disb);
 
@@ -112,7 +115,7 @@ const BasicDetailsView = () => {
         firstName: res.data.first_name,
         lastName: res.data.last_name,
         dob: res.data.last_dob,
-        disability: res.data.disability,
+        disability: false,
         kid: "123",
         eno: null,
       };
@@ -121,6 +124,7 @@ const BasicDetailsView = () => {
       setDob(res.data.last_dob);
       setEno(res.data.eno);
       setKid("123");
+      setDisb(false);
       setBasicDetails(basicDetailsObj);
     };
     fetchData();
@@ -129,7 +133,7 @@ const BasicDetailsView = () => {
   // console.log(`first name ======> ${JSON.stringify(fName)}`);
 
   const checkingEmpty = () => {
-    if (!fName || !lName || !disb || !gender || !eno) {
+    if (!fName || !lName || !disb || !eno || !Dob) {
       return false;
     } else {
       return true;
@@ -141,23 +145,24 @@ const BasicDetailsView = () => {
     setLName(basicDetails.lastName);
     setDisb(basicDetails.disability);
     setDob(basicDetails.dob);
+    setEno(basicDetails.eno);
     setKid("123");
   };
 
   const onSubmit = async () => {
     // if (isSubmit) {
-      console.log("Form Submitted");
-      var basicDetailsObj: BasicDetailsInterface = {
-        firstName: fName,
-        lastName: lName,
-        dob: "",
-        disability: false,
-        gender: "",
-      };
-      setBasicDetails(basicDetailsObj);
-      //pass basicDetailsObj to API
-      const res = await updateBasicDetails(basicDetailsObj);
-      console.log(res);
+    console.log("Form Submitted");
+    var basicDetailsObj: BasicDetailsInterface = {
+      firstName: fName,
+      lastName: lName,
+      dob: "",
+      disability: false,
+      gender: "",
+    };
+    setBasicDetails(basicDetailsObj);
+    //pass basicDetailsObj to API
+    const res = await updateBasicDetails(basicDetailsObj);
+    console.log(res);
     // }
   };
 
@@ -247,7 +252,7 @@ const BasicDetailsView = () => {
                     rules={{ required: true }}
                     render={({ field: { onChange } }) => (
                       <TextField
-                        disabled={!isEdit ? true : false}
+                        disabled={true}
                         value={!isCancel ? kid : basicDetails.kid}
                         label="KodNest Id"
                         onChange={(e: any) => {
@@ -311,21 +316,20 @@ const BasicDetailsView = () => {
                   name="dob"
                   control={control}
                   rules={{ required: true }}
-                  render={({ field: { onChange } }) => (
+                  render={({ field: { value, onChange } }) => (
                     <DatePicker
-                      disabled={!isEdit ? true : false}
-                      selected={Dob}
+                      disabled={true}
+                      selected={!isCancel ? Dob : basicDetails.Dob}
                       showYearDropdown
                       showMonthDropdown
-                      onChange={(e: any) => {
-                        // console.log(`first name ======> ${e?.target?.value}`);
-                        onChange(e?.target?.value);
-                        setDob(e?.target?.value);
+                      onChange={(e) => {
+                        onChange(e);
+                        setDob(e);
                       }}
                       placeholderText="MM/DD/YYYY"
                       customInput={
                         <CustomInput
-                          value={Dob}
+                          value={value}
                           onChange={onChange}
                           label="Date of Birth"
                           error={Boolean(!Dob && isChecking)}
@@ -345,76 +349,11 @@ const BasicDetailsView = () => {
                 )}
               </Grid>
 
-              {/* <Grid item xs={12} sm={6}>
-                <FormControl fullWidth>
-                  <InputLabel
-                    id="validation-basic-select"
-                    error={Boolean(errors.select)}
-                    htmlFor="validation-basic-select"
-                  >
-                    Country
-                  </InputLabel>
-                  <Controller
-                    name="select"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field: { value, onChange } }) => (
-                      <Select
-                        value={value}
-                        label="Country"
-                        onChange={onChange}
-                        error={Boolean(errors.select)}
-                        labelId="validation-basic-select"
-                        aria-describedby="validation-basic-select"
-                      >
-                        <MenuItem value="UK">UK</MenuItem>
-                        <MenuItem value="USA">USA</MenuItem>
-                        <MenuItem value="Australia">Australia</MenuItem>
-                        <MenuItem value="Germany">Germany</MenuItem>
-                      </Select>
-                    )}
-                  />
-                  {errors.select && (
-                    <FormHelperText
-                      sx={{ color: "error.main" }}
-                      id="validation-basic-select"
-                    >
-                      This field is required
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </Grid> */}
-
-              {/* <Grid item xs={12}>
-                <FormControl fullWidth>
-                  <Controller
-                    name="textarea"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field }) => (
-                      <TextField
-                        rows={4}
-                        multiline
-                        {...field}
-                        label="Bio"
-                        error={Boolean(errors.textarea)}
-                        aria-describedby="validation-basic-textarea"
-                      />
-                    )}
-                  />
-                  {errors.textarea && (
-                    <FormHelperText
-                      sx={{ color: "error.main" }}
-                      id="validation-basic-textarea"
-                    >
-                      This field is required
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </Grid> */}
-
-              {/* <Grid item xs={12}>
-                <FormControl error={Boolean(errors.radio && isSubmit)}>
+              <Grid item xs={12}>
+                <FormControl
+                  error={Boolean(!disb && isChecking)}
+                  disabled={!isEdit ? true : false}
+                >
                   <FormLabel>Disability</FormLabel>
                   <Controller
                     name="radio"
@@ -422,26 +361,26 @@ const BasicDetailsView = () => {
                     rules={{ required: true }}
                     render={({ field }) => (
                       <RadioGroup
+                        onClick={(e: any) => {
+                          setDisb(e.target.value);
+                        }}
                         row
                         {...field}
                         aria-label="disability"
                         name="validation-basic-radio"
                       >
                         <FormControlLabel
-                          value="yes"
+                          disabled={!isEdit ? true : false}
+                          value={true}
+                          checked={disb && true}
                           label="Yes"
-                          onClick={(e: any) => {
-                            setDisb(true);
-                          }}
                           sx={
-                            errors.radio && isSubmit
-                              ? { color: "error.main" }
-                              : null
+                            !disb && isChecking ? { color: "error.main" } : null
                           }
                           control={
                             <Radio
                               sx={
-                                errors.radio && isSubmit
+                                !disb && isChecking
                                   ? { color: "error.main" }
                                   : null
                               }
@@ -449,31 +388,27 @@ const BasicDetailsView = () => {
                           }
                         />
                         <FormControlLabel
-                          value="no"
+                          disabled={!isEdit ? true : false}
+                          value={false}
+                          checked={!disb && true}
                           label="No"
-                          onClick={(e: any) => {
-                            setDisb(false);
-                          }}
                           sx={
-                            errors.radio && isSubmit
-                              ? { color: "error.main" }
-                              : null
+                            !disb && isChecking ? { color: "error.main" } : null
                           }
                           control={
                             <Radio
                               sx={
-                                errors.radio && isSubmit
+                                !disb && isChecking
                                   ? { color: "error.main" }
                                   : null
                               }
                             />
                           }
                         />
-                
                       </RadioGroup>
                     )}
                   />
-                  {errors.radio && isSubmit && (
+                  {!disb && isChecking && (
                     <FormHelperText
                       sx={{ color: "error.main" }}
                       id="validation-basic-radio"
@@ -482,7 +417,7 @@ const BasicDetailsView = () => {
                     </FormHelperText>
                   )}
                 </FormControl>
-              </Grid> */}
+              </Grid>
 
               {/* <Grid item xs={12}>
                 <FormControl>

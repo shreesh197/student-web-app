@@ -39,6 +39,7 @@ import { useForm, Controller } from "react-hook-form";
 // ** Icon Imports
 import Icon from "../../common/ui-library/app-repository-admin-panel/src/@core/components/icon";
 import axios from "axios";
+import { configConsumerProps } from "antd/es/config-provider";
 
 interface State {
   password: string;
@@ -55,23 +56,18 @@ const defaultValues = {
   city: "",
 };
 
-const ExperienceYears = [
-  "0 Years",
-  "6 Months",
-  "1 Year",
-  "2 Years",
-  "3 Year",
-  "4 Years",
-  "5 Years",
-];
-
 const AddressDetailsView = () => {
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [isCancel, setIsCancel] = useState(false);
+  const [isChecking, setIsChecking] = useState(false);
+  const [addressDetails, setAddressDetails] = useState(null);
+
   const [indianSates, setIndianSates] = useState([]);
   const [cities, setCities] = useState([]);
   const [statesData, setStatesData] = useState(null);
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
-  const [isSubmit, setIsSubmit] = useState(false);
 
   useEffect(() => {
     const GetStates = async () => {
@@ -85,7 +81,7 @@ const AddressDetailsView = () => {
           districts: item["districts"],
         };
       });
-      console.log("States data is", statesData);
+      // console.log("States data is", statesData);
       setStatesData(statesData);
 
       const IndiaStates = data?.states?.map((item: { state: any }) => ({
@@ -97,10 +93,6 @@ const AddressDetailsView = () => {
     GetStates();
   }, []);
 
-  // useEffect(() => {
-
-  // }, [selectedState]);
-
   // ** Hooks
   const {
     control,
@@ -108,27 +100,68 @@ const AddressDetailsView = () => {
     formState: { errors },
   } = useForm<FormInputs>({ defaultValues });
 
-  const onSelectState = (e) => {
-    // console.log(`e ====> ${JSON.stringify(e.target.value)}`);
-    setSelectedState(e.target.value);
-    // console.log(e.target.value);
-    const cities = statesData?.filter(
-      (item: { name: any }) => e.target.value === item.name
-    )[0]["districts"];
+  useEffect(() => {
+    const fetchData = async () => {
+      // const res = await getAddressDetails();
+      var addressDetailsObj = {
+        selectedState: "karnataka",
+        selectedCity: "bengaluru",
+      };
+      setSelectedState(addressDetailsObj.selectedState);
+      setSelectedCity(addressDetailsObj.selectedCity);
+      setAddressDetails(addressDetailsObj);
+    };
+    fetchData();
+  }, []);
 
-    console.log(cities);
+  useEffect(() => {
+    onSelectState();
+  }, [selectedState]);
 
-    setCities(cities);
+  const onSelectState = () =>
+    // e: any
+    {
+      // console.log("Selected state is", e.target.value);
+      const cities = statesData?.filter(
+        (item: { name: any }) => selectedState === item?.name
+      )[0]["districts"];
+
+      setCities(cities);
+    };
+
+  const checkingEmpty = () => {
+    if (!selectedState || !selectedCity) {
+      return false;
+    } else {
+      return true;
+    }
   };
 
-  const onSelectCity = (e) => {
-    setSelectedCity(e.target.value);
-    // console.log(e.target.value);
+  const formReset = () => {
+    setSelectedState("karnataka");
+    setSelectedCity("bengaluru");
   };
 
-  const onSubmit = () => toast.success("Form Submitted");
+  // const onSelectCity = (e) => {
+  //   setSelectedCity(e.target.value);
+  //   // console.log(e.target.value);
+  // };
 
-  // console.log(selectedState);
+  const onSubmit = async () => {
+    // if (isSubmit) {
+    console.log("Form Submitted");
+    var addressDetailsObj = {
+      selectedState: "karnataka",
+      selectedCity: "bengaluru",
+    };
+
+    setAddressDetails(addressDetailsObj);
+    // const res = await updateAddressDetails(addressDetailsObj);
+    // console.log(res);
+    // }
+  };
+
+  console.log("Selected state is outside", selectedState);
 
   return (
     <Card
@@ -142,7 +175,7 @@ const AddressDetailsView = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
+              <FormControl fullWidth disabled={!isEdit ? true : false}>
                 <InputLabel
                   id="validation-address-state"
                   error={Boolean(!selectedState && isSubmit)}
@@ -154,24 +187,40 @@ const AddressDetailsView = () => {
                   name="state"
                   control={control}
                   rules={{ required: true }}
-                  render={({ field: { value, onChange } }) => {
-                    console.log(`value is =====> ${value}`);
+                  render={({ field: { onChange } }) => {
                     return (
                       <Select
-                        value={value}
+                        value={
+                          !isCancel
+                            ? selectedState
+                            : addressDetails.selectedState
+                        }
                         label="Are you Working professional?"
-                        onChange={(value: any) => {
-                          onChange(value);
-                          onSelectState(value);
+                        onChange={(e: any) => {
+                          console.log(
+                            "Selected state is inside",
+                            selectedState
+                          );
+
+                          onChange(e?.target?.value);
+                          // setSelectedState(e?.target?.value);
+                          // onSelectState(e?.target?.value);
                         }}
-                        error={Boolean(!selectedState && isSubmit)}
+                        error={Boolean(!selectedState && isChecking)}
                         labelId="validation-address-state"
                         aria-describedby="validation-address-state"
                       >
                         {/* <MenuItem value="yes">Yes</MenuItem>
         <MenuItem value="no">No</MenuItem> */}
                         {indianSates?.map((item, index) => (
-                          <MenuItem value={item.state} key={index}>
+                          <MenuItem
+                            value={item.state.toLowerCase()}
+                            key={index}
+                            onClick={() => {
+                              console.log(`menu ====> ${item.state}`);
+                              setSelectedState(item.state);
+                            }}
+                          >
                             {item.state}
                           </MenuItem>
                         ))}
@@ -179,7 +228,7 @@ const AddressDetailsView = () => {
                     );
                   }}
                 />
-                {!selectedState && isSubmit && (
+                {!selectedState && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-address-state"
@@ -190,7 +239,7 @@ const AddressDetailsView = () => {
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
+              <FormControl fullWidth disabled={!isEdit ? true : false}>
                 <InputLabel
                   id="validation-address-city"
                   error={Boolean(!selectedCity && isSubmit)}
@@ -204,19 +253,18 @@ const AddressDetailsView = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <Select
-                      value={value}
+                      value={
+                        !isCancel ? selectedCity : addressDetails.selectedCity
+                      }
                       label="Current Location - City"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        // onSelectCity(value);
-                        setSelectedCity(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setSelectedCity(e?.target?.value);
                       }}
-                      error={Boolean(!selectedCity && isSubmit)}
+                      error={Boolean(!selectedCity && isChecking)}
                       labelId="validation-address-city"
                       aria-describedby="validation-address-city"
                     >
-                      {/* <MenuItem value="yes">Yes</MenuItem>
-                      <MenuItem value="no">No</MenuItem> */}
                       {cities?.map((item, index) => (
                         <MenuItem value={item} key={index}>
                           {item && item}
@@ -225,7 +273,7 @@ const AddressDetailsView = () => {
                     </Select>
                   )}
                 />
-                {!selectedCity && isSubmit && (
+                {!selectedCity && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-address-city"
@@ -242,10 +290,43 @@ const AddressDetailsView = () => {
                 type="submit"
                 variant="contained"
                 style={{ marginTop: 30 }}
-                onClick={() => setIsSubmit(true)}
+                onClick={() => {
+                  if (!isEdit) {
+                    setIsEdit(true);
+                    setIsSubmit(false);
+                  } else if (!checkingEmpty()) {
+                    // setIsSubmit(true);
+                    // setIsEdit(true);
+                    setIsChecking(true);
+                    console.log("errors are not nill");
+                  } else {
+                    setIsSubmit(true);
+                    setIsEdit(false);
+                    // console.log("submitted");
+                    onSubmit();
+                  }
+                  setIsCancel(false);
+                }}
               >
-                Submit
+                {!isEdit ? "Edit" : "Submit"}
               </Button>
+              {isEdit && (
+                <Button
+                  className="ml-2"
+                  size="large"
+                  type="reset"
+                  variant="contained"
+                  style={{ marginTop: 30 }}
+                  onClick={() => {
+                    setIsEdit(false);
+                    setIsSubmit(false);
+                    setIsCancel(true);
+                    formReset();
+                  }}
+                >
+                  Cancel
+                </Button>
+              )}
             </Grid>
           </Grid>
         </form>
