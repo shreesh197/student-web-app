@@ -1,5 +1,11 @@
 // ** React Imports
-import { forwardRef, MouseEvent, useState, ChangeEvent } from "react";
+import {
+  forwardRef,
+  MouseEvent,
+  useState,
+  ChangeEvent,
+  useEffect,
+} from "react";
 
 // ** MUI Imports
 import Card from "@mui/material/Card";
@@ -29,15 +35,19 @@ import { useForm, Controller } from "react-hook-form";
 
 // ** Icon Imports
 import Icon from "../../common/ui-library/app-repository-admin-panel/src/@core/components/icon";
+import {
+  getCommunicationDetails,
+  updateCommunicationDetails,
+} from "../../services/ApiExecutor";
 
 // ** Types
 
 interface FormInputs {
-
   email: string;
   primarycontactnumber: number;
-  alternatecontactnumber: number;
+  // alternatecontactnumber: number;
   whatsappcontactnumber: number;
+  preferredjoblocation: string;
 }
 
 interface CustomInputProps {
@@ -49,23 +59,30 @@ interface CustomInputProps {
 const defaultValues = {
   email: "",
   primarycontactnumber: null,
-  alternatecontactnumber: null,
+  // alternatecontactnumber: null,
   whatsappcontactnumber: null,
+  preferredjoblocation: "",
 };
 
-const CustomInput = forwardRef(({ ...props }: CustomInputProps, ref) => {
-  return <TextField inputRef={ref} {...props} sx={{ width: "100%" }} />;
-});
+const JobLocation = ["Bengaluru", "Hyderabad"];
+
+// const CustomInput = forwardRef(({ ...props }: CustomInputProps, ref) => {
+//   return <TextField inputRef={ref} {...props} sx={{ width: "100%" }} />;
+// });
 
 const CommunincationDetailsView = () => {
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [isCancel, setIsCancel] = useState(false);
+  const [isChecking, setIsChecking] = useState(false);
+  const [communicationDetails, setCommunicationDetails] = useState(null);
 
-    const [isSubmit, setIsSubmit] = useState(false);
-    const [email, setEmail] = useState("");
-    const [pnumber, setPnumber] = useState(null);
-    const [anumber, setAnumber] = useState(null);
-    const [wnumber, setWnumber] = useState(null);
+  const [email, setEmail] = useState("");
+  const [pnumber, setPnumber] = useState(null);
+  // const [anumber, setAnumber] = useState(1234567890);
+  const [wnumber, setWnumber] = useState(null);
+  const [jobLocation, setJobLocation] = useState("");
 
- 
   // ** Hooks
   const {
     control,
@@ -73,7 +90,58 @@ const CommunincationDetailsView = () => {
     formState: { errors },
   } = useForm<FormInputs>({ defaultValues });
 
-  const onSubmit = () => toast.success("Form Submitted");
+  useEffect(() => {
+    const fetchData = async () => {
+      // const res = await getCommunicationDetails();
+      var communicationDetailsObj = {
+        email: "kodnest@gmail.com",
+        pnumber: 1234567890,
+        // anumber: 1234567890,
+        jobLocation: "bengaluru",
+        wnumber: 1234567890,
+      };
+
+      setPnumber(communicationDetailsObj.pnumber);
+      // setAnumber(1234567890);
+      setJobLocation(communicationDetailsObj.jobLocation);
+      setWnumber(communicationDetailsObj.wnumber);
+      setEmail(communicationDetailsObj.email);
+      setCommunicationDetails(communicationDetailsObj);
+    };
+    fetchData();
+  }, []);
+
+  const checkingEmpty = () => {
+    if (!email || !pnumber || !jobLocation || !wnumber) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const formReset = () => {
+    setPnumber(1234567890);
+    //  setAnumber(1234567890);
+    setJobLocation("Bengaluru");
+    setWnumber(1234567890);
+    setEmail("kodnest@gmail.com");
+  };
+
+  const onSubmit = async () => {
+    // if (isSubmit) {
+    console.log("Form Submitted");
+    var communicationDetailsObj = {
+      email: "kodnest@gmail.com",
+      pnumber: 1234567890,
+      // anumber: 1234567890,
+      jobLocation: "Bengaluru",
+      wnumber: 1234567890,
+    };
+    setCommunicationDetails(communicationDetailsObj);
+    // const res = await updateCommunicationDetails(communicationDetailsObj);
+    // console.log(res);
+    // }
+  };
 
   return (
     <Card
@@ -93,22 +161,23 @@ const CommunincationDetailsView = () => {
                   name="email"
                   control={control}
                   rules={{ required: true }}
-                  render={({ field: { value, onChange } }) => (
+                  render={({ field: { onChange } }) => (
                     <TextField
+                      disabled={true}
                       type="email"
-                      value={value}
+                      value={!isCancel ? email : communicationDetails.email}
                       label="Email Id (gmail by default)"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setEmail(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setEmail(e?.target?.value);
                       }}
-                      error={Boolean(!email && isSubmit)}
-                      placeholder="carterleonard@gmail.com"
+                      error={Boolean(!email && isChecking)}
+                      placeholder={email}
                       aria-describedby="validation-communication-email"
                     />
                   )}
                 />
-                {!email && isSubmit && (
+                {!email && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-communication-email"
@@ -127,20 +196,21 @@ const CommunincationDetailsView = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <TextField
+                      disabled={true}
                       type="tel"
-                      value={value}
+                      value={!isCancel ? pnumber : communicationDetails.pnumber}
                       label="Primary Contact Number"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setPnumber(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setPnumber(e?.target?.value);
                       }}
-                      error={Boolean(!pnumber && isSubmit)}
+                      error={Boolean(!pnumber && isChecking)}
                       placeholder=""
                       aria-describedby="validation-communication-primarycontactnumber"
                     />
                   )}
                 />
-                {!pnumber && isSubmit && (
+                {!pnumber && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-communication-primarycontactnumber"
@@ -151,7 +221,7 @@ const CommunincationDetailsView = () => {
               </FormControl>
             </Grid>
 
-            <Grid item xs={12} sm={6}>
+            {/* <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
                 <Controller
                   name="alternatecontactnumber"
@@ -159,20 +229,21 @@ const CommunincationDetailsView = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <TextField
+                      disabled={!isEdit ? true : false}
                       type="tel"
-                      value={value}
+                      value={!isCancel ? anumber : communicationDetails.anumber}
                       label="Alternate Contact Number"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setAnumber(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setAnumber(e?.target?.value);
                       }}
-                      error={Boolean(!anumber && isSubmit)}
+                      error={Boolean(!anumber && isChecking)}
                       placeholder=""
                       aria-describedby="validation-communication-alternatecontactnumber"
                     />
                   )}
                 />
-                {!anumber && isSubmit && (
+                {!anumber && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-communication-alternatecontactnumber"
@@ -181,7 +252,7 @@ const CommunincationDetailsView = () => {
                   </FormHelperText>
                 )}
               </FormControl>
-            </Grid>
+            </Grid> */}
 
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
@@ -191,23 +262,70 @@ const CommunincationDetailsView = () => {
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <TextField
+                      disabled={!isEdit ? true : false}
                       type="tel"
-                      value={value}
-                      label="WhatsApp Contact Number  ( Father/mother/sister/brother)"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setWnumber(value);
+                      value={!isCancel ? wnumber : communicationDetails.wnumber}
+                      label="WhatsApp Contact Number"
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setWnumber(e?.target?.value);
                       }}
-                      error={Boolean(!wnumber && isSubmit)}
+                      error={Boolean(!wnumber && isChecking)}
                       placeholder=""
                       aria-describedby="validation-communication-whatsappcontactnumber"
                     />
                   )}
                 />
-                {!wnumber && isSubmit && (
+                {!wnumber && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-communication-whatsappcontactnumber"
+                  >
+                    This field is required
+                  </FormHelperText>
+                )}
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth disabled={!isEdit ? true : false}>
+                <InputLabel
+                  id="validation-experience-totalyearsofexperience"
+                  error={Boolean(!jobLocation && isChecking)}
+                  htmlFor="validation-experience-totalyearsofexperience"
+                >
+                  Preferred Job Location
+                </InputLabel>
+                <Controller
+                  name="preferredjoblocation"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field: { onChange } }) => (
+                    <Select
+                      value={
+                        !isCancel
+                          ? jobLocation
+                          : communicationDetails.jobLocation
+                      }
+                      label="Total work experience"
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setJobLocation(e?.target?.value);
+                      }}
+                      error={Boolean(!jobLocation && isChecking)}
+                      labelId="validation-experience-totalyearsofexperience"
+                      aria-describedby="validation-experience-totalyearsofexperience"
+                    >
+                      {JobLocation.map((item: string, index: number) => (
+                        <MenuItem value={item.toLowerCase()}>{item}</MenuItem>
+                      ))}
+                    </Select>
+                  )}
+                />
+                {!jobLocation && isChecking && (
+                  <FormHelperText
+                    sx={{ color: "error.main" }}
+                    id="validation-experience-totalyearsofexperience"
                   >
                     This field is required
                   </FormHelperText>
@@ -221,10 +339,43 @@ const CommunincationDetailsView = () => {
                 type="submit"
                 variant="contained"
                 style={{ marginTop: 30 }}
-                onClick={() => setIsSubmit(true)}
+                onClick={() => {
+                  if (!isEdit) {
+                    setIsEdit(true);
+                    setIsSubmit(false);
+                  } else if (!checkingEmpty()) {
+                    // setIsSubmit(true);
+                    // setIsEdit(true);
+                    setIsChecking(true);
+                    console.log("errors are not nill");
+                  } else {
+                    setIsSubmit(true);
+                    setIsEdit(false);
+                    // console.log("submitted");
+                    onSubmit();
+                  }
+                  setIsCancel(false);
+                }}
               >
-                Submit
+                {!isEdit ? "Edit" : "Submit"}
               </Button>
+              {isEdit && (
+                <Button
+                  className="ml-2"
+                  size="large"
+                  type="reset"
+                  variant="contained"
+                  style={{ marginTop: 30 }}
+                  onClick={() => {
+                    setIsEdit(false);
+                    setIsSubmit(false);
+                    setIsCancel(true);
+                    formReset();
+                  }}
+                >
+                  Cancel
+                </Button>
+              )}
             </Grid>
           </Grid>
         </form>

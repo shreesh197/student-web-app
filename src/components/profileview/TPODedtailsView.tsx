@@ -7,6 +7,7 @@ import {
   JSXElementConstructor,
   ReactElement,
   ReactFragment,
+  useEffect,
 } from "react";
 
 // ** MUI Imports
@@ -55,13 +56,18 @@ const defaultValues = {
   tpocontactnumber: null,
 };
 
-const YearsFunction = (item: string) => {
-  return <MenuItem value={item}>{item}</MenuItem>;
-};
+// const YearsFunction = (item: string) => {
+//   return <MenuItem value={item}>{item}</MenuItem>;
+// };
 
 const TpoDetailsView = () => {
 
     const [isSubmit, setIsSubmit] = useState(false);
+const [isEdit, setIsEdit] = useState(false);
+const [isCancel, setIsCancel] = useState(false);
+const [isChecking, setIsChecking] = useState(false);
+const [tpoDetails, setTpoDetails] = useState(null);
+
     const [tpoName, setTpoName] = useState("");
     const [tpoEmail, setTpoEmail] = useState("");
     const [tpoNumber, setTpoNumber] = useState(null);
@@ -73,8 +79,50 @@ const TpoDetailsView = () => {
     formState: { errors },
   } = useForm<FormInputs>({ defaultValues });
 
-  const onSubmit = () => toast.success("Form Submitted");
+  useEffect(() => {
+    const fetchData = async () => {
+      // const res = await getTPODetails();
+      var tpoDetailsObj = {
+        tpoName: "fghuj",
+        tpoEmail: "kodnest@gmail.com",
+        tpoNumber: 1234567890,
+      };
+      setTpoName(tpoDetailsObj.tpoName);
+      setTpoEmail(tpoDetailsObj.tpoEmail);
+      setTpoNumber(tpoDetailsObj.tpoNumber);
+      setTpoDetails(tpoDetailsObj);
+    };
+    fetchData();
+  }, []);
 
+   const checkingEmpty = () => {
+     if (!tpoName || !tpoEmail || !tpoNumber) {
+       return false;
+     } else {
+       return true;
+     }
+   };
+
+     const formReset = () => {
+       setTpoName("fghuj");
+       setTpoEmail("kodnest@gmail.com");
+       setTpoNumber("1234567890");
+     };
+
+
+const onSubmit = async () => {
+  // if (isSubmit) {
+  console.log("Form Submitted");
+  var tpoDetailsObj = {
+    tpoName: "fghuj",
+    tpoEmail: "kodnest@gmail.com",
+    tpoNumber: 1234567890,
+  };
+  setTpoDetails(tpoDetailsObj);
+  // const res = await updateTPODetails(communicationDetailsObj);
+  // console.log(res);
+  // }
+};
   return (
     <Card
       className="md:w-[60%] md:mt-[30px] md:mb-[30px] md:p-[20px] md:shadow-lg md:rounded-[16px]"
@@ -93,21 +141,22 @@ const TpoDetailsView = () => {
                   name="tponame"
                   control={control}
                   rules={{ required: false }}
-                  render={({ field: { value, onChange } }) => (
+                  render={({ field: { onChange } }) => (
                     <TextField
-                      value={value}
+                      disabled={!isEdit ? true : false}
+                      value={!isCancel ? tpoName : tpoDetails.tpoName}
                       label="Your College Training and Placement Officer name"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setTpoName(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setTpoName(e?.target?.value);
                       }}
                       placeholder="Leonard"
-                      error={Boolean(!tpoName && isSubmit)}
+                      error={Boolean(!tpoName && isChecking)}
                       aria-describedby="validation-tpo-tponame"
                     />
                   )}
                 />
-                {!tpoName && isSubmit && (
+                {!tpoName && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-tpo-tponame"
@@ -126,19 +175,20 @@ const TpoDetailsView = () => {
                   rules={{ required: false }}
                   render={({ field: { value, onChange } }) => (
                     <TextField
-                      value={value}
+                      disabled={!isEdit ? true : false}
+                      value={!isCancel ? tpoEmail : tpoDetails.tpoEmail}
                       label="Your College Training and Placement Officer Email ID"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setTpoEmail(value);
+                      onChange={(e: any) => {
+                        onChange(e?.target?.value);
+                        setTpoEmail(e?.target?.value);
                       }}
                       placeholder="Leonard"
-                      error={Boolean(!tpoEmail && isSubmit)}
+                      error={Boolean(!tpoEmail && isChecking)}
                       aria-describedby="validation-tpo-tpoemailid"
                     />
                   )}
                 />
-                {!tpoEmail && isSubmit && (
+                {!tpoEmail && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-tpo-tpoemailid"
@@ -159,20 +209,21 @@ const TpoDetailsView = () => {
                     console.log(`value inside render ======> ${value}`);
                     return (
                       <TextField
-                        value={value}
+                        disabled={!isEdit ? true : false}
+                        value={!isCancel ? tpoNumber : tpoDetails.tpoNumber}
                         label="Your College Training and Placement Officer Contact Number"
-                        onChange={(value: any) => {
-                          onChange(value);
-                          setTpoNumber(value);
+                        onChange={(e: any) => {
+                          onChange(e?.target?.value);
+                          setTpoNumber(e?.target?.value);
                         }}
                         placeholder="Leonard"
-                        error={Boolean(!tpoNumber && isSubmit)}
+                        error={Boolean(!tpoNumber && isChecking)}
                         aria-describedby="validation-tpo-tpocontactnumber"
                       />
                     );
                   }}
                 />
-                {!tpoNumber && isSubmit && (
+                {!tpoNumber && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-tpo-tpocontactnumber"
@@ -189,10 +240,43 @@ const TpoDetailsView = () => {
                 type="submit"
                 variant="contained"
                 style={{ marginTop: 30 }}
-                onClick={() => setIsSubmit(true)}
+                onClick={() => {
+                  if (!isEdit) {
+                    setIsEdit(true);
+                    setIsSubmit(false);
+                  } else if (!checkingEmpty()) {
+                    // setIsSubmit(true);
+                    // setIsEdit(true);
+                    setIsChecking(true);
+                    console.log("errors are not nill");
+                  } else {
+                    setIsSubmit(true);
+                    setIsEdit(false);
+                    // console.log("submitted");
+                    onSubmit();
+                  }
+                  setIsCancel(false);
+                }}
               >
-                Submit
+                {!isEdit ? "Edit" : "Submit"}
               </Button>
+              {isEdit && (
+                <Button
+                  className="ml-2"
+                  size="large"
+                  type="reset"
+                  variant="contained"
+                  style={{ marginTop: 30 }}
+                  onClick={() => {
+                    setIsEdit(false);
+                    setIsSubmit(false);
+                    setIsCancel(true);
+                    formReset();
+                  }}
+                >
+                  Cancel
+                </Button>
+              )}
             </Grid>
           </Grid>
         </form>
