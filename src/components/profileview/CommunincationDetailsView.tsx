@@ -45,7 +45,6 @@ import {
 interface FormInputs {
   email: string;
   primarycontactnumber: number;
-  // alternatecontactnumber: number;
   whatsappcontactnumber: number;
   preferredjoblocation: string;
 }
@@ -59,7 +58,6 @@ interface CustomInputProps {
 const defaultValues = {
   email: "",
   primarycontactnumber: null,
-  // alternatecontactnumber: null,
   whatsappcontactnumber: null,
   preferredjoblocation: "",
 };
@@ -79,7 +77,6 @@ const CommunincationDetailsView = () => {
 
   const [email, setEmail] = useState("");
   const [pnumber, setPnumber] = useState(null);
-  // const [anumber, setAnumber] = useState(1234567890);
   const [wnumber, setWnumber] = useState(null);
   const [jobLocation, setJobLocation] = useState("");
 
