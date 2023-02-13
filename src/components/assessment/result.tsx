@@ -10,28 +10,30 @@ import {
 import { Bar, Pie, G2 } from "@ant-design/plots";
 import { Card } from "@mui/material";
 
-const AssessmentResult = () => {
+const AssessmentResult = ({ resultData }: { resultData: any }) => {
   const { screenWidth, isMobile }: any = useContext(DeviceContext);
   const [mcqResult, setMcqResult] = useState(null);
   const [tableRows, setTableRows] = useState([]);
   const G = G2.getEngine("canvas");
 
+  // console.log(`resultData ======> ${JSON.stringify(resultData)}`);
+
   const data = [
     {
       year: "3",
-      value: mcqResultCollection.total_unattempted,
+      value: resultData.total_unattempted,
       type: "Total Unattempted",
       color: "rgb(170, 246, 170)",
     },
     {
       year: "2",
-      value: mcqResultCollection.total_incorrect,
+      value: resultData.total_incorrect,
       type: "Total Incorrect",
       color: "rgb(170, 246, 170)",
     },
     {
       year: "1",
-      value: mcqResultCollection.total_correct,
+      value: resultData.total_correct,
       type: "Total Correct",
       color: "rgb(170, 246, 170)",
     },
@@ -167,14 +169,14 @@ const AssessmentResult = () => {
   ];
 
   const fetchMcqResult = useCallback(() => {
-    const res = mcqResultCollection;
-    setMcqResult(res);
-    setCorrectValues(res);
-  }, []);
+    // const res = mcqResultCollection;
+    setMcqResult(resultData);
+    setCorrectValues(resultData);
+  }, [resultData]);
 
   useEffect(() => {
     fetchMcqResult();
-  }, [fetchMcqResult]);
+  }, [fetchMcqResult, resultData]);
 
   const customTableCellRenderer = (title: string) => {
     return (
@@ -190,14 +192,12 @@ const AssessmentResult = () => {
   };
 
   const setCorrectValues = (obj: any) => {
-    const total_score = obj?.total_score;
-    const maximum_marks = obj?.maximum_marks;
+    const total_score = obj?.score;
+    const maximum_marks = obj?.maximum_score;
     const time_taken = millisecondsToMinutesAndSeconds(obj?.time_taken);
     const total_time = millisecondsToMinutesAndSeconds(obj?.total_time);
     const scoreToRender = `${total_score} / ${maximum_marks}`;
-    const accuracyToRender = `${((total_score / maximum_marks) * 100).toFixed(
-      2
-    )} %`;
+    const accuracyToRender = `${obj?.accuracy} %`;
     const timeToRender = `${time_taken} / ${total_time}`;
     let rows = [
       createData(

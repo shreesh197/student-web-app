@@ -8,8 +8,16 @@ import { Drawer } from "antd";
 import { BsQuestionSquareFill } from "react-icons/bs";
 import { useRouter } from "next/router";
 import { StoreState } from "../../redux/Types";
+import { submitMcqAssessment } from "../../services/assessment";
+import { apiFetchErrMsg } from "../../constants";
 
-const MCQ = () => {
+const MCQ = ({
+  questionsData,
+  assessmentId,
+}: {
+  questionsData: any;
+  assessmentId: string;
+}) => {
   const [currentQuestionNumber, setCurrentQuestionNumber] = useState(1);
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [mcqTest, setMcqTest] = useState([]);
@@ -30,9 +38,21 @@ const MCQ = () => {
   //   },
   // ];
 
+  const fetchMcqQuestions = useCallback(() => {
+    //modify
+    let newData = questionsData?.questions.map((question, i) => ({
+      ...question,
+      is_answered: false,
+      is_marked: false,
+      is_visited: false,
+    }));
+    setMcqTest(newData);
+    dispatch(saveQuestions(newData));
+  }, [questionsData, dispatch]);
+
   useEffect(() => {
     fetchMcqQuestions();
-  }, []);
+  }, [fetchMcqQuestions]);
 
   const findCorrespondingQuestion = useCallback(() => {
     let correctQuestion = mcqTest.find(
@@ -55,17 +75,6 @@ const MCQ = () => {
   useEffect(() => {
     findCorrespondingQuestion();
   }, [currentQuestionNumber, findCorrespondingQuestion]);
-
-  const fetchMcqQuestions = () => {
-    //modify
-    let newData = mcqCollection.questions.map((question, i) => ({
-      ...question,
-      is_answered: false,
-      is_marked: false,
-      is_visited: false,
-    }));
-    setMcqTest(newData);
-  };
 
   const answerHandler = (
     selectedOption: any,
@@ -206,7 +215,9 @@ const MCQ = () => {
   };
 
   const goToNextQuestion = () => {
-    setCurrentQuestionNumber(currentQuestionNumber + 1);
+    if (currentQuestionNumber < mcqTest.length) {
+      setCurrentQuestionNumber(currentQuestionNumber + 1);
+    }
   };
 
   const handleClearResponse = () => {
@@ -216,6 +227,39 @@ const MCQ = () => {
 
   const handleMarkedForReview = () => {
     answerHandler(selectedOption, true);
+  };
+
+  const modifyMcqTestArr = (questions: any) => {
+    questions?.forEach((question: any) => {
+      delete question.is_marked;
+      delete question.is_visited;
+    });
+    return questions;
+  };
+
+  const submitMcqTest = async () => {
+    const body = {
+      assessment_id: assessmentId,
+      user_id: "1",
+      questions: modifyMcqTestArr(storeMcq),
+      time_taken: 5400000,
+      total_time: questionsData?.total_time,
+    };
+    try {
+      const response = await submitMcqAssessment(body);
+      // console.log(`response is ======> ${response}`);
+      const { message, status_code, data } = response;
+      const { submission_id } = data;
+      if (message !== "Success" && status_code !== "AS200") {
+        alert(message);
+        return;
+      }
+      router.push(
+        `/student-webapp/assessment/${assessmentId}/result/${submission_id}`
+      );
+    } catch (e) {
+      alert(apiFetchErrMsg);
+    }
   };
 
   const renderQuestionListContainer = () => {
@@ -286,6 +330,18 @@ const MCQ = () => {
     );
   };
 
+  const nextTextRenderer = (): string => {
+    let text: string = "";
+    if (currentQuestionNumber < mcqTest.length) {
+      text = "& Next";
+    }
+    return text;
+  };
+
+  // console.log(
+  //   `currentQuestionNumber =======> ${currentQuestionNumber}, ${mcqTest.length}`
+  // );
+
   // console.log(`store ======> ${JSON.stringify(storeMcq)}`);
 
   return (
@@ -295,7 +351,7 @@ const MCQ = () => {
           className="mcq-header position-absolute"
           style={{ padding: !isMobile ? "10px 75px" : "10px 35px" }}
         >
-          Time Left: <Countdown date={Date.now() + 5400000} />
+          Time Left: <Countdown date={Date.now() + questionsData?.total_time} />
         </nav>
         <div
           className={`col-${
@@ -399,7 +455,7 @@ const MCQ = () => {
                     goToNextQuestion();
                   }}
                 >
-                  Mark for Review & Next
+                  Mark for Review {nextTextRenderer()}
                 </button>
                 <button
                   className={`mcq-question-buttons other-buttons me-2 ${
@@ -435,9 +491,7 @@ const MCQ = () => {
                     className={`mcq-question-buttons me-2 ${
                       screenWidth < 1366 ? "mb-2" : ""
                     }`}
-                    onClick={() =>
-                      router.push("/student-webapp/assessment/result")
-                    }
+                    onClick={submitMcqTest}
                   >
                     Submit Test
                   </button>
@@ -451,7 +505,7 @@ const MCQ = () => {
                     goToNextQuestion();
                   }}
                 >
-                  Save & Next
+                  Save {nextTextRenderer()}
                 </button>
               </div>
             </div>
@@ -468,9 +522,7 @@ const MCQ = () => {
                 <div className="col-12">
                   <button
                     className="mcq-question-buttons submit-button"
-                    onClick={() =>
-                      router.push("/student-webapp/assessment/result")
-                    }
+                    onClick={submitMcqTest}
                   >
                     Submit Test
                   </button>
