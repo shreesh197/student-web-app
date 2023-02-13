@@ -54,6 +54,8 @@ import {
   Switch,
   Typography,
 } from "@mui/material";
+import { postOtherDetails } from "../../services/ApiExecutor";
+import { validateEmail } from "../../helper";
 
 interface State {
   password: string;
@@ -63,7 +65,7 @@ interface State {
 const defaultValues = {
   city: "",
   state: "",
-  preferredjoblocation: "",
+  preferredjoblocation: null,
   tponame: "",
   tpoemailid: "",
   tpocontactnumber: null,
@@ -108,7 +110,7 @@ const OtherDetails = ({
   const [selectedState, setSelectedState] = useState(otherDetails.state || "");
   const [selectedCity, setSelectedCity] = useState(otherDetails.city || "");
   const [jobLocation, setJobLocation] = useState(
-    otherDetails.jobLocation || ""
+    otherDetails.jobLocation || []
   );
   const [tpoName, setTpoName] = useState(otherDetails.tpoName || "");
   const [tpoEmail, setTpoEmail] = useState(otherDetails.tpoEmail || "");
@@ -155,7 +157,7 @@ const OtherDetails = ({
   };
 
   const handleChange = (event: SelectChangeEvent<string[]>) => {
-    setPersonName(event.target.value as string[]);
+    setJobLocation(event.target.value as string[]);
   };
 
   const dependencies = [
@@ -202,7 +204,7 @@ const OtherDetails = ({
     var otherDetailsObj = {
       city: "",
       state: "",
-      preferredjoblocation: "",
+      preferredjoblocation: [],
       tponame: "",
       tpoemailid: "",
       tpocontactnumber: null,
@@ -248,14 +250,18 @@ const OtherDetails = ({
   const onSubmit = async () => {
     // if (isSubmit) {
     console.log("Form Submitted");
-    var addressDetailsObj = {
-      selectedState: "karnataka",
-      selectedCity: "bengaluru",
+    var otherDetailsObj = {
+      preferred_job_location: jobLocation,
+      current_location_state: selectedState,
+      current_location_city: selectedCity,
+      tpo_name: tpoName,
+      tpo_email: tpoEmail,
+      tpo_contact: tpoNumber,
     };
 
-    setAddressDetails(addressDetailsObj);
-    // const res = await updateAddressDetails(addressDetailsObj);
-    // console.log(res);
+    // setAddressDetails(otherDetailsObj);
+    const res = await postOtherDetails(otherDetailsObj);
+    console.log(res);
     // }
   };
 
@@ -420,13 +426,23 @@ const OtherDetails = ({
                     />
                   )}
                 />
-                {!tpoEmail && isChecking && (
+                {!tpoEmail && isChecking ? (
                   <FormHelperText
                     sx={{ color: "error.main" }}
-                    id="validation-tpo-tpoemailid"
+                    id="validation-other-email"
                   >
                     This field is required
                   </FormHelperText>
+                ) : (
+                  !validateEmail(tpoEmail) &&
+                  isChecking && (
+                    <FormHelperText
+                      sx={{ color: "error.main" }}
+                      id="validation-other-email"
+                    >
+                      Please enter correct email format
+                    </FormHelperText>
+                  )
                 )}
               </FormControl>
             </Grid>
@@ -520,7 +536,7 @@ const OtherDetails = ({
                   error={Boolean(!jobLocation && isChecking)}
                   multiple
                   label="Preferred Job Location"
-                  value={personName}
+                  value={jobLocation}
                   MenuProps={MenuProps}
                   id="demo-multiple-chip"
                   onChange={handleChange}
@@ -619,7 +635,7 @@ const OtherDetails = ({
                     setIsChecking(true);
                     console.log("errors are not nill");
                   } else {
-                    handleNext();
+                    // handleNext();
                     setIsSubmit(true);
                     console.log("submitted");
                     onSubmit();

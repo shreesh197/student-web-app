@@ -111,3 +111,10 @@ margin-left: -10px !important;
 .MuiStepConnector-root.Mui-disabled .MuiStepConnector-line{
 border-color: rgba(102, 108, 255, 0.3) !important;
 }
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+

@@ -46,7 +46,7 @@ export const initAcademictDetails = {
 export const initOtherDetails = {
   city: "",
   state: "",
-  preferredjoblocation: "",
+  preferredjoblocation: null,
   tponame: "",
   tpoemailid: "",
   tpocontactnumber: null,
@@ -122,7 +122,7 @@ export interface AcademicDetailsINterface {
 export interface OtherDetailsInterface  {
   city: string;
   state: string;
-  preferredjoblocation: string,
+  preferredjoblocation: [],
   tponame: string;
   tpoemailid: string;
   tpocontactnumber: number;

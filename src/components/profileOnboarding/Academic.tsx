@@ -39,6 +39,12 @@ import { useForm, Controller } from "react-hook-form";
 // ** Icon Imports
 import Icon from "../../common/ui-library/app-repository-admin-panel/src/@core/components/icon";
 import { AcademicDetailsINterface } from "../../constants/profile";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
 
 interface State {
   password: string;
@@ -178,6 +184,17 @@ const Academic = ({
   const [totalYearsOfExperience, setTotalYearsOfExperience] = useState(
     academicDetails.totalYearsOfExperience || ""
   );
+
+  const [open, setOpen] = useState<boolean>(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const dependencies = [
     usn,
     tenthYop,
@@ -275,7 +292,7 @@ const Academic = ({
       totalYearsOfExperience: "",
     };
 
-    setAcademicDetails(academicDetailsObj);
+    // setAcademicDetails(academicDetailsObj);
     // const res = await updateAcademicdetails(communicationDetailsObj);
     // console.log(res);
     // }
@@ -301,7 +318,7 @@ const Academic = ({
                         onChange(e?.target?.value);
                         setUsn(e?.target?.value);
                       }}
-                      placeholder="12f3gh"
+                      placeholder=""
                       error={Boolean(!usn && isChecking)}
                       aria-describedby="validation-academic-usn"
                     />
@@ -333,11 +350,15 @@ const Academic = ({
                   rules={{ required: true }}
                   render={({ field: { onChange } }) => (
                     <Select
+                      // onClick={tenthYop == "others" && handleClickOpen}
                       value={tenthYop}
                       label="10th Year of Passout"
                       onChange={(e: any) => {
                         onChange(e?.target?.value);
                         setTenthYop(e?.target?.value);
+                        if (e.target.value === "others") {
+                          handleClickOpen();
+                        }
                       }}
                       error={Boolean(!tenthYop && isChecking)}
                       labelId="validation-academic-tenthyop"
@@ -449,7 +470,7 @@ const Academic = ({
                         onChange(e?.target?.value);
                         setTwelthPercentage(e?.target?.value);
                       }}
-                      placeholder="Leonard"
+                      placeholder=""
                       error={Boolean(!twelthPercentage && isChecking)}
                       aria-describedby="validation-academic-twelthpercentage"
                     />
@@ -651,7 +672,7 @@ const Academic = ({
                         onChange(e?.target?.value);
                         setGraduationCgpa(e?.target?.value);
                       }}
-                      placeholder="Leonard"
+                      placeholder=""
                       error={Boolean(!graduationCgpa && isChecking)}
                       aria-describedby="validation-academic-graduationpercgpa"
                     />
@@ -760,7 +781,7 @@ const Academic = ({
               <FormControl fullWidth>
                 <InputLabel
                   id="validation-academic-postgraduationcourse"
-                  error={Boolean(!postgraduationPercentage && isChecking)}
+                  error={Boolean(!postGraduationCourse && isChecking)}
                   htmlFor="validation-academic-postgraduationcourse"
                 >
                   Post-Graduation Course
@@ -769,19 +790,15 @@ const Academic = ({
                   name="postGraduationCourse"
                   control={control}
                   rules={{ required: true }}
-                  render={({ field: { value, onChange } }) => (
+                  render={({ field: { onChange } }) => (
                     <Select
-                      value={
-                        !isCancel
-                          ? postgraduationPercentage
-                          : academicDetails.postgraduationPercentage
-                      }
+                      value={postGraduationCourse}
                       label="Post-Graduation Course"
                       onChange={(e: any) => {
                         onChange(e?.target?.value);
                         setPostGraduationCourse(e?.target?.value);
                       }}
-                      error={Boolean(!postgraduationPercentage && isChecking)}
+                      error={Boolean(!postGraduationCourse && isChecking)}
                       labelId="validation-academic-postgraduationcourse"
                       aria-describedby="validation-academic-postgraduationcourse"
                     >
@@ -791,7 +808,7 @@ const Academic = ({
                     </Select>
                   )}
                 />
-                {!postgraduationPercentage && isChecking && (
+                {!postGraduationCourse && isChecking && (
                   <FormHelperText
                     sx={{ color: "error.main" }}
                     id="validation-academic-postgraduationcourse"
@@ -913,7 +930,7 @@ const Academic = ({
                         onChange(e?.target?.value);
                         setPostGraduationPercentage(e?.target?.value);
                       }}
-                      placeholder="Leonard"
+                      placeholder=""
                       error={Boolean(!postgraduationPercentage && isChecking)}
                       aria-describedby="validation-academic-postgraduationpercentage"
                     />
@@ -949,7 +966,7 @@ const Academic = ({
                         onChange(e?.target?.value);
                         setPostGraduationCgpa(e?.target?.value);
                       }}
-                      placeholder="Leonard"
+                      placeholder=""
                       error={Boolean(!postgraduationCgpa && isChecking)}
                       aria-describedby="validation-academic-postgraduationpercgpa"
                     />
@@ -1073,15 +1090,11 @@ const Academic = ({
                   rules={{ required: true }}
                   render={({ field: { onChange } }) => (
                     <Select
-                      value={
-                        !isCancel
-                          ? gapInAcademics
-                          : academicDetails.gapInAcademics
-                      }
+                      value={gapInAcademics}
                       label="Gap in Academics, if any, (Nos of years)"
-                      onChange={(value: any) => {
-                        onChange(value);
-                        setGapInAcademics(value);
+                      onChange={(e: any) => {
+                        onChange(e.target.value);
+                        setGapInAcademics(e.target.value);
                       }}
                       error={Boolean(!gapInAcademics && isChecking)}
                       labelId="validation-academic-gapinacademics"
@@ -1122,7 +1135,7 @@ const Academic = ({
                       value={working}
                       label="Are you Working professional?"
                       onChange={(e: any) => {
-                        console.log(`are you working =====> ${working}`);
+                        // console.log(`are you working =====> ${working}`);
                         onChange(e?.target?.value);
                         setWorking(e?.target?.value);
                       }}
@@ -1150,6 +1163,7 @@ const Academic = ({
                 )}
               </FormControl>
             </Grid>
+
             <Grid item xs={12} sm={4}>
               <FormControl fullWidth>
                 <InputLabel
@@ -1192,6 +1206,99 @@ const Academic = ({
                   </FormHelperText>
                 )}
               </FormControl>
+            </Grid>
+
+            <Grid item xs={12} sm={4}>
+              <div>
+                {/* <Button variant="outlined" onClick={handleClickOpen}>
+                  Open select dialog
+                </Button> */}
+                <Dialog
+                  maxWidth="xs"
+                  fullWidth
+                  open={open}
+                  onClose={handleClose}
+                >
+                  <DialogTitle>Fill the form</DialogTitle>
+                  <DialogContent className="pt-2">
+                    <form>
+                      {/* <FormControl sx={{ mr: 4 }}>
+                        <InputLabel id="demo-dialog-select-label">
+                          Age
+                        </InputLabel>
+                        <Select
+                          label="Age"
+                          labelId="demo-dialog-select-label"
+                          id="demo-dialog-select"
+                          defaultValue=""
+                        >
+                          <MenuItem value="">
+                            <em>None</em>
+                          </MenuItem>
+                          <MenuItem value={10}>Ten</MenuItem>
+                          <MenuItem value={20}>Twenty</MenuItem>
+                          <MenuItem value={30}>Thirty</MenuItem>
+                        </Select>
+                      </FormControl>
+                      <FormControl>
+                        <InputLabel htmlFor="outlined-age-native-simple">
+                          Age
+                        </InputLabel>
+                        <Select
+                          native
+                          label="Age"
+                          defaultValue=""
+                          inputProps={{
+                            name: "age",
+                            id: "outlined-age-native-simple",
+                          }}
+                        >
+                          <option aria-label="None" value="" />
+                          <option value={10}>Ten</option>
+                          <option value={20}>Twenty</option>
+                          <option value={30}>Thirty</option>
+                        </Select>
+                      </FormControl> */}
+                      <FormControl fullWidth>
+                        <Controller
+                          name="tenthYop"
+                          control={control}
+                          rules={{ required: true }}
+                          render={({ field: { onChange } }) => (
+                            <TextField
+                              value={tenthYop}
+                              label="Enter other Tenth YOP"
+                              onChange={(e: any) => {
+                                onChange(e?.target?.value);
+                                setTenthYop(e?.target?.value);
+                              }}
+                              placeholder=""
+                              error={Boolean(!tenthYop)}
+                              aria-describedby="validation-academic-usn"
+                            />
+                          )}
+                        />
+                        {!tenthYop && (
+                          <FormHelperText
+                            sx={{ color: "error.main" }}
+                            id="validation-tpo-usn"
+                          >
+                            This field is required
+                          </FormHelperText>
+                        )}
+                      </FormControl>
+                    </form>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleClose} variant="outlined">
+                      Cancel
+                    </Button>
+                    <Button onClick={handleClose} variant="outlined">
+                      Ok
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </div>
             </Grid>
 
             {/* <Grid item xs={12}>

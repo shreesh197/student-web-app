@@ -51,7 +51,7 @@ import Documents from "./Documents";
 
 const ProfileOnboarding = () => {
   // ** States
-  const [activeStep, setActiveStep] = useState<number>(2);
+  const [activeStep, setActiveStep] = useState<number>(3);
   const [basicDetails, setBasicDetails] =
     useState<BasicDetailsInterface>(initBasicDetails);
 

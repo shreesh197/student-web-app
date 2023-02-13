@@ -41,12 +41,14 @@ import { DateType } from "../../common/ui-library/app-repository-admin-panel/src
 import DatePickerWrapper from "../../common/ui-library/app-repository-admin-panel/src/@core/styles/libs/react-datepicker";
 import {
   getBasicDetails,
+  postBasicDetails,
   updateBasicDetails,
 } from "../../services/ApiExecutor";
 import { formBtnColors } from "../../helper/Profile";
 import { BasicDetailsInterface } from "../../constants/profile";
 import { validateEmail } from "../../helper";
 import { FormGroup, Switch } from "@mui/material";
+import moment from "moment";
 
 interface State {
   password: string;
@@ -93,6 +95,7 @@ const BasicDetailsView = ({
     basicDetails.emergencyContact || null
   );
   const [dob, setDob] = useState(basicDetails.dob || new Date());
+  const [formatteddob, setFormattedDob] = useState("");
   const [disability, setDisability] = useState(
     basicDetails.disability || false
   );
@@ -104,12 +107,11 @@ const BasicDetailsView = ({
     basicDetails.whatsappContact || null
   );
 
-  // const [checked, setChecked] = useState<boolean>(
-  //   basicDetails.disability || false
-  // );
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setDisability(event.target.checked);
   };
+
+  console.log("date of birth is ", formatteddob);
 
   const dependencies = [
     firstName,
@@ -167,25 +169,23 @@ const BasicDetailsView = ({
   const onSubmit = async () => {
     // if (isSubmit) {
     console.log("Form Submitted");
-    var basicDetailsObj: BasicDetailsInterface = {
-      firstName,
-      lastName,
-      kodnestId,
-      emergencyContact,
-      dob,
-      disability,
-      email,
-      primaryContact,
-      whatsappContact,
+    var basicDetailsObj = {
+      first_name: firstName,
+      last_name: lastName,
+      KodNest_id: kodnestId,
+      emergency_contact: emergencyContact,
+      dob: formatteddob,
+      disability: disability,
+      email_id: email,
+      primary_contact: primaryContact,
+      whatsapp_contact: whatsappContact,
     };
-    setBasicDetails(basicDetailsObj);
+    // setBasicDetails(basicDetailsObj);
     //pass basicDetailsObj to API
-    // const res = await updateBasicDetails(basicDetailsObj);
-    // console.log(res);
+    const res = await postBasicDetails(basicDetailsObj);
+    console.log(res);
     // }
   };
-
-  console.log(`Disability is set to =======> $`);
 
   return (
     <div>
@@ -332,14 +332,16 @@ const BasicDetailsView = ({
                   rules={{ required: true }}
                   render={({ field: { value, onChange } }) => (
                     <DatePicker
-                      selected={dob}
+                      selected={value ? value : dob}
                       showYearDropdown
                       showMonthDropdown
                       onChange={(e) => {
                         onChange(e);
                         setDob(dob);
+                        let formattedDate = moment(e).format("YYYY/MM/DD");
+                        setFormattedDob(formattedDate);
                       }}
-                      placeholderText="MM/DD/YYYY"
+                      placeholderText="YYYY/MM/DD"
                       customInput={
                         <CustomInput
                           value={value}
@@ -541,7 +543,7 @@ const BasicDetailsView = ({
                       setIsChecking(true);
                       console.log("errors are not nill");
                     } else {
-                      handleNext();
+                      // handleNext();
                       setIsSubmit(true);
                       console.log("submitted");
                       onSubmit();
