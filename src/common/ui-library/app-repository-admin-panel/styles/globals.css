@@ -22,3 +22,18 @@ code:not([class*='language-']):after {
 code[class*='language-'] {
   padding: 0;
 }
+
+.MuiStepConnector-lineVertical {
+ 
+  border: 3px solid #1976d2 !important;
+}
+
+/* .css-16oo4wd .MuiStepper-vertical .MuiStepConnector-root {
+  margin-left: 8px !important;
+}
+
+.css-16oo4wd .MuiStepConnector-root .MuiStepConnector-line {
+  border-width: 3px !important;
+  border-left-width: 3px !important;
+  border-radius: 3px !important;
+} */

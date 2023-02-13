@@ -1,7 +1,7 @@
 import { Api, PostMethod, PutMethod } from "app-repo-common-pkg";
 import NgrokApi from "./NgrokApoConfig";
 
-const userId = "0b2efe86-8ced-11ed-9090-3af9d3c3fec6";
+const userId = "cbac8d7e-a942-11ed-98ec-acde48001122";
 
 export const postLoginData = (data: any) => {
   console.log(data);
@@ -9,14 +9,31 @@ export const postLoginData = (data: any) => {
   return response;
 };
 
-export const postBasicDetails = (data: any) => {
-  const response = PostMethod(
-    `/profile-service/api/v1/users/${userId}/communication_details`,
-    data,
-    false
-  );
-  return response;
+// export const postBasicDetails = (data: any) => {
+//   const response = PostMethod(
+//     `/profile-service/api/v1/users/${userId}/communication_details`,
+//     data,
+//     false
+//   );
+//   return response;
+// };
+
+export const postBasicDetails = async (data:any) => {
+  const result = await NgrokApi()
+    .patch(
+      `https://fdfa-103-179-108-118.in.ngrok.io/profile-service/api/v1/users/${userId}/basic_details`, data
+    );
+  return result.data;
 };
+
+export const postOtherDetails = async (data:any) => {
+  const result = await NgrokApi()
+    .patch(
+      `https://fdfa-103-179-108-118.in.ngrok.io/profile-service/api/v1/users/${userId}/other_details`, data
+    );
+  return result.data;
+};
+
 
 export const postContactDetails = (data: any) => {
   const response = PutMethod(

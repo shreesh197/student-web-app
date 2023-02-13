@@ -2,11 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+
 :root {
   --primary-color: #feba01;
   --secondary-color: #000;
   --no-validation-error-color: green;
   --validation-error-color: red;
+  --ui-accent-color:#656dfe;
 
   /* --inverted-primary-color: #000;
     --inverted-secondary-color: #feba01; */
@@ -82,3 +84,37 @@ body {
 /* .radio-fields label.no-validation-error {
   border: 2px solid var(--no-validation-error-color) !important;
 } */
+
+
+.MuiStepContent-root{
+ 
+  margin-left: 8px !important;
+  
+}
+
+.MuiStepConnector-line,.MuiStepContent-root{
+  border-right: 0 !important;
+    border-bottom: 0 !important;
+    border-left: 3px solid var(--ui-accent-color) !important;
+      border-top: 0 !important;
+      
+}
+
+
+.MuiStepConnector-line{
+margin-left: -10px !important;
+}
+
+.MuiStepper-vertical .MuiStep-root.active+.MuiStepConnector-root .MuiStepConnector-line {
+  border-color: var(--ui-accent-color) !important;
+}
+.MuiStepConnector-root.Mui-disabled .MuiStepConnector-line{
+border-color: rgba(102, 108, 255, 0.3) !important;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
