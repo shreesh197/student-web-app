@@ -9,8 +9,15 @@ import Typography, { TypographyProps } from "@mui/material/Typography";
 
 // ** Third Party Imports
 import { useDropzone } from "react-dropzone";
-import { Card, CardContent, CardHeader, Grid } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  FormHelperText,
+  Grid,
+} from "@mui/material";
 import Button, { ButtonProps } from "@mui/material/Button";
+import { useForm } from "react-hook-form";
 
 interface FileProp {
   name: string;
@@ -73,10 +80,16 @@ const Documents = ({ handleBack, handleNext, activeStep, steps }) => {
   const [isChecking, setIsChecking] = useState(false);
 
   const [files, setFiles] = useState<File[]>([]);
-  const [imgSrc, setImgSrc] = useState<string>("/images/avatars/1.png");
+  const [imgSrc, setImgSrc] = useState<string>("");
   const [inputValue, setInputValue] = useState<string>("");
 
-  console.log("Selected file is", imgSrc);
+  //   console.log("Selected file is", imgSrc);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const handleInputImageChange = (file: ChangeEvent) => {
     const reader = new FileReader();
@@ -92,7 +105,7 @@ const Documents = ({ handleBack, handleNext, activeStep, steps }) => {
   };
   const handleInputImageReset = () => {
     setInputValue("");
-    setImgSrc("/images/avatars/1.png");
+    setImgSrc("");
   };
 
   // ** Hook
@@ -165,6 +178,8 @@ const Documents = ({ handleBack, handleNext, activeStep, steps }) => {
     // </CardContent>
 
     <Grid container>
+                <form onSubmit={handleSubmit(onSubmit)}>
+
       <Grid item xs={12}>
         <CardHeader title="Passport size photo" />
         <CardContent sx={{ pt: 0 }}>
@@ -184,7 +199,16 @@ const Documents = ({ handleBack, handleNext, activeStep, steps }) => {
                   accept="image/png, image/jpeg"
                   onChange={handleInputImageChange}
                   id="account-settings-upload-image"
+                  aria-describedby="account-settings-upload-image"
                 />
+                {isChecking && (
+                  <FormHelperText
+                    sx={{ color: "error.main" }}
+                    id="account-settings-upload-image"
+                  >
+                    This field is required
+                  </FormHelperText>
+                )}
               </ButtonStyled>
               <ResetButtonStyled
                 color="secondary"
@@ -441,7 +465,7 @@ const Documents = ({ handleBack, handleNext, activeStep, steps }) => {
                 setIsChecking(true);
                 console.log("errors are not nill");
               } else {
-                handleNext();
+                // handleNext();
                 setIsSubmit(true);
                 console.log("submitted");
                 onSubmit();
@@ -453,6 +477,7 @@ const Documents = ({ handleBack, handleNext, activeStep, steps }) => {
           </Button>
         </div>
       </Grid>
+      </form>
     </Grid>
   );
 };
